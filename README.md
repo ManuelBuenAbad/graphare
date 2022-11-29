@@ -13,7 +13,7 @@ This code has been written in Wolfram language using Mathematica 12.0 by Manuel 
 Installing the code
 --------------
 
-There are two packages: `PhaseTransition.wl`, which computes various observables from the first-order phase transition; and `DSReheating.wl`, which computes the reheating history of the dark sector.
+There are two packages: `DSReheating.wl`, which computes the reheating history of the dark sector; and `PhaseTransition.wl`, which computes various observables from the first-order phase transition.
 
 To install, simply open a Mathematica notebook and:
 
@@ -25,8 +25,8 @@ To install, simply open a Mathematica notebook and:
 
 To call the packages, simply enter the following commands in a Mathematica cell:
 
-    Needs["PhaseTransition`"]
     Needs["DSReheating`"]
+    Needs["PhaseTransition`"]
 
 
 Using the code
@@ -36,7 +36,7 @@ You can use `GraPhaRe` freely, provided that in your publications, you cite the 
 
 The BibTeX entry for the paper is:
 
-    @article{Buch:2020xyt,
+    @article{Buen-Abad:2212abc,
 		author = "Buen-Abad, Manuel A. and Chang, Jae Hyeok and Hook, Anson",
 		title = "{Gravitational Waves from Reheating}",
 		eprint = "2212.xxxxx",

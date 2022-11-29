@@ -24,7 +24,7 @@ Begin["`Private`"];
 (* ::Text:: *)
 (*WRITTEN BY: MANUEL A. BUEN-ABAD, 2022.*)
 (**)
-(*This is a code that computes various quantities associated with the reheating of a Dark Sector (DS) due to the decay of a reheaton \[Phi], which dominates the Universe in an early matter-domination (EDM) era. For the derivation of these hard-coded results, see notebook 02_reheating.nb.*)
+(*This is a code that computes various quantities associated with the reheating of a Dark Sector (DS) due to the decay of a reheaton \[Phi], which dominates the Universe in an early matter-domination (EDM) era. For the derivation of these hard-coded results, see notebook 01_reheating.nb.*)
 
 
 (* ::Chapter:: *)
@@ -105,47 +105,44 @@ gsFn[T_]:=Which[T<gsDomain[[1]],gs0,T<=gsDomain[[2]],gsInt[T],T>gsDomain[[2]],gS
 
 
 (* ::Text:: *)
-(*We will be solving for a two-fluid Universe: one a \[Phi] fluid that starts to decay at some time Subscript[t, d] (equivalently, scale factor Subscript[a, d] and Hubble scale Subscript[H, d]), and the other is made of the dark radiation decay products.*)
+(*We will be solving for a two-fluid Universe: one a \[Phi] fluid that starts to decay at some time t_d (equivalently, scale factor a_d and Hubble scale H_d), and the other is made of the dark radiation decay products.*)
 (**)
 (*The evolution equations are:*)
 (**)
-(*Subscript[\!\(\*OverscriptBox[\(\[Rho]\), \(.\)]\), \[Phi]]+3H Subscript[\[Rho], \[Phi]] (1+Subscript[w, \[Phi]])+Subscript[\[CapitalGamma]\[Rho], \[Phi]]=0*)
-(*Subscript[\!\(\*OverscriptBox[\(\[Rho]\), \(.\)]\), r]+4H Subscript[\[Rho], r] -Subscript[\[CapitalGamma]\[Rho], \[Phi]]=0*)
+(*d\[Rho]_\[Phi]/dt +3H \[Rho]_\[Phi] (1+w_\[Phi])+\[CapitalGamma]*\[Rho]_\[Phi]=0*)
+(*d\[Rho]_r/dt +4H \[Rho]_r -\[CapitalGamma]*\[Rho]_\[Phi]=0*)
 (**)
-(*It may be convenient to rewrite everything in dimensionless quantities, normalized to the value of Subscript[\[Rho], \[Phi],d] at this time Subscript[t, d] when the decays start:*)
+(*It may be convenient to rewrite everything in dimensionless quantities, normalized to the value of \[Rho]_\[Phi]d at this time t_d when the decays start:*)
 (**)
-(*(1)   (d Subscript[r, \[Phi]])/(d x)+3 h Subscript[r, \[Phi]] (1+Subscript[w, \[Phi]])+\[Gamma] Subscript[r, \[Phi]]=0*)
-(*(d Subscript[r, r])/(d x)+4 h Subscript[r, r]-\[Gamma] Subscript[r, \[Phi]]=0*)
+(*(1)   (d r_\[Phi])/(d x)+3 h r_\[Phi] (1+w_\[Phi])+\[Gamma] r_\[Phi]=0*)
+(*(d r_r)/(d x)+4 h r_r-\[Gamma] r_\[Phi]=0*)
 (**)
 (*where we have defined*)
 (**)
-(*x\[Congruent]t\[CenterDot]Subscript[H, d]*)
-(*Subscript[H, d]\[Congruent]Sqrt[Subscript[\[Rho], \[Phi],d]/(3 \!\(\*SubsuperscriptBox[\(m\), \(Pl\), \(2\)]\))]*)
-(*r\[Congruent]\[Rho]/Subscript[\[Rho], \[Phi],d]*)
-(*h\[Congruent]H/Subscript[H, d]=Sqrt[Subscript[r, \[Phi]]+Subscript[r, r]]*)
-(*Subscript[\[Gamma], d]\[Congruent]\[CapitalGamma]/Subscript[H, d]*)
+(*x\[Congruent]t\[CenterDot]H_d*)
+(*H_d\[Congruent]Sqrt[\[Rho]_\[Phi]d/(3 m_Pl^2)]*)
+(*r\[Congruent]\[Rho]/\[Rho]_\[Phi]d*)
+(*h\[Congruent]H/H_d=Sqrt[r_\[Phi]+r_r]*)
+(*Subscript[\[Gamma], d]\[Congruent]\[CapitalGamma]/H_d*)
 (**)
-(*with Subscript[m, Pl] being the reduced Planck mass: Subscript[m, Pl]\[Congruent]Subscript[M, Pl]/Sqrt[8\[Pi]].*)
+(*with m_Pl being the reduced Planck mass: m_Pl\[Congruent]M_Pl/Sqrt[8\[Pi]].*)
 (**)
-(*Defining y\[Congruent]ln(a/Subscript[a, d]) note that, since x\[Congruent]t\[CenterDot]Subscript[H, d], then*)
+(*Defining y\[Congruent]ln(a/a_d) note that, since x\[Congruent]t\[CenterDot]H_d, then*)
 (**)
-(*(d y)/(d x)=1/a (d a)/(d t Subscript[H, d])=1/Subscript[H, d] \!\(\*OverscriptBox[\(a\), \(.\)]\)/a=H/Subscript[H, d]=h(y), and therefore:*)
+(*(d y)/(d x)=1/a (d a)/(d t H_d)=H/H_d=h(y), and therefore:*)
 (**)
-(*x(y) = \!\( *)
-(*\*SubsuperscriptBox[\(\[Integral]\), *)
-(*SubscriptBox[\(y\), \(i\)], \(y\)]*)
-(*\*FractionBox[\(d\ y'\), \(h(y')\)]\)*)
+(*x(y) = \[Integral]_y_i^y  dy'/h(y')*)
 (**)
-(*where y=Subscript[y, i] corresponds to an initial scale factor Subscript[a, i]<<Subscript[a, d]. Note in particular that x(y=a)=Subscript[H, d]t(Subscript[a, d])=Subscript[H, d] Subscript[t, d] is not necessarily equal to 1. This is because in the inverse of the Hubble expansion is not in general equal to time!*)
+(*where y=y_i corresponds to an initial scale factor a_i<<a_d. Note in particular that x(y=a)=H_dt(a_d)=H_d t_d is not necessarily equal to 1. This is because in the inverse of the Hubble expansion is not in general equal to time!*)
 
 
 (* ::Text:: *)
-(*Defining Subscript[A, \[Rho]]\[Congruent](\[Pi]^2 SubStar[g'])/30 then Subscript[\[Rho], r]=Subscript[A, \[Rho]] T^4.*)
+(*Defining A_\[Rho]\[Congruent](\[Pi]^2 g'_*)/30 then \[Rho]_r=A_\[Rho] T^4.*)
 (**)
-(*We can also define the factor f: Subscript[\[Rho], \[Phi],d]\[Congruent]f^4 Subscript[\[Rho], r,c], i.e. the initial Subscript[\[Rho], \[Phi]] in terms of Subscript[\[Rho], r] at the critical temperature. Thus, Subscript[H, d]=f^4 Subscript[\[Rho], r,c]/(3 \!\(\*SubsuperscriptBox[\(m\), \(Pl\), \(2\)]\)) and, since Subscript[\[Rho], \[Phi]]>Subscript[\[Rho], r] for all times:*)
-(*Subscript[\[Rho], \[Phi]]>Subscript[\[Rho], r] \[Implies] f^4 Subscript[\[Rho], r,c]=f^4 Subscript[A, \[Rho]] \!\(\*SubsuperscriptBox[\(T\), \(c\), \(4\)]\)>Subscript[A, \[Rho]] T^4\[Implies]f>T/Subscript[T, c], and in particular f>1.*)
+(*We can also define the factor f: \[Rho]_\[Phi]d\[Congruent]f^4 \[Rho]_rc, i.e. the initial \[Rho]_\[Phi] in terms of \[Rho]_r at the critical temperature. Thus, H_d=f^4 \[Rho]_rc/(3 m_Pl^2) and, since \[Rho]_\[Phi]>\[Rho]_r for all times:*)
+(*\[Rho]_\[Phi]>\[Rho]_r \[Implies] f^4 \[Rho]_rc=f^4 A_\[Rho] T_c^4 > A_\[Rho] T^4\[Implies]f>T/T_c, and in particular f>1.*)
 (**)
-(*\[Implies] Subscript[r, r]\[Congruent]Subscript[\[Rho], r]/Subscript[\[Rho], \[Phi]]=Subscript[\[Rho], r]/(f^4 Subscript[\[Rho], r,c])=(T/(f Subscript[T, c]))^4, and Subscript[r, r,c]=f^-4.*)
+(*\[Implies] r_r\[Congruent]\[Rho]_r/\[Rho]_\[Phi]=\[Rho]_r/(f^4 \[Rho]_rc)=(T/(f T_c))^4, and r_rc=f^-4.*)
 
 
 (* ::Section:: *)
@@ -153,11 +150,11 @@ gsFn[T_]:=Which[T<gsDomain[[1]],gs0,T<=gsDomain[[2]],gsInt[T],T>gsDomain[[2]],gS
 
 
 (* ::Subsection:: *)
-(*Time as a function of scale factor: x(a)=Subscript[H, d]\[CenterDot]t(a)*)
+(*Time as a function of scale factor: x(a)=H_d\[CenterDot]t(a)*)
 
 
 (* ::Text:: *)
-(*During reheaton-domination (\[Phi]-domination, with a constant equation of state Subscript[w, \[Phi]]), compute x(a) before the reheaton decays are allowed.*)
+(*During reheaton-domination (\[Phi]-domination, with a constant equation of state w_\[Phi]), compute x(a) before the reheaton decays are allowed.*)
 
 
 Clear[xOfa]
@@ -165,7 +162,7 @@ xOfa[wfi_,aa_]:=Block[{w\[Phi]=wfi,a=aa},(2 a^((3 (1+w\[Phi]))/2))/(3 (1+w\[Phi]
 
 
 (* ::Subsection:: *)
-(*Reheating Equations & Numerical Solution (in terms of x=t\[CenterDot]Subscript[H, d])*)
+(*Reheating Equations & Numerical Solution (in terms of x=t\[CenterDot]H_d)*)
 
 
 (* ::Text:: *)
@@ -246,7 +243,7 @@ Tfnx
 
 
 (* ::Text:: *)
-(*Computing the scale factor as a function of time, assuming a certain Hubble scale Subscript[H, i] and a certain number of degrees of freedom SubStar[g].*)
+(*Computing the scale factor as a function of time, assuming a certain Hubble scale H_i and a certain number of degrees of freedom g_*.*)
 
 
 Clear[aOfx]
@@ -288,13 +285,10 @@ afnx
 (*2. Redshift from this time until after the Visible Sector (VS) is reheated by the DS (VSRH).*)
 (*3. Redshift from VSRH time until today.*)
 (**)
-(*For #1 the ratio a(Subscript[t, 2])/a(Subscript[t, 1])=(1+Subscript[z, 1])/(1+Subscript[z, 2]) of scale factors between two times Subscript[t, 1]<Subscript[t, 2] during DS reheating is simply equal to a(Subscript[t, 2])/a(Subscript[t, 1])=\!\(\*SuperscriptBox[\(e\), \( *)
-(*\*SubsuperscriptBox[\(\[Integral]\), *)
-(*SubscriptBox[\(t\), \(1\)], *)
-(*SubscriptBox[\(t\), \(2\)]]\[DifferentialD]t\ \ \(H(t)\)\)]\)=\!\(\*SuperscriptBox[\(e\), \( *)
-(*\*SubsuperscriptBox[\(\[Integral]\), *)
-(*SubscriptBox[\(x\), \(1\)], *)
-(*SubscriptBox[\(x\), \(2\)]]\[DifferentialD]x\ \ \(h(x)\)\)]\).*)
+(*For #1 the ratio a(t_ 2)/a(t_ 1)=(1+z_ 1)/(1+z_ 2) of scale factors between two times t_ 1<t_ 2 during DS reheating is simply equal to*)
+(**)
+(*a(t_ 2)/a(t_ 1)= exp[\[Integral]_x_1^x_2 dx' h(x') ].*)
+(**)
 (*For #2, VSRH can take place instantaneously or adiabatically. So we use either energy- or entropy-conservation as our guides.*)
 
 
@@ -302,24 +296,24 @@ Clear[redshift]
 
 redshift[gg_?NumberQ,gs_,Hscale_,xRange_List,instant_,gdIR_:0,xiIR_:0,TIR_:10^3,wf_:0,xLarge_:10^3,prec_:30,accu_:20,debug_:False]:=redshift[gg,gs,Hscale,xRange,instant,gdIR,xiIR,TIR,wf,xLarge,prec,accu,debug]=Block[{gstar=gs,Hi=Hscale,w\[Phi]=wf,xStar,xm,r\[Phi],rr,efolds,Tdm,gIR,Gfactor,Z1,Z2,Z3,res},
 
-(*the time-range between GW production (Subscript[x, *]) and an arbitrary point during DS-RD era (Subscript[x, m])*)
+(*the time-range between GW production (x_*) and an arbitrary point during DS-RD era (x_m)*)
 {xStar,xm}=xRange;
 
-(*computing the efolds between Subscript[x, *] and Subscript[x, m]*)
+(*computing the efolds between x_* and x_m*)
 {r\[Phi],rr}=solEqs[gg,wf,xLarge,prec,accu];
 efolds=NIntegrate[hub[x],{x,xStar,xm}];
 
-(*the redshift factor between Subscript[x, *] and Subscript[x, m]*)
+(*the redshift factor between x_* and x_m*)
 Z1=Exp[efolds];
 
-(*computing the DS temperature at Subscript[x, m]*)
+(*computing the DS temperature at x_m*)
 Tdm=TOfx[gg,gs,Hscale,wf,xLarge,prec,accu][xm];
 
 (*computing the entropy dump from DS reheating the VS; whether instantaneously or adiabatically*)
 gIR=gsFn[TIR];
 Gfactor=If[instant,(gs/(gdIR*xiIR^4+gIR))^(1/4),(gs/(gdIR*xiIR^3+gIR))^(1/3)];
 
-(*the redshift factor between Subscript[x, m] and Subscript[x, IR], at some arbitrary time shortly after VS reheating*)
+(*the redshift factor between x_m and x_IR, at some arbitrary time shortly after VS reheating*)
 Z2=Gfactor*Tdm/TIR;
 
 (*the redshift factor from the time of VS reheating down until today*)
@@ -432,11 +426,11 @@ RHDict["\[Rho]\[Phi]i"]=\[Rho]\[Phi]i;
 
 
 (* ::Subsection:: *)
-(*Subscript[r, r,c]*)
+(*r_rc*)
 
 
 (* ::Text:: *)
-(*Subscript[r, r,c]\[Congruent]Subscript[r, r](Subscript[x, c])=f^-4:*)
+(*r_rc\[Congruent]r_r(x_c)=f^-4:*)
 
 
 RHDict["rrc"]=f^-4;
@@ -447,7 +441,7 @@ RHDict["rrc"]=f^-4;
 
 
 (* ::Subsubsection:: *)
-(*\[Phi]D: reheaton domination (Subscript[r, r]<<Subscript[r, \[Phi]])*)
+(*\[Phi]D: reheaton domination (r_r<<r_\[Phi])*)
 
 
 RHDict["solsAn"]["\[Gamma]<<1","\[Phi]D"]={r\[Phi][x]->4/(9 x^2)-(2 (-2+3 x) (2+3 x) \[Gamma])/(81 x^3),rr[x]->1/20 (-((32 (2/3)^(2/3))/(9 x^(8/3)))+16/(3 x)) \[Gamma]};
@@ -455,7 +449,7 @@ RHDict["solsAn"]["\[Gamma]>>1","\[Phi]D"]={r\[Phi][x]->1+(-(2/3)+x) (-3-\[Gamma]
 
 
 (* ::Subsubsection:: *)
-(*\[Phi]R equality: Subscript[r, eq]\[Congruent]Subscript[r, r](Subscript[x, eq])=Subscript[r, \[Phi]](Subscript[x, eq])*)
+(*\[Phi]R equality: r_eq\[Congruent]r_r(x_eq)=r_\[Phi](x_eq)*)
 
 
 RHDict["xEq"]["\[Gamma]<<1"]=10/(11 \[Gamma]);
@@ -466,7 +460,7 @@ RHDict["rEq"]["\[Gamma]>>1"]=1/2-3/(4 \[Gamma]);
 
 
 (* ::Subsubsection:: *)
-(*RD: radiation domination (Subscript[r, r]>>Subscript[r, \[Phi]])*)
+(*RD: radiation domination (r_r>>r_\[Phi])*)
 
 
 RHDict["solsAn"]["\[Gamma]<<1","RD"]={r\[Phi][x]->((11/6)^(1/4) E^(10/11-x \[Gamma]) Sqrt[\[Gamma]/x^3])/(2 Sqrt[5]),rr[x]->1/(4 x^2)};
@@ -475,7 +469,7 @@ RHDict["solsAn"]["\[Gamma]>>1","RD"]={r\[Phi][x]->(E^(1/2+(2 \[Gamma])/3-x \[Gam
 
 
 (* ::Subsubsection:: *)
-(*Subscript[L, r]\[Congruent]1/4 (d ln Subscript[r, r])/(d x)=(d ln T)/(d x)*)
+(*L_r\[Congruent]1/4 (d ln r_r)/(d x)=(d ln T)/(d x)*)
 
 
 RHDict["Lr"]["\[Gamma]<<1","\[Phi]D"]=-(2/(3 x))+1/(-((8 (2/3)^(2/3))/(5 x^(2/3)))+(12 x)/5);
@@ -486,7 +480,7 @@ RHDict["Lr"]["\[Gamma]>>1","RD"]=3/(1-6 x);
 
 
 (* ::Subsubsection:: *)
-(*Maximum: Subscript[r, r,max]\[Congruent]Subscript[r, r](Subscript[x, max])*)
+(*Maximum: r_rmax\[Congruent]r_r(x_max)*)
 
 
 RHDict["xMax"]["\[Gamma]<<1"]=2/3 (8/3)^(3/5);
@@ -501,7 +495,7 @@ RHDict["rrMax"]["\[Gamma]>>1"]=1-4/Sqrt[\[Gamma]]+15/\[Gamma];
 
 
 (* ::Subsubsection:: *)
-(*Subscript[f, min](\[Gamma]): Subscript[r, r,c]<=Subscript[r, r,max]*)
+(*f_min(\[Gamma]): r_rc<=r_rmax*)
 
 
 RHDict["fmin"]["\[Gamma]<<1"]=2^(19/20)/(3^(3/20) \[Gamma]^(1/4));
@@ -510,7 +504,7 @@ RHDict["fmin"]["\[Gamma]>>1"]=\[Gamma]^(1/4)/(15 +\[Gamma]-4*Sqrt[\[Gamma]])^(1/
 
 
 (* ::Subsubsection:: *)
-(*Subscript[x, c]: Subscript[r, r,c]\[Congruent]Subscript[r, r](Subscript[x, c])*)
+(*x_c: r_rc\[Congruent]r_r(x_c)*)
 
 
 RHDict["xcVals"]["\[Gamma]<<1"]={2/3+1/(f^4 \[Gamma]),(4 f^4 \[Gamma])/15};
@@ -519,7 +513,7 @@ RHDict["xcVals"]["\[Gamma]>>1"]={2/3+1/(f^4 \[Gamma]),1/6 (1+3 f^2)};
 
 
 (* ::Subsubsection:: *)
-(*Subscript[L, r,c]\[Congruent]Subscript[L, r](Subscript[x, c])=1/4 Subscript[((d ln Subscript[r, r])/(d x)), Subscript[x, c]]*)
+(*L_rc\[Congruent]L_r(x_c)=1/4  ((d ln r_r)/(d x))(x_c)*)
 
 
 RHDict["LrcVals"]["\[Gamma]<<1"]={(f^4 \[Gamma])/4-7/8+67/(48 f^4 \[Gamma]),-(15/(16 f^4 \[Gamma]))};
@@ -528,7 +522,7 @@ RHDict["LrcVals"]["\[Gamma]>>1"]={(f^4 \[Gamma])/4,-(1/f^2)};
 
 
 (* ::Subsubsection:: *)
-(*Subscript[H, c]\[Congruent]H(Subscript[x, c])=Subscript[H, dec] Sqrt[Subscript[r, \[Phi]]+Subscript[r, r]]*)
+(*H_c\[Congruent]H(x_c)=H_dec Sqrt[r_\[Phi]+r_r]*)
 
 
 HdecFactor=Assuming[Arho>0&&mPL>0,Sqrt[f^4 Arho/3 Tc^4/mPL^2]//Simplify];

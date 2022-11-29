@@ -3,8 +3,8 @@
 BeginPackage["PhaseTransition`"];
 
 
-ptParams::usage="ptParams: function to compute parameters of the first order phase transition (1PT).\nInput: (gStar,direction,vw,{Temperature Evolution},coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx).\n\tIf method='analytic' then {Temperature Evolution}={\[Gamma], t0, tcrit};\n\telse if method='semi'/'numeric' then {Temperature Evolution}={Tfn, tScale}.\nOutput: {\!\(\*SubscriptBox[\(T\), \(PT\)]\), \!\(\*SubscriptBox[\(t\), \(PT\)]\), \!\(\*OverscriptBox[\(\[Lambda]\), \(_\)]\), \!\(\*SubscriptBox[\(\[Chi]\), \(b\)]\), \[Epsilon], \!\(\*SubscriptBox[\(E\), \(c\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\)', \!\(\*SubscriptBox[\(S\), \(E\)]\)'', \!\(\*SubscriptBox[\(\[CapitalGamma]\), \(nucl\)]\)/\[ScriptCapitalV], \!\(\*SubscriptBox[\(\[Beta]\), \(1\)]\), \!\(\*SubscriptBox[\(\[Beta]\), \(2\)]\), \!\(\*SubscriptBox[\(n\), \(b\)]\), \!\(\*SubscriptBox[\(R\), \(b\)]\), <R>, \!\(\*SubscriptBox[\(\[Beta]\), \(eff\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(\[Infinity]\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(n\)]\), \!\(\*SubscriptBox[\(\[Kappa]\), \(run\)]\)}";
-tTPT::usage="tTPT: function to compute the time and temperature of the 1PT.\nInput: (direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx).\n\tIf method='analytic' then {Temperature Evolution}={\[Gamma], t0, tcrit};\n\telse if method='semi'/'numeric' then {Temperature Evolution}={Tfn, tScale}.\nOutput: \!\(\*SubscriptBox[\(t\), \(PT\)]\),\!\(\*SubscriptBox[\(T\), \(PT\)]\)";
+ptParams::usage="ptParams: function to compute parameters of the first order phase transition (1PT).\nInput: (gStar,direction,vw,{Temperature Evolution},coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx).\n\tIf method='analytic' then {Temperature Evolution}={\[Gamma], t0, tcrit};\n\telse if method='semi'/'numeric'/'alt' then {Temperature Evolution}={Tfn, tScale}.\nOutput: {\!\(\*SubscriptBox[\(T\), \(PT\)]\), \!\(\*SubscriptBox[\(t\), \(PT\)]\), \!\(\*OverscriptBox[\(\[Lambda]\), \(_\)]\), \!\(\*SubscriptBox[\(\[Chi]\), \(b\)]\), \[Epsilon], \!\(\*SubscriptBox[\(E\), \(c\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\)', \!\(\*SubscriptBox[\(S\), \(E\)]\)'', \!\(\*SubscriptBox[\(\[CapitalGamma]\), \(nucl\)]\)/\[ScriptCapitalV], \!\(\*SubscriptBox[\(\[Beta]\), \(1\)]\), \!\(\*SubscriptBox[\(\[Beta]\), \(2\)]\), \!\(\*SubscriptBox[\(n\), \(b\)]\), \!\(\*SubscriptBox[\(R\), \(b\)]\), <R>, \!\(\*SubscriptBox[\(\[Beta]\), \(eff\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(\[Infinity]\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(n\)]\), \!\(\*SubscriptBox[\(\[Kappa]\), \(run\)]\)}";
+tTPT::usage="tTPT: function to compute the time and temperature of the 1PT.\nInput: (direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx).\n\tIf method='analytic' then {Temperature Evolution}={\[Gamma], t0, tcrit};\n\telse if method='semi'/'numeric'/'alt' then {Temperature Evolution}={Tfn, tScale}.\nOutput: \!\(\*SubscriptBox[\(t\), \(PT\)]\),\!\(\*SubscriptBox[\(T\), \(PT\)]\)";
 Lmlnh::usage="Lmlnh: interpolated function \!\(\*SubscriptBox[\(log\), \(10\)]\)(-ln[h(\!\(\*SubscriptBox[\(log\), \(10\)]\) x)]), where h is the fractional volume in the metastable phase of the 1PT.\nInput: (direction,vw,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor,Nlx).\nOutput: \!\(\*SubscriptBox[\(log\), \(10\)]\)(-ln[h(\!\(\*SubscriptBox[\(log\), \(10\)]\)x)])";
 Lnbubble::usage="Lnbubble: interpolated function \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(n\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x)), where \!\(\*SubscriptBox[\(n\), \(b\)]\) is the mean bubble number density.\nInput: (LmlnhLx,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor).\nOutput: \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(n\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x)))";
 LRbubble::usage="LRbubble: interpolated function \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(R\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x))), where \!\(\*SubscriptBox[\(R\), \(b\)]\) is the average bubble radius.\nInput: (LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor).\nOutput: \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(R\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x)))";
@@ -27,7 +27,7 @@ Begin["`Private`"];
 (* ::Text:: *)
 (*WRITTEN BY: MANUEL A. BUEN-ABAD, 2022.*)
 (**)
-(*This is a code that computes various parameters and functions associated with bubble nucleation during First Order Phase Transitions (1PT). Many of the results here have been hard-wired into the code. This helps to make importing this code much faster and painless, but may obscure the results. For the derivation of these hard-coded results, see notebook 01_phase_transition.nb.*)
+(*This is a code that computes various parameters and functions associated with bubble nucleation during First Order Phase Transitions (1PT). Many of the results here have been hard-wired into the code. This helps to make importing this code much faster and painless, but may obscure the results. For the derivation of these hard-coded results, see notebook 02_phase_transition.nb.*)
 
 
 (* ::Chapter:: *)
@@ -1184,10 +1184,19 @@ betabar2
 (*Evolution of temperature T(t)*)
 
 
+(* ::Subsubsection:: *)
+(*Analytic*)
+
+
 (* ::Text:: *)
 (*In an analytic approximation, we parameterize the temperature evolution with a simple power law*)
 (**)
 (*T(t)=T_c((t-t_0)/(t_c-t_0))^\[Gamma].*)
+(**)
+(*From this:*)
+(**)
+(*dlnT/dt = \[Gamma]/(t-t_0)*)
+(*d^2lnT/dt^2 = -\[Gamma]/(t-t_0)^2*)
 
 
 Clear[tempEvolAn,tOfTempAn]
@@ -1195,6 +1204,10 @@ Clear[tempEvolAn,tOfTempAn]
 tempEvolAn[Tcrit_,tcrit_,gamma_,t0_,t_]:=Tcrit*((t-t0)/(tcrit-t0))^gamma
 
 tOfTempAn[Tcrit_,tcrit_,gamma_,t0_,Temp_]:=(tcrit-t0)*(Temp/Tcrit)^(1/gamma)+t0
+
+
+(* ::Subsubsection:: *)
+(*Numeric*)
 
 
 (* ::Text:: *)
@@ -1233,6 +1246,7 @@ xmx=10^(Lx/.xmx);
 
 result={xmx*argScale,Tmx}
 ]
+
 
 tOfTempNum[Tfn_,Temp_,argScale_:1]:=tOfTempNum[Tfn,Temp,argScale]=Block[{xA,xB,xData,yData,prec,Tmx,xmx,xLSet,xRSet,yLSet,yRSet,xLGuess,xRGuess,xLe,xRi,result,eps=10^-6},
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
@@ -1283,6 +1297,7 @@ result
 ]
 tOfTempNum::NoTemp="The temperature Temp=`1` is not in the interval `2` of temperatures probed by the Tfn function.";
 
+
 noTempFn[Tfn_,Temp_,argScale_:1]:=Block[{xA,xB,xData,Tmx,xmx,Tmin,eps=10^-6},
 
 (*anatomy of the interpolating function*)
@@ -1326,15 +1341,18 @@ S2Rate[dlnTdt_,d2lnTdt2_,coeffs_List,Tcrit_,Temp_]:=d2lnTdt2*dSdlnT[coeffs,Tcrit
 (*For the analytic, single-power law of the temperature, we have:*)
 (**)
 (*S_ 1(t)=(\[Gamma]/(t-t_ 0))((dS_E)/(d lnT))(T)*)
+(*S_2(t) = -(\[Gamma]/(t-t_0)^2)((dS_E)/(d lnT)) + (\[Gamma]/(t-t_ 0))^2 ((d^2S_E)/(d lnT^2))*)
 
 
-Clear[S1An,S1OfTempAn]
+Clear[S1An,S2An,S1OfTempAn,S2OfTempAn]
 
 (*analytic approximation*)
 S1An[gamma_,t0_,time_,coeffs_List,Tcrit_,Temp_]:=S1Rate[gamma/(time-t0),coeffs,Tcrit,Temp]
+S2An[gamma_,t0_,time_,coeffs_List,Tcrit_,Temp_]:=S2Rate[gamma/(time-t0),-(gamma/(time-t0)^2),coeffs,Tcrit,Temp]
 
 (*analytic approximation, as a function of temperature and not time*)
 S1OfTempAn[gamma_,t0_,tcrit_,coeffs_List,Tcrit_,Temp_]:=S1An[gamma,t0,tOfTempAn[Tcrit,tcrit,gamma,t0,Temp],coeffs,Tcrit,Temp]
+S2OfTempAn[gamma_,t0_,tcrit_,coeffs_List,Tcrit_,Temp_]:=S2An[gamma,t0,tOfTempAn[Tcrit,tcrit,gamma,t0,Temp],coeffs,Tcrit,Temp]
 
 
 (* ::Subsection:: *)
@@ -1358,16 +1376,19 @@ Clear[\[Beta]1Rate,\[Beta]2Rate]
 (* ::Text:: *)
 (*For the analytic approximation we have:*)
 (**)
-(*\[Beta](t) = \[Gamma]/(t-t0) \[Beta]bar(T).*)
+(*\[Beta]_1(t) = \[Gamma]/(t-t_0) \[Beta]bar_1(T).*)
+(*\[Beta]_2(t) = -(\[Gamma]/(t-t_0)^2) \[Beta]bar_1 + (\[Gamma]/(t-t_ 0))^2 \[Beta]bar_2*)
 
 
-Clear[beta1An,beta1OfTempAn]
+Clear[beta1An,beta2An,beta1OfTempAn,beta2OfTempAn]
 
 (*analytic approximation*)
 beta1An[gamma_,t0_,time_,coeffs_List,Tcrit_,Temp_,Kfactor_:1,full_:False]:=\[Beta]1Rate[gamma/(time-t0),coeffs,Tcrit,Temp,Kfactor,full]
+beta2An[gamma_,t0_,time_,coeffs_List,Tcrit_,Temp_,Kfactor_:1,full_:False]:=\[Beta]2Rate[gamma/(time-t0),-(gamma/(time-t0)^2),coeffs,Tcrit,Temp,Kfactor,full]
 
 (*analytic approximation, as a function of temperature and not time*)
 beta1OfTempAn[gamma_,t0_,tcrit_,coeffs_List,Tcrit_,Temp_,Kfactor_:1,full_:False]:=beta1An[gamma,t0,tOfTempAn[Tcrit,tcrit,gamma,t0,Temp],coeffs,Tcrit,Temp,Kfactor,full]
+beta2OfTempAn[gamma_,t0_,tcrit_,coeffs_List,Tcrit_,Temp_,Kfactor_:1,full_:False]:=beta2An[gamma,t0,tOfTempAn[Tcrit,tcrit,gamma,t0,Temp],coeffs,Tcrit,Temp,Kfactor,full]
 
 
 (* ::Subsection:: *)
@@ -1382,7 +1403,7 @@ beta1OfTempAn[gamma_,t0_,tcrit_,coeffs_List,Tcrit_,Temp_,Kfactor_:1,full_:False]
 
 Clear[Lmlnh]
 
-Lmlnh[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,scaleFactor_:1,Nlx_:250]:=Lmlnh[direction,vw,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,Toffset,Tofx,tScale,xmax,Tmax,TmaxFlag,xA,xB,xData,prec,Trange,xrange,scale,Lnscale,LnGammaPT,GammaPT,aofx,radius,integrand,lxTable,table,resTable,non0Tab,reg,data,res,eps=10^-6,\[CapitalDelta]lx},
+Lmlnh[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,scaleFactor_:1,Nlx_:250]:=Lmlnh[direction,vw,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,Toffset,Tofx,tScale,xmax,Tmax,TmaxFlag,xA,xB,xData,prec,Trange,xrange,scale,Lnscale,LnGammaPT,GammaPT,aofx,radius,integrand,lxTable,lxMids,table,resTable,non0Tab,reg,data,res,eps=10^-6,\[CapitalDelta]lx},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1469,11 +1490,15 @@ integrand[x_,xp_]:=xp/aofx[xp]*((4\[Pi])/3 (radius[x,xp])^3 * GammaPT[xp]);
 (*table of ln(x) values*)
 lxTable=Log[xrange[[1]]]+Table[\[CapitalDelta]lx*(i-1),{i,Nlx}];
 
+(*table of ln(x) mid-points*)
+lxMids=(lxTable[[1;;-2]]+lxTable[[2;;-1]])/2;
+
 (*table to integrate: rows (i) are x, columns (j) are xp. The function 'Outer' performs faster than 'Table'!*)
-table=Outer[integrand,Exp[lxTable],Exp[lxTable]];
+table=Outer[integrand,Exp[lxTable],Exp[lxMids]];
 
 (*integrating along xp: a simple sum of columns, for each row!*)
 resTable=\[CapitalDelta]lx*Total[table,{2}];
+Clear[table];
 
 (*selecting those that are not 0, to regularize*)
 non0Tab=Select[resTable,#!=0&];
@@ -1485,6 +1510,7 @@ resTable=If[#==0,reg,#]&/@resTable;
 
 (*data to interpolate, in log10 (which is ln/ln(10))*)
 data=Transpose[{lxTable/Log[10],Log10[resTable]}];
+Clear[resTable];
 
 (*interpolating the data*)
 res=Interpolation[data];
@@ -1509,7 +1535,7 @@ Lmlnh::NoNucleation="The nucleation rate is so small at all times ((\[CapitalGam
 
 Clear[Lnbubble]
 
-Lnbubble[LmlnhLx_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,scaleFactor_:1]:=Lnbubble[LmlnhLx,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor]=Block[{Tc=Tcrit,Tofx,tScale,scale,Lnscale,LnGammaPT,GammaPT,LxA,LxB,LxData,hofx,aofx,integrand,lxTable,table,resTable,non0Tab,reg,data,res,eps=10^-6,\[CapitalDelta]lx},
+Lnbubble[LmlnhLx_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,scaleFactor_:1]:=Lnbubble[LmlnhLx,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor]=Block[{Tc=Tcrit,Tofx,tScale,scale,Lnscale,LnGammaPT,GammaPT,LxA,LxB,LxData,hofx,aofx,integrand,lxTable,lxMids,table,resTable,non0Tab,reg,data,res,eps=10^-6,\[CapitalDelta]lx},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1549,11 +1575,15 @@ integrand[x_,xp_]:=aofx[x]^-3*xp/aofx[xp]*(GammaPT[xp]*hofx[xp])*(HeavisideTheta
 (*table of ln(x) values*)
 lxTable=(LxData*Log[10]);
 
+(*table of ln(x) mid-points*)
+lxMids=(lxTable[[1;;-2]]+lxTable[[2;;-1]])/2;
+
 (*table to integrate*)
-table=Outer[integrand,Exp[lxTable],Exp[lxTable]];
+table=Outer[integrand,Exp[lxTable],Exp[lxMids]];
 
 (*integrating along xp: a simple sum of columns, for each row!*)
 resTable=\[CapitalDelta]lx*Total[table,{2}];
+Clear[table];
 
 (*selecting those that are not 0, to regularize*)
 non0Tab=Select[resTable,#!=0&];
@@ -1565,6 +1595,7 @@ resTable=If[#==0,reg,#]&/@resTable;
 
 (*data to interpolate, in log10 (which is ln/ln(10))*)
 data=Transpose[{lxTable/Log[10],Log10[resTable]}];
+Clear[resTable];
 
 (*interpolating the data*)
 res=Interpolation[data];
@@ -1590,7 +1621,7 @@ Lnbubble::NoNucleation="The nucleation rate is so small at all times that there 
 
 Clear[LRbubble]
 
-LRbubble[LmlnhLx_,LnbLx_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,scaleFactor_:1]:=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor]=Block[{Tc=Tcrit,Tofx,tScale,scale,Lnscale,LnGammaPT,GammaPT,LxA,LxB,LxData,LnbData,hofx,aofx,radius,integrand,lxTable,table,resTable,non0Tab,reg,Lnorm,data,res,eps=10^-6,\[CapitalDelta]lx},
+LRbubble[LmlnhLx_,LnbLx_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,scaleFactor_:1]:=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor]=Block[{Tc=Tcrit,Tofx,tScale,scale,Lnscale,LnGammaPT,GammaPT,LxA,LxB,LxData,LnbData,hofx,aofx,radius,integrand,lxTable,lxMids,table,resTable,non0Tab,reg,Lnorm,data,res,eps=10^-6,\[CapitalDelta]lx},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1628,7 +1659,7 @@ hofx[xx_]:=If[(-10^LmlnhLx[Log10[xx]])>-500,Exp[-10^LmlnhLx[Log10[xx]]],0];
 radius[x_,xp_]:=If[scaleFactor===1,vw*(x-xp)*HeavisideTheta[x-xp],If[xp>=x,0,vw*NIntegrate[xx/aofx[xx],{xx,xp,x}]]];
 
 (*integrand, in ln-space*)
-integrand[x_,xp_]:=aofx[x]*xp/aofx[xp]*(GammaPT[xp]*hofx[xp]*radius[x,xp])*HeavisideTheta[x-xp];
+integrand[x_,xp_]:=aofx[x]*xp/aofx[xp]*(GammaPT[xp]*hofx[xp]*radius[x,xp]);
 
 (*differentials in ln(x), for the numerical integral*)
 \[CapitalDelta]lx=(LxData[[2]]-LxData[[1]])*Log[10];
@@ -1636,11 +1667,15 @@ integrand[x_,xp_]:=aofx[x]*xp/aofx[xp]*(GammaPT[xp]*hofx[xp]*radius[x,xp])*Heavi
 (*table of ln(x) values*)
 lxTable=(LxData*Log[10]);
 
+(*table of ln(x) mid-points*)
+lxMids=(lxTable[[1;;-2]]+lxTable[[2;;-1]])/2;
+
 (*table to integrate*)
-table=Outer[integrand,Exp[lxTable],Exp[lxTable]];
+table=Outer[integrand,Exp[lxTable],Exp[lxMids]];
 
 (*integrating along xp: a simple sum of columns, for each row!*)
 resTable=\[CapitalDelta]lx*Total[table,{2}];
+Clear[table];
 
 (*selecting those that are not 0, to regularize*)
 non0Tab=Select[resTable,#!=0&];
@@ -1655,6 +1690,7 @@ Lnorm=LnbData+3Log10[aofx[Exp[lxTable]]];
 
 (*data to interpolate, in log10 (which is ln/ln(10))*)
 data=Transpose[{lxTable/Log[10],Log10[resTable]-Lnorm}];
+Clear[resTable,LnbData,Lnorm];
 
 (*interpolating the data*)
 res=Interpolation[data];
@@ -1693,7 +1729,7 @@ NoDLogCondPT[vw_,LogGammList_List,betaList_List]:=Log10[8\[Pi]]+3Log10[vw]+LogGa
 
 Clear[tTPT]
 
-tTPT[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,method_:"analytic",Kfactor_:1,full_:False,scaleFactor_:1,Nlx_:250]:=tTPT[direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx]=Block[{gamma,t0,tcrit,Tofx,tScale,dlnTdt,xmax,Tmax,xA,xB,xData,yData,prec,\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,TmaxFlag,PTCritFlag,Toffset,Tini,TLeft,TRight,x0,xlo,xhi,xRange,xLeft,xRight,GammaPT,LogGammaPT,betaPT,cond,LogCond,noDLogCond,xpt,tpt,Tpt,result,eps=10^-6},
+tTPT[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,method_:"analytic",Kfactor_:1,full_:False,scaleFactor_:1,Nlx_:250]:=tTPT[direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx]=Block[{gamma,t0,tcrit,Tofx,tScale,dlnTdt,xmax,Tmax,xA,xB,xData,yData,prec,\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,TmaxFlag,PTCritFlag,Toffset,Tini,TLeft,TRight,x0,xlo,xhi,xRange,xLeft,xRight,GammaPT,LogGammaPT,betaPT,cond,LogCond,noDLogCond,LhLx,LnbLx,LRLx,data,xpt,tpt,Tpt,result,eps=10^-6},
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
 (*distributing the coefficients*)
@@ -1709,12 +1745,12 @@ Thi=THigh;
 (*the phase transition is either cold (subcritical) or hot (supercritical):*)
 noOption[direction,{"cold","hot"}];
 
-(*the 'method' argument is either analytic or numeric*)
-noOption[method,{"analytic","semi","numeric"}];
+(*the 'method' argument is either analytic, semi-analytic, numeric, or alternative*)
+noOption[method,{"analytic","semi","numeric","alt"}];
 
 (*checking consistency between 'method' and 'TempEvol' arguments.*)
 If[(method=="analytic")&&(Length@TempEvol)!=3,Message[tTPT::AnalyticTempEvolError];Abort[]];
-If[((method=="semi")||(method=="numeric"))&&(Length@TempEvol)!=2,Message[tTPT::NumericTempEvolError];Abort[]];
+If[((method=="semi")||(method=="numeric")||(method=="alt"))&&(Length@TempEvol)!=2,Message[tTPT::NumericTempEvolError];Abort[]];
 
 (*temperature offset from T_c depending on direction*)
 Toffset=Tc*(1+eps*If[direction=="cold",-1,+1]);
@@ -1761,7 +1797,7 @@ tpt=tOfTempAn[Tc,tcrit,gamma,t0,Tpt];
 If[IntervalMemberQ[Interval[{Tlo,Thi}],Tpt]==False,Message[tTPT::NoTpt, Tpt,{Tlo,Thi}];Abort[],result={tpt,Tpt}];
 ];
 
-(*routine for numeric approximation method*)
+(*routine for semi-analytic method*)
 If[method=="semi",
 (*NOTE: the crucial object for the 'numeric' method is T(t), the temperature as a function of time. However, the only purpose of the time t here is to serve as a parameter or variable with which the temperature evolves. It does *not* matter what its absolute scale or dimensions are. This is useful, since in our reheating code we will use x=t*H_d as our variable. In other words, tScale = 1/H_d.*)
 
@@ -1818,10 +1854,10 @@ noDLogCond[xx_?NumericQ]:=NoDLogCondPT[vw,{LogGammaPT[xx],Tc},{betaPT[xx],1/tSca
 
 (*checking whether the PT finished immediately after T_c*)
 PTCritFlag = (noDLogCond[xLeft]>0);
-If[(PTCritFlag == True),Message[tTPT::ApproxCritPT,direction,Tc,xLeft,xLeft*tScale,Tofx[xLeft],noDLogCond[xLeft]]];
+If[(PTCritFlag == True),Message[tTPT::SemiCritPT,direction,Tc,xLeft,xLeft*tScale,Tofx[xLeft],noDLogCond[xLeft]]];
 
 (*checking whether the PT completes at all*)
-If[(PTCritFlag == False) && (noDLogCond[xLeft]*noDLogCond[xRight]>0),Message[tTPT::ApproxUnfinishedPT,direction,xLeft,xLeft*tScale,Tofx[xLeft],noDLogCond[xLeft],xRight,xRight*tScale,Tofx[xRight],noDLogCond[xRight]];Abort[]];
+If[(PTCritFlag == False) && (noDLogCond[xLeft]*noDLogCond[xRight]>0),Message[tTPT::SemiUnfinishedPT,direction,xLeft,xLeft*tScale,Tofx[xLeft],noDLogCond[xLeft],xRight,xRight*tScale,Tofx[xRight],noDLogCond[xRight]];Abort[]];
 
 (*solving for t_PT (using the pre-calculated log of the PT condition)*)
 xpt=If[(PTCritFlag == True),xLeft,10^(Lx/.FindRoot[noDLogCond[10^Lx],{Lx,Log10[x0],Log10[xLeft],Log10[xRight]},MaxIterations->10^6,AccuracyGoal->6,PrecisionGoal->4]//Quiet)];
@@ -1869,12 +1905,12 @@ xRight=xRange[[2]];
 
 (*checking whether the PT finished immediately after Tc*)
 PTCritFlag = (LogCond[Log10[xLeft]]>0);
-If[(PTCritFlag == True),Message[tTPT::FullCritPT,direction,Tc,xLeft,xLeft*tScale,Tofx[xLeft],LogCond[Log10[xLeft]]]];
+If[(PTCritFlag == True),Message[tTPT::NumericCritPT,direction,Tc,xLeft,xLeft*tScale,Tofx[xLeft],LogCond[Log10[xLeft]]]];
 
 (*checking whether the PT completes at all*)
-If[(PTCritFlag == False) && (direction == "cold") && (LogCond[Log10[xLeft]]*LogCond[Log10[xRight]]>0),Message[tTPT::FullUnfinishedCoolPT,direction,xLeft,xLeft*tScale,Tofx[xLeft],LogCond[Log10[xLeft]],xRight,xRight*tScale,Tofx[xRight],LogCond[Log10[xRight]]];Abort[]];
-If[(PTCritFlag == False) && (direction == "hot") &&(TmaxFlag == True) && (LogCond[Log10[xLeft]]*LogCond[Log10[xRight]]>0),Message[tTPT::FullUnfinishedBoilPT1,direction,xLeft,xLeft*tScale,Tofx[xLeft],LogCond[Log10[xLeft]],xRight,xRight*tScale,Tofx[xRight],LogCond[Log10[xRight]]];Abort[]];
-If[(PTCritFlag == False) && (direction == "hot") &&(TmaxFlag == False) && (LogCond[Log10[xLeft]]*LogCond[Log10[xRight]]>0),Message[tTPT::FullUnfinishedBoilPT2,direction,xLeft,xLeft*tScale,Tofx[xLeft],LogCond[Log10[xLeft]],xRight,xRight*tScale,Tofx[xRight],LogCond[Log10[xRight]]];Abort[]];
+If[(PTCritFlag == False) && (direction == "cold") && (LogCond[Log10[xLeft]]*LogCond[Log10[xRight]]>0),Message[tTPT::NumericUnfinishedColdPT,direction,xLeft,xLeft*tScale,Tofx[xLeft],LogCond[Log10[xLeft]],xRight,xRight*tScale,Tofx[xRight],LogCond[Log10[xRight]]];Abort[]];
+If[(PTCritFlag == False) && (direction == "hot") &&(TmaxFlag == True) && (LogCond[Log10[xLeft]]*LogCond[Log10[xRight]]>0),Message[tTPT::NumericUnfinishedHotPT1,direction,xLeft,xLeft*tScale,Tofx[xLeft],LogCond[Log10[xLeft]],xRight,xRight*tScale,Tofx[xRight],LogCond[Log10[xRight]]];Abort[]];
+If[(PTCritFlag == False) && (direction == "hot") &&(TmaxFlag == False) && (LogCond[Log10[xLeft]]*LogCond[Log10[xRight]]>0),Message[tTPT::NumericUnfinishedHotPT2,direction,xLeft,xLeft*tScale,Tofx[xLeft],LogCond[Log10[xLeft]],xRight,xRight*tScale,Tofx[xRight],LogCond[Log10[xRight]]];Abort[]];
 
 (*the initial guess for the PT time*)
 If[(Length@yData != Length@xData),
@@ -1900,22 +1936,103 @@ Tpt=Tofx[xpt];
 If[IntervalMemberQ[Interval[{Tlo,Thi}],Tpt]==False,Message[TPT::NoTpt, Tpt,{Tlo,Thi}];Abort[],result={tpt,Tpt}];
 ];
 
+(*routine for alternative method*)
+If[method=="alt",
+(*NOTE: the crucial object for the 'numeric' method is T(t), the temperature as a function of time. However, the only purpose of the time t here is to serve as a parameter or variable with which the temperature evolves. It does *not* matter what its absolute scale or dimensions are. This is useful, since in our reheating code we will use x=t*H_d as our variable. In other words, tScale = 1/H_d.*)
+
+(*T(x), t/x*)
+{Tofx,tScale}=TempEvol;
+
+(*anatomy of the interpolating function*)
+{xA,xB}=(InterpolatingFunctionDomain[Tofx]//Flatten);
+xData=(InterpolatingFunctionCoordinates[Tofx]//Flatten);
+prec=Round[Precision[xData[[1]]]];
+
+(*slightly away from the edges*)
+xA=If[xA<=0,eps,Min[xData[[2]],xA*(1+eps)]];
+Clear[xData];
+
+(*time t at which T(t) reaches a maximum*)
+{xmax,Tmax}=tTMax[Tofx,1];
+
+(*correcting Thi in case this corresponds to a non-existent temperature (because the spinodal temperature never disappears!)*)
+Thi=If[(Im[Thi]!=0)||(Thi===ComplexInfinity),Tmax*2,Thi];
+
+(*whether Tmax is in the interval of temperatures for which we computed the critical bubbles*)
+TmaxFlag=IntervalMemberQ[Interval[{Tlo,Thi}],Tmax];
+
+(*computing log10(-ln h(log10 x))*)
+LhLx=Lmlnh[direction,vw,TempEvol,coeffs,Tc,Kfactor,full,scaleFactor,Nlx];
+
+(*computing log10(n_b(log10 x))*)
+LnbLx=Lnbubble[LhLx,TempEvol,coeffs,Tc,Kfactor,full,scaleFactor];
+
+(*computing log10(\[LeftAngleBracket]R(log10 x)\[RightAngleBracket])*)
+LRLx=LRbubble[LhLx,LnbLx,vw,TempEvol,coeffs,Tc,Kfactor,full,scaleFactor];
+
+(*computing the PT condition: log10 R_b - log10\[LeftAngleBracket]R\[RightAngleBracket], where R_b\[Congruent]n_b^(-1/3)*)
+xData=(InterpolatingFunctionCoordinates[LnbLx]//Flatten);
+yData=(-(1/3)(InterpolatingFunctionValuesOnGrid[LnbLx]//Flatten))-(InterpolatingFunctionValuesOnGrid[LRLx]//Flatten);
+data=Transpose[{xData,yData}];
+
+LogCond=Interpolation[data];
+Clear[LhLx,LnbLx,LRLx,xData,yData,data];
+
+(*the time range, slightly offset from the edges*)
+xRange=10^(InterpolatingFunctionDomain[LogCond]//Flatten);
+xLeft=xRange[[1]];
+xRight=xRange[[2]];
+
+(*checking whether the PT finished immediately after Tc*)
+PTCritFlag = (LogCond[Log10[xLeft]]<0);
+If[(PTCritFlag == True),Message[tTPT::AltCritPT,direction,Tc,xLeft,xLeft*tScale,Tofx[xLeft],LogCond[Log10[xLeft]]]];
+
+(*checking whether the PT completes at all*)
+If[(PTCritFlag == False) && (direction == "cold") && (LogCond[Log10[xLeft]]*LogCond[Log10[xRight]]>0),Message[tTPT::AltUnfinishedColdPT,direction,xLeft,xLeft*tScale,Tofx[xLeft],LogCond[Log10[xLeft]],xRight,xRight*tScale,Tofx[xRight],LogCond[Log10[xRight]]];Abort[]];
+If[(PTCritFlag == False) && (direction == "hot") &&(TmaxFlag == True) && (LogCond[Log10[xLeft]]*LogCond[Log10[xRight]]>0),Message[tTPT::AltUnfinishedHotPT1,direction,xLeft,xLeft*tScale,Tofx[xLeft],LogCond[Log10[xLeft]],xRight,xRight*tScale,Tofx[xRight],LogCond[Log10[xRight]]];Abort[]];
+If[(PTCritFlag == False) && (direction == "hot") &&(TmaxFlag == False) && (LogCond[Log10[xLeft]]*LogCond[Log10[xRight]]>0),Message[tTPT::AltUnfinishedHotPT2,direction,xLeft,xLeft*tScale,Tofx[xLeft],LogCond[Log10[xLeft]],xRight,xRight*tScale,Tofx[xRight],LogCond[Log10[xRight]]];Abort[]];
+
+(*the initial guess for the PT time*)
+xData=(InterpolatingFunctionCoordinates[LogCond]//Flatten);
+yData=(InterpolatingFunctionValuesOnGrid[LogCond]//Flatten);
+
+yData=Abs[yData];
+x0=(Position[yData,Min[yData]]//Flatten)[[1]];
+x0=10^xData[[x0]];
+
+Clear[xData,yData];
+
+(*solving for t_PT (using the pre-calculated log of the PT condition)*)
+xpt=If[(PTCritFlag == True),xLeft,10^(Lx/.FindRoot[LogCond[Lx],{Lx,Log10[x0],Log10[xLeft],Log10[xRight]},MaxIterations->10^6,WorkingPrecision->prec,AccuracyGoal->6,PrecisionGoal->4])];
+tpt=xpt*tScale;
+
+(*T_PT*)
+Tpt=Tofx[xpt];
+
+If[IntervalMemberQ[Interval[{Tlo,Thi}],Tpt]==False,Message[TPT::NoTpt, Tpt,{Tlo,Thi}];Abort[],result={tpt,Tpt}];
+];
+
 result
 ]
 
 tTPT::AnalyticTempEvolError="If you pass 'method'=='analytic', then argument 'TempEvol' should be {gamma, t0, tcrit}: a list with three elements: the power-law behavior of the temperature T as a function of time t, some reference time \!\(\*SubscriptBox[\(t\), \(0\)]\) at which the temperature vanishes, and the critical time.";
-tTPT::NumericTempEvolError="If you pass 'method'=='semi'/'numeric', then argument 'TempEvol' should be {Tofx, tScale}: a list with only two elements: the temperature as a function of a time-like parameter x, T(x), and the time-scale given by the ratio t/x.";
+tTPT::NumericTempEvolError="If you pass 'method'=='semi'/'numeric'/'alt', then argument 'TempEvol' should be {Tofx, tScale}: a list with only two elements: the temperature as a function of a time-like parameter x, T(x), and the time-scale given by the ratio t/x.";
 
 tTPT::AnalyticCritPT="The condition for the completion of the `1` Phase Transition was satisfied immediately after the critical temperature Tc=`2`: Toffset=`3`, \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`4`. This is a very fast PT and quantities such as \[Beta] should not be trusted. We will nevertheless proceed as if this was when the PT finished.";
 tTPT::AnalyticUnfinishedPT="The condition for the completion of the `1` Phase Transition cannot be satisfied: at T=`2` the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`3`, while at T=`4` the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`5`: the function never crosses 0.";
 
-tTPT::ApproxCritPT="The condition for the completion of the `1` Phase Transition was satisfied immediately after the critical temperature Tc=`2`: at xLeft=`3` (tLeft=`4`) with T=`5`, \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`6`. This is a very fast PT and quantities such as \[Beta] should not be trusted. We will nevertheless proceed as if this was when the PT finished.";
-tTPT::ApproxUnfinishedPT="The condition for the completion of the `1` Phase Transition cannot be satisfied: at x=`2` (t=`3`, T=`4`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`5`, while at x=`6` (t=`7`, T=`8`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`9`: the function, which is monotonic in x, never crosses 0.";
+tTPT::SemiCritPT="The condition for the completion of the `1` Phase Transition was satisfied immediately after the critical temperature Tc=`2`: at xLeft=`3` (tLeft=`4`) with T=`5`, \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`6`. This is a very fast PT and quantities such as \[Beta] should not be trusted. We will nevertheless proceed as if this was when the PT finished.";
+tTPT::SemiUnfinishedPT="The condition for the completion of the `1` Phase Transition cannot be satisfied: at x=`2` (t=`3`, T=`4`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`5`, while at x=`6` (t=`7`, T=`8`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`9`: the function, which is monotonic in x, never crosses 0.";
 
-tTPT::FullCritPT="The condition for the completion of the `1` Phase Transition was satisfied immediately after the critical temperature Tc=`2`: at xLeft=`3` (tLeft=`4`) with T=`5`, \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`6`. This is a very fast PT and quantities such as \[Beta] should not be trusted. We will nevertheless proceed as if this was when the PT finished.";
-tTPT::FullUnfinishedCoolPT="The condition for the completion of the `1` Phase Transition cannot be satisfied: at x=`2` (t=`3`, T=`4`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`5`, while at x=`6` (t=`7`, T=`8`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`9`: the function, which is monotonic in x, never crosses 0.";
-tTPT::FullUnfinishedBoilPT1="The condition for the completion of the `1` Phase Transition cannot be satisfied between the two times at which the critical temperature is reached: at x=`2` (t=`3`, T=`4`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`5`, while at x=`6` (t=`7`, T=`8`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`9`: the function, which is monotonic in x, never crosses 0. In other words, the PT does not finish by the time the temperature drops below its critical value again.";
-tTPT::FullUnfinishedBoilPT2="The condition for the completion of the `1` Phase Transition cannot be satisfied between the times at which the critical and the spinodal temperatures are reached: at x=`2` (t=`3`, T=`4`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`5`, while at x=`6` (t=`7`, T=`8`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`9`: the function, which is monotonic in x, never crosses 0. In other words, the PT does not finish by the time the spinodal temperature is reached, and the broken minimum disappears, leading to a rolling transition.";
+tTPT::NumericCritPT="The condition for the completion of the `1` Phase Transition was satisfied immediately after the critical temperature Tc=`2`: at xLeft=`3` (tLeft=`4`) with T=`5`, \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`6`. This is a very fast PT and quantities such as \[Beta] should not be trusted. We will nevertheless proceed as if this was when the PT finished.";
+tTPT::NumericUnfinishedColdPT="The condition for the completion of the `1` Phase Transition cannot be satisfied: at x=`2` (t=`3`, T=`4`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`5`, while at x=`6` (t=`7`, T=`8`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`9`: the function, which is monotonic in x, never crosses 0.";
+tTPT::NumericUnfinishedHotPT1="The condition for the completion of the `1` Phase Transition cannot be satisfied between the two times at which the critical temperature is reached: at x=`2` (t=`3`, T=`4`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`5`, while at x=`6` (t=`7`, T=`8`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`9`: the function, which is monotonic in x, never crosses 0. In other words, the PT does not finish by the time the temperature drops below its critical value again.";
+tTPT::NumericUnfinishedHotPT2="The condition for the completion of the `1` Phase Transition cannot be satisfied between the times at which the critical and the spinodal temperatures are reached: at x=`2` (t=`3`, T=`4`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`5`, while at x=`6` (t=`7`, T=`8`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`9`: the function, which is monotonic in x, never crosses 0. In other words, the PT does not finish by the time the spinodal temperature is reached, and the broken minimum disappears, leading to a rolling transition.";
+
+tTPT::AltCritPT="The condition for the completion of the `1` Phase Transition was satisfied immediately after the critical temperature Tc=`2`: at xLeft=`3` (tLeft=`4`) with T=`5`, \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`6`. This is a very fast PT and quantities such as \[Beta] should not be trusted. We will nevertheless proceed as if this was when the PT finished.";
+tTPT::AltUnfinishedColdPT="The condition for the completion of the `1` Phase Transition cannot be satisfied: at x=`2` (t=`3`, T=`4`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`5`, while at x=`6` (t=`7`, T=`8`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`9`: the function, which is monotonic in x, never crosses 0.";
+tTPT::AltUnfinishedHotPT1="The condition for the completion of the `1` Phase Transition cannot be satisfied between the two times at which the critical temperature is reached: at x=`2` (t=`3`, T=`4`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`5`, while at x=`6` (t=`7`, T=`8`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`9`: the function, which is monotonic in x, never crosses 0. In other words, the PT does not finish by the time the temperature drops below its critical value again.";
+tTPT::AltUnfinishedHotPT2="The condition for the completion of the `1` Phase Transition cannot be satisfied between the times at which the critical and the spinodal temperatures are reached: at x=`2` (t=`3`, T=`4`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`5`, while at x=`6` (t=`7`, T=`8`) the \!\(\*SubscriptBox[\(log\), \(10\)]\)(cond.)=`9`: the function, which is monotonic in x, never crosses 0. In other words, the PT does not finish by the time the spinodal temperature is reached, and the broken minimum disappears, leading to a rolling transition.";
 
 tTPT::NoTpt="Tpt=`1` is outside the interval `2`. In other words, the PT could not finish before the radiation cooled-down/heated-up beyond this interval.";
 
@@ -1932,6 +2049,7 @@ tTPT::NoTpt="Tpt=`1` is outside the interval `2`. In other words, the PT could n
 (*If method="analytic"\[Implies]{Temperature Evolution}={\[Gamma], t_0, t_c}*)
 (*If method="semi"\[Implies]{Temperature Evolution}={T(x), t_scale}*)
 (*If method="numeric"\[Implies]{Temperature Evolution}={T(x), t_scale}*)
+(*If method="alt"\[Implies]{Temperature Evolution}={T(x), t_scale}*)
 (**)
 (*Recall that:*)
 (**)
@@ -1987,7 +2105,7 @@ SE=SETemp[coeffs,Tc,Tpt];
 SE1=If[method=="analytic",S1OfTempAn[gamma,t0,tcrit,coeffs,Tc,Tpt],S1Rate[dlnTdt[tpt],coeffs,Tc,Tpt]];
 
 (*S_E''*)
-SE2=If[method=="analytic",Null,S2Rate[dlnTdt[tpt],d2lnTdt2[tpt],coeffs,Tc,Tpt]];
+SE2=If[method=="analytic",S2OfTempAn[gamma,t0,tcrit,coeffs,Tc,Tpt],S2Rate[dlnTdt[tpt],d2lnTdt2[tpt],coeffs,Tc,Tpt]];
 
 (*\[CapitalGamma]_nucl/\[ScriptCapitalV]*)
 GammaNucl=\[CapitalGamma]nucl[coeffs,Tc,Tpt,Kfactor,full];
@@ -1996,12 +2114,12 @@ GammaNucl=\[CapitalGamma]nucl[coeffs,Tc,Tpt,Kfactor,full];
 beta1Rate=If[method=="analytic",beta1OfTempAn[gamma,t0,tcrit,coeffs,Tc,Tpt,Kfactor,full],\[Beta]1Rate[dlnTdt[tpt],coeffs,Tc,Tpt,Kfactor,full]];
 
 (*\[Beta]_2*)
-beta2Rate=If[method=="analytic",Null,\[Beta]2Rate[dlnTdt[tpt],d2lnTdt2[tpt],coeffs,Tc,Tpt,Kfactor,full]];
+beta2Rate=If[method=="analytic",beta2OfTempAn[gamma,t0,tcrit,coeffs,Tc,Tpt,Kfactor,full],\[Beta]2Rate[dlnTdt[tpt],d2lnTdt2[tpt],coeffs,Tc,Tpt,Kfactor,full]];
 
-If[method!="numeric",
+If[MemberQ[{"analytic","semi"},method],
 nbPT=(beta1Rate^3/(8\[Pi]*vw^3));
 RPT=nbPT^(-1/3);
-Ravg=Null;
+Ravg=vw*(tpt-tcrit);
 betaEff=(8\[Pi]*vw^3*nbPT)^(1/3),
 
 LmlnhLx=Lmlnh[direction,vw,TempEvol,coeffs,Tc,Kfactor,full,scaleFactor,Nlx];
