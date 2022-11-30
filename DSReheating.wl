@@ -6,7 +6,8 @@ BeginPackage["DSReheating`"];
 solEqs::usage="solEqs: solutions to the reheating equations, interpolated as functions of (dimensionless) time.\nInput: (\[Gamma],w\[Phi],xLarge,prec,accu).\nOutput: {\!\(\*SubscriptBox[\(r\), \(\[Phi]\)]\), \!\(\*SubscriptBox[\(r\), \(r\)]\)}";
 hub::usage="hub: the dimensionless hubble expansion rate, as a function of (dimensionless) time.\nInput: (x).\nOutput: h(x)";
 TOfx::usage="TOfx: dark sector temperature interpolated as a function of (dimensionless) time/\nInput: (\[Gamma],\!\(\*SubscriptBox[\(g\), \(*\)]\),\!\(\*SubscriptBox[\(H\), \(i\)]\),w\[Phi],xLarge,prec,accu).\nOutput: T";
-aOfx::usafe="aOfx: function to compute scale factor\nInput: (\[Gamma], \!\(\*SubscriptBox[\(g\), \(*\)]\), \!\(\*SubscriptBox[\(H\), \(i\)]\), \!\(\*SubscriptBox[\(a\), \(ini\)]\), w\[Phi], xLarge, prec, accu).\nOutput: a";
+aOfx::usage="aOfx: function to compute scale factor\nInput: (\[Gamma], \!\(\*SubscriptBox[\(a\), \(ini\)]\), w\[Phi], xLarge, prec, accu).\nOutput: a";
+tauOfx::usage="tauOfx: function to compute comoving time\nInput: (\[Gamma], \!\(\*SubscriptBox[\(t\), \(scale\)]\), \!\(\*SubscriptBox[\(a\), \(ini\)]\), w\[Phi], xLarge, prec, accu).\nOutput: \[Tau]";
 redshift::usage="redshift: function to compute the redshift \!\(\*SubscriptBox[\(z\), \(*\)]\)+1 from today to an arbitrary point \!\(\*SubscriptBox[\(x\), \(*\)]\) in the past during reheating.\nInput: (\[Gamma],\!\(\*SubscriptBox[\(g\), \(*\)]\),\!\(\*SubscriptBox[\(H\), \(i\)]\),xRange,instant,g\!\(\*SubscriptBox[\('\), \(IR\)]\),\!\(\*SubscriptBox[\(\[Xi]\), \(IR\)]\),\!\(\*SubscriptBox[\(T\), \(IR\)]\),w\[Phi],xLarge,prec,accu,debug).\nOutput: \!\(\*SubscriptBox[\(z\), \(*\)]\)+1=\!\(\*SubsuperscriptBox[\(a\), \(*\), \(-1\)]\)";
 xCross::usage="xCross: function to compute the two crossing times at which the DS temperature reaches certain value \!\(\*SubscriptBox[\(T\), \(*\)]\), as well as the time at which it reaches the maximum temperature.\nInput: (\[Gamma],\!\(\*SubscriptBox[\(r\), \(r, c\)]\),w\[Phi],xLarge,prec,accu).\nOutput: {\!\(\*SubscriptBox[\(x\), \(c1\)]\),\!\(\*SubscriptBox[\(x\), \(max\)]\),\!\(\*SubscriptBox[\(x\), \(c2\)]\)}";
 gammaRate::usage="gammaRate: function to compute the log derivagive of the dark sector temperature at some time \!\(\*SubscriptBox[\(x\), \(*\)]\).\nInput: (\[Gamma],\!\(\*SubscriptBox[\(x\), \(*\)]\),w\[Phi],\[Delta],xLarge,prec,accu).\nOutput: \!\(\*FractionBox[\(d\\\ ln\\\ T\), \(d\\\ ln\\\ x\)]\)(\!\(\*SubscriptBox[\(x\), \(*\)]\))";
@@ -123,7 +124,7 @@ gsFn[T_]:=Which[T<gsDomain[[1]],gs0,T<=gsDomain[[2]],gsInt[T],T>gsDomain[[2]],gS
 (*H_d\[Congruent]Sqrt[\[Rho]_\[Phi]d/(3 m_Pl^2)]*)
 (*r\[Congruent]\[Rho]/\[Rho]_\[Phi]d*)
 (*h\[Congruent]H/H_d=Sqrt[r_\[Phi]+r_r]*)
-(*Subscript[\[Gamma], d]\[Congruent]\[CapitalGamma]/H_d*)
+(*\[Gamma]_d\[Congruent]\[CapitalGamma]/H_d*)
 (**)
 (*with m_Pl being the reduced Planck mass: m_Pl\[Congruent]M_Pl/Sqrt[8\[Pi]].*)
 (**)
@@ -134,10 +135,8 @@ gsFn[T_]:=Which[T<gsDomain[[1]],gs0,T<=gsDomain[[2]],gsInt[T],T>gsDomain[[2]],gS
 (*x(y) = \[Integral]_y_i^y  dy'/h(y')*)
 (**)
 (*where y=y_i corresponds to an initial scale factor a_i<<a_d. Note in particular that x(y=a)=H_dt(a_d)=H_d t_d is not necessarily equal to 1. This is because in the inverse of the Hubble expansion is not in general equal to time!*)
-
-
-(* ::Text:: *)
-(*Defining A_\[Rho]\[Congruent](\[Pi]^2 g'_*)/30 then \[Rho]_r=A_\[Rho] T^4.*)
+(**)
+(*Defining A_\[Rho]\[Congruent](\[Pi]^2 g'_* )/30 then \[Rho]_r=A_\[Rho] T^4.*)
 (**)
 (*We can also define the factor f: \[Rho]_\[Phi]d\[Congruent]f^4 \[Rho]_rc, i.e. the initial \[Rho]_\[Phi] in terms of \[Rho]_r at the critical temperature. Thus, H_d=f^4 \[Rho]_rc/(3 m_Pl^2) and, since \[Rho]_\[Phi]>\[Rho]_r for all times:*)
 (*\[Rho]_\[Phi]>\[Rho]_r \[Implies] f^4 \[Rho]_rc=f^4 A_\[Rho] T_c^4 > A_\[Rho] T^4\[Implies]f>T/T_c, and in particular f>1.*)
@@ -159,6 +158,17 @@ gsFn[T_]:=Which[T<gsDomain[[1]],gs0,T<=gsDomain[[2]],gsInt[T],T>gsDomain[[2]],gS
 
 Clear[xOfa]
 xOfa[wfi_,aa_]:=Block[{w\[Phi]=wfi,a=aa},(2 a^((3 (1+w\[Phi]))/2))/(3 (1+w\[Phi]))]
+
+
+(* ::Text:: *)
+(*The (dimensionless) comoving time \[Tau]bar during reheaton domination, from x=0 to x(a=1):*)
+(**)
+(*\[Tau]bar_i\[Congruent]\[Integral]_0^x(a=1)  dx'/a(x').*)
+
+
+Clear[taubarini]
+
+taubarini[wfi_]:=Block[{w\[Phi]=wfi},2/(1+3 w\[Phi])]
 
 
 (* ::Subsection:: *)
@@ -215,7 +225,7 @@ res
 
 
 (* ::Text:: *)
-(*Computing the temperature as a function of time, assuming a certain Hubble scale Subscript[H, i] and a certain number of degrees of freedom SubStar[g].*)
+(*Computing the temperature as a function of time, assuming a certain Hubble scale H_scale and a certain number of degrees of freedom g_*.*)
 
 
 Clear[TOfx]
@@ -243,12 +253,12 @@ Tfnx
 
 
 (* ::Text:: *)
-(*Computing the scale factor as a function of time, assuming a certain Hubble scale H_i and a certain number of degrees of freedom g_*.*)
+(*Computing the scale factor as a function of time.*)
 
 
 Clear[aOfx]
 
-aOfx[gg_?NumberQ,gs_,aini_:1,wf_:0,xLarge_:10^3,prec_:30,accu_:20]:=aOfx[gg,gs,aini,wf,xLarge,prec,accu]=Block[{gstar=gs,w\[Phi]=wf,r\[Phi],rr,domain,xData,efolds,yData,data,afnx},
+aOfx[gg_?NumberQ,aini_:1,wf_:0,xLarge_:10^3,prec_:30,accu_:20]:=aOfx[gg,aini,wf,xLarge,prec,accu]=Block[{w\[Phi]=wf,r\[Phi],rr,domain,xData,efolds,yData,data,afnx},
 
 (*solving the reheating equations*)
 {r\[Phi],rr}=solEqs[gg,wf,xLarge,prec,accu];
@@ -276,6 +286,45 @@ afnx
 
 
 (* ::Subsection:: *)
+(*Comoving time \[Tau](x)*)
+
+
+(* ::Text:: *)
+(*Computing the comoving time since x_i, with a given timescale t_scale:*)
+(**)
+(*\[Tau](x)-\[Tau]_i = t_scale*\[Integral]_x_i^x dx'/a(x').*)
+
+
+Clear[tauOfx]
+
+tauOfx[gg_?NumberQ,tscale_:1,aini_:1,wf_:0,xLarge_:10^3,prec_:30,accu_:20]:=tauOfx[gg,tscale,aini,wf,xLarge,prec,accu]=Block[{w\[Phi]=wf,ax,domain,xData,tau,yData,data,taufnx},
+
+(*finding the scale factor a(x)*)
+ax=aOfx[gg,aini,wf,xLarge,prec,accu];
+
+(*interpolation function properties*)
+domain=(InterpolatingFunctionDomain[ax]//Flatten);
+xData=(InterpolatingFunctionCoordinates[ax]//Flatten);
+
+(*comoving time difference function*)
+tau[1]=0;
+tau[i_]:=tau[i]=tau[i-1]+NIntegrate[ax[xx]^-1,{xx,xData[[i-1]],xData[[i]]}];
+
+(*computing the comoving time difference*)
+yData=Monitor[Table[tau[i],{i,xData//Length}],ProgressIndicator[i,{1,xData//Length}]];
+
+(*adding initial comoving time and putting in the timescale*)
+yData=tscale*(taubarini[w\[Phi]]+yData);
+
+(*final data & interpolation*)
+data={xData,yData}//Transpose;
+taufnx=Interpolation[data];
+
+taufnx
+]
+
+
+(* ::Subsection:: *)
 (*Redshift*)
 
 
@@ -296,7 +345,7 @@ Clear[redshift]
 
 redshift[gg_?NumberQ,gs_,Hscale_,xRange_List,instant_,gdIR_:0,xiIR_:0,TIR_:10^3,wf_:0,xLarge_:10^3,prec_:30,accu_:20,debug_:False]:=redshift[gg,gs,Hscale,xRange,instant,gdIR,xiIR,TIR,wf,xLarge,prec,accu,debug]=Block[{gstar=gs,Hi=Hscale,w\[Phi]=wf,xStar,xm,r\[Phi],rr,efolds,Tdm,gIR,Gfactor,Z1,Z2,Z3,res},
 
-(*the time-range between GW production (x_*) and an arbitrary point during DS-RD era (x_m)*)
+(*the time-range between GW production at time x_*, and an arbitrary point during DS-RD era (x_m)*)
 {xStar,xm}=xRange;
 
 (*computing the efolds between x_* and x_m*)

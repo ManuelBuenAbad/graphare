@@ -1403,7 +1403,7 @@ beta2OfTempAn[gamma_,t0_,tcrit_,coeffs_List,Tcrit_,Temp_,Kfactor_:1,full_:False]
 
 Clear[Lmlnh]
 
-Lmlnh[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,scaleFactor_:1,Nlx_:250]:=Lmlnh[direction,vw,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,Toffset,Tofx,tScale,xmax,Tmax,TmaxFlag,xA,xB,xData,prec,Trange,xrange,scale,Lnscale,LnGammaPT,GammaPT,aofx,radius,integrand,lxTable,lxMids,table,resTable,non0Tab,reg,data,res,eps=10^-6,\[CapitalDelta]lx},
+Lmlnh[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=Lmlnh[direction,vw,TempEvol,coeffs,Tcrit,Kfactor,full,atau,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,Toffset,Tofx,tScale,xmax,Tmax,TmaxFlag,xA,xB,xData,prec,Trange,xrange,scaleFactor,comovingTime,aofx,tauofx,scale,Lnscale,LnGammaPT,GammaPT,radius,integrand,lxTable,lxMids,table,resTable,non0Tab,reg,data,res,eps=10^-6,\[CapitalDelta]lx},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1464,8 +1464,14 @@ If[direction=="hot",{xrange[[1]]*(1+eps),xrange[[2]]*(1-eps)},{xrange[[1]]*(1+ep
 If[direction=="hot",{xrange[[1]]*(1+eps),xrange[[2]]},{xrange[[1]]*(1+eps),xrange[[2]]}]
 ];
 
+(*scale factor and comoving time*)
+{scaleFactor,comovingTime}=atau;
+
 (*scale factor*)
 aofx[xx_]:=If[scaleFactor===1,1,scaleFactor[xx]];
+
+(*comoving time*)
+tauofx[xx_]:=If[comovingTime===1,xx,comovingTime[xx]];
 
 (*overall scale of integral: scale^4*)
 scale=Tc*tScale;
@@ -1479,7 +1485,7 @@ LnGammaPT[xx_]:=\[CapitalGamma]nucl[coeffs,1,Tofx[xx]/Tc,Kfactor,full,True]*Log[
 GammaPT[xx_]:=If[(LnGammaPT[xx]+4*Lnscale)>-500,aofx[xx]^4*Exp[LnGammaPT[xx]+4*Lnscale],0];
 
 (*dimensionless (comoving) bubble radius: w/ or w/o scale factor*)
-radius[x_,xp_]:=If[scaleFactor===1,vw*(x-xp)*HeavisideTheta[x-xp],If[xp>=x,0,vw*NIntegrate[xx/aofx[xx],{xx,xp,x}]]];
+radius[x_,xp_]:=vw*(tauofx[x]-tauofx[xp])*HeavisideTheta[x-xp];
 
 (*integrand, in ln-space*)
 integrand[x_,xp_]:=xp/aofx[xp]*((4\[Pi])/3 (radius[x,xp])^3 * GammaPT[xp]);
@@ -1535,7 +1541,7 @@ Lmlnh::NoNucleation="The nucleation rate is so small at all times ((\[CapitalGam
 
 Clear[Lnbubble]
 
-Lnbubble[LmlnhLx_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,scaleFactor_:1]:=Lnbubble[LmlnhLx,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor]=Block[{Tc=Tcrit,Tofx,tScale,scale,Lnscale,LnGammaPT,GammaPT,LxA,LxB,LxData,hofx,aofx,integrand,lxTable,lxMids,table,resTable,non0Tab,reg,data,res,eps=10^-6,\[CapitalDelta]lx},
+Lnbubble[LmlnhLx_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1}]:=Lnbubble[LmlnhLx,TempEvol,coeffs,Tcrit,Kfactor,full,atau]=Block[{Tc=Tcrit,Tofx,tScale,scaleFactor,comovingTime,aofx,tauofx,scale,Lnscale,LnGammaPT,GammaPT,LxA,LxB,LxData,hofx,integrand,lxTable,lxMids,table,resTable,non0Tab,reg,data,res,eps=10^-6,\[CapitalDelta]lx},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1545,8 +1551,14 @@ If[(Length@TempEvol)!=2,Message[Lnbubble::TempEvolError];Abort[]];
 (*T(x), t/x*)
 {Tofx,tScale}=TempEvol;
 
+(*scale factor and comoving time*)
+{scaleFactor,comovingTime}=atau;
+
 (*scale factor*)
 aofx[xx_]:=If[scaleFactor===1,1,scaleFactor[xx]];
+
+(*comoving time*)
+tauofx[xx_]:=If[comovingTime===1,xx,comovingTime[xx]];
 
 (*overall scale of the result*)
 scale=Tc^4*tScale;
@@ -1621,7 +1633,7 @@ Lnbubble::NoNucleation="The nucleation rate is so small at all times that there 
 
 Clear[LRbubble]
 
-LRbubble[LmlnhLx_,LnbLx_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,scaleFactor_:1]:=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor]=Block[{Tc=Tcrit,Tofx,tScale,scale,Lnscale,LnGammaPT,GammaPT,LxA,LxB,LxData,LnbData,hofx,aofx,radius,integrand,lxTable,lxMids,table,resTable,non0Tab,reg,Lnorm,data,res,eps=10^-6,\[CapitalDelta]lx},
+LRbubble[LmlnhLx_,LnbLx_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1}]:=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tcrit,Kfactor,full,atau]=Block[{Tc=Tcrit,Tofx,tScale,scaleFactor,comovingTime,aofx,tauofx,scale,Lnscale,LnGammaPT,GammaPT,LxA,LxB,LxData,LnbData,hofx,radius,integrand,lxTable,lxMids,table,resTable,non0Tab,reg,Lnorm,data,res,eps=10^-6,\[CapitalDelta]lx},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1631,8 +1643,14 @@ If[(Length@TempEvol)!=2,Message[LRbubble::TempEvolError];Abort[]];
 (*T(x), t/x*)
 {Tofx,tScale}=TempEvol;
 
+(*scale factor and comoving time*)
+{scaleFactor,comovingTime}=atau;
+
 (*scale factor*)
 aofx[xx_]:=If[scaleFactor===1,1,scaleFactor[xx]];
+
+(*comoving time*)
+tauofx[xx_]:=If[comovingTime===1,xx,comovingTime[xx]];
 
 (*overall scale of the result*)
 scale=Tc^4*tScale^2;
@@ -1656,7 +1674,7 @@ LnbData=InterpolatingFunctionValuesOnGrid[LnbLx]//Flatten;
 hofx[xx_]:=If[(-10^LmlnhLx[Log10[xx]])>-500,Exp[-10^LmlnhLx[Log10[xx]]],0];
 
 (*dimensionless (comoving) bubble radius: w/ or w/o scale factor*)
-radius[x_,xp_]:=If[scaleFactor===1,vw*(x-xp)*HeavisideTheta[x-xp],If[xp>=x,0,vw*NIntegrate[xx/aofx[xx],{xx,xp,x}]]];
+radius[x_,xp_]:=vw*(tauofx[x]-tauofx[xp])*HeavisideTheta[x-xp];
 
 (*integrand, in ln-space*)
 integrand[x_,xp_]:=aofx[x]*xp/aofx[xp]*(GammaPT[xp]*hofx[xp]*radius[x,xp]);
@@ -1729,7 +1747,7 @@ NoDLogCondPT[vw_,LogGammList_List,betaList_List]:=Log10[8\[Pi]]+3Log10[vw]+LogGa
 
 Clear[tTPT]
 
-tTPT[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,method_:"analytic",Kfactor_:1,full_:False,scaleFactor_:1,Nlx_:250]:=tTPT[direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx]=Block[{gamma,t0,tcrit,Tofx,tScale,dlnTdt,xmax,Tmax,xA,xB,xData,yData,prec,\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,TmaxFlag,PTCritFlag,Toffset,Tini,TLeft,TRight,x0,xlo,xhi,xRange,xLeft,xRight,GammaPT,LogGammaPT,betaPT,cond,LogCond,noDLogCond,LhLx,LnbLx,LRLx,data,xpt,tpt,Tpt,result,eps=10^-6},
+tTPT[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,method_:"analytic",Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=tTPT[direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,atau,Nlx]=Block[{gamma,t0,tcrit,Tofx,tScale,dlnTdt,xmax,Tmax,xA,xB,xData,yData,prec,\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,TmaxFlag,PTCritFlag,Toffset,Tini,TLeft,TRight,x0,xlo,xhi,xRange,xLeft,xRight,GammaPT,LogGammaPT,betaPT,cond,LogCond,noDLogCond,LhLx,LnbLx,LRLx,data,xpt,tpt,Tpt,result,eps=10^-6},
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
 (*distributing the coefficients*)
@@ -1896,7 +1914,7 @@ Thi=If[(Im[Thi]!=0)||(Thi===ComplexInfinity),Tmax*2,Thi];
 TmaxFlag=IntervalMemberQ[Interval[{Tlo,Thi}],Tmax];
 
 (*computing log10(-ln h(log10x)), the PT condition; and the time range*)
-LogCond=Lmlnh[direction,vw,TempEvol,coeffs,Tc,Kfactor,full,scaleFactor,Nlx];
+LogCond=Lmlnh[direction,vw,TempEvol,coeffs,Tc,Kfactor,full,atau,Nlx];
 
 (*the time range, slightly offset from the edges*)
 xRange=10^(InterpolatingFunctionDomain[LogCond]//Flatten);
@@ -1962,13 +1980,13 @@ Thi=If[(Im[Thi]!=0)||(Thi===ComplexInfinity),Tmax*2,Thi];
 TmaxFlag=IntervalMemberQ[Interval[{Tlo,Thi}],Tmax];
 
 (*computing log10(-ln h(log10 x))*)
-LhLx=Lmlnh[direction,vw,TempEvol,coeffs,Tc,Kfactor,full,scaleFactor,Nlx];
+LhLx=Lmlnh[direction,vw,TempEvol,coeffs,Tc,Kfactor,full,atau,Nlx];
 
 (*computing log10(n_b(log10 x))*)
-LnbLx=Lnbubble[LhLx,TempEvol,coeffs,Tc,Kfactor,full,scaleFactor];
+LnbLx=Lnbubble[LhLx,TempEvol,coeffs,Tc,Kfactor,full,atau];
 
 (*computing log10(\[LeftAngleBracket]R(log10 x)\[RightAngleBracket])*)
-LRLx=LRbubble[LhLx,LnbLx,vw,TempEvol,coeffs,Tc,Kfactor,full,scaleFactor];
+LRLx=LRbubble[LhLx,LnbLx,vw,TempEvol,coeffs,Tc,Kfactor,full,atau];
 
 (*computing the PT condition: log10 R_b - log10\[LeftAngleBracket]R\[RightAngleBracket], where R_b\[Congruent]n_b^(-1/3)*)
 xData=(InterpolatingFunctionCoordinates[LnbLx]//Flatten);
@@ -2044,7 +2062,7 @@ tTPT::NoTpt="Tpt=`1` is outside the interval `2`. In other words, the PT could n
 (* ::Text:: *)
 (*The full physics routine. The only function that matters in the end.*)
 (**)
-(*Input: g_*, "direction", v_w, {Temperature Evolution}, t_c, {\[Mu],A,\[Lambda]}, T_c, (method="analytic"), (K=1), (0-modes from path integral: False), (scale factor=1), (Nlx=300)*)
+(*Input: g_*, "direction", v_w, {Temperature Evolution}, t_c, {\[Mu],A,\[Lambda]}, T_c, (method="analytic"), (K=1), (0-modes from path integral: False), (atau={1,1}), (Nlx=300)*)
 (**)
 (*If method="analytic"\[Implies]{Temperature Evolution}={\[Gamma], t_0, t_c}*)
 (*If method="semi"\[Implies]{Temperature Evolution}={T(x), t_scale}*)
@@ -2067,7 +2085,7 @@ tTPT::NoTpt="Tpt=`1` is outside the interval `2`. In other words, the PT could n
 
 Clear[ptParams]
 
-ptParams[gStar_,direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,method_:"analytic",Kfactor_:1,full_:False,scaleFactor_:1,Nlx_:250]:=ptParams[gStar,direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,gamma,t0,tcrit,Tfn,Toft,dlnTdt,d2lnTdt2,tt,tScale,Tpt,tpt,T,\[Lambda]bar,\[Chi]b,\[Epsilon],Ec,SE,SE1,SE2,GammaNucl,beta1Rate,beta2Rate,LmlnhLx,LnbLx,LRbLx,nbPT,RPT,Ravg,betaEff,alphInf,alphn,effRun},
+ptParams[gStar_,direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,method_:"analytic",Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=ptParams[gStar,direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,atau,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,gamma,t0,tcrit,Tfn,Toft,dlnTdt,d2lnTdt2,tt,tScale,Tpt,tpt,T,\[Lambda]bar,\[Chi]b,\[Epsilon],Ec,SE,SE1,SE2,GammaNucl,beta1Rate,beta2Rate,LmlnhLx,LnbLx,LRbLx,nbPT,RPT,Ravg,betaEff,alphInf,alphn,effRun},
 
 (*distributing the coefficients*)
 {\[Mu],A,\[Lambda]}=coeffs;
@@ -2076,7 +2094,7 @@ ptParams[gStar_,direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,method_:"analyti
 noCritTemp[coeffs];
 
 (*{t_PT, T_PT}*)
-{tpt,Tpt}=tTPT[direction,vw,TempEvol,coeffs,Tc,method,Kfactor,full,scaleFactor,Nlx];
+{tpt,Tpt}=tTPT[direction,vw,TempEvol,coeffs,Tc,method,Kfactor,full,atau,Nlx];
 T=Tpt;
 
 (*allocating some parameters*)
@@ -2122,9 +2140,9 @@ RPT=nbPT^(-1/3);
 Ravg=vw*(tpt-tcrit);
 betaEff=(8\[Pi]*vw^3*nbPT)^(1/3),
 
-LmlnhLx=Lmlnh[direction,vw,TempEvol,coeffs,Tc,Kfactor,full,scaleFactor,Nlx];
-LnbLx=Lnbubble[LmlnhLx,TempEvol,coeffs,Tc,Kfactor,full,scaleFactor];
-LRbLx=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tc,Kfactor,full,scaleFactor];
+LmlnhLx=Lmlnh[direction,vw,TempEvol,coeffs,Tc,Kfactor,full,atau,Nlx];
+LnbLx=Lnbubble[LmlnhLx,TempEvol,coeffs,Tc,Kfactor,full,atau];
+LRbLx=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tc,Kfactor,full,atau];
 nbPT=10^(LnbLx[Log10[tpt/tScale]]);
 RPT=nbPT^(-1/3);
 Ravg=10^(LRbLx[Log10[tpt/tScale]]);
