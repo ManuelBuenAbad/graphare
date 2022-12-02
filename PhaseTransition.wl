@@ -1403,7 +1403,7 @@ beta2OfTempAn[gamma_,t0_,tcrit_,coeffs_List,Tcrit_,Temp_,Kfactor_:1,full_:False]
 
 Clear[Lmlnh]
 
-Lmlnh[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=Lmlnh[direction,vw,TempEvol,coeffs,Tcrit,Kfactor,full,atau,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,Toffset,Tofx,tScale,xmax,Tmax,TmaxFlag,xA,xB,xData,prec,Trange,xrange,scaleFactor,comovingTime,aofx,tauofx,scale,Lnscale,LnGammaPT,GammaPT,radius,integrand,lxTable,lxMids,table,resTable,non0Tab,reg,data,res,eps=10^-6,\[CapitalDelta]lx},
+Lmlnh[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=Lmlnh[direction,vw,TempEvol,coeffs,Tcrit,Kfactor,full,atau,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,Toffset,Tofx,tScale,xmax,Tmax,TmaxFlag,xA,xB,xData,prec,Trange,xrange,scaleFactor,comovingTime,aofx,tauofx,scale,lnscale,lnGammaPT,GammaPT,radius,integrand,zrange,\[CapitalDelta]lz,lzTable,lxTable,Nmids,\[CapitalDelta]lxTable,lxMids,integral,table,resTable,non0Tab,reg,data,res,eps=10^-6},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1475,14 +1475,14 @@ tauofx[xx_]:=If[comovingTime===1,xx,comovingTime[xx]];
 
 (*overall scale of integral: scale^4*)
 scale=Tc*tScale;
-(*LnS \[Congruent] ln(scale)*)
-Lnscale=Log[scale];
+(*lnS \[Congruent] ln(scale)*)
+lnscale=Log[scale];
 
-(*Ln\[CapitalGamma] \[Congruent] ln(\[CapitalGamma]_nucl(T_PT)/T_c^4)*)
-LnGammaPT[xx_]:=\[CapitalGamma]nucl[coeffs,1,Tofx[xx]/Tc,Kfactor,full,True]*Log[10];
+(*ln\[CapitalGamma] \[Congruent] ln(\[CapitalGamma]_nucl(x)/T_c^4)*)
+lnGammaPT[xx_]:=\[CapitalGamma]nucl[coeffs,1,Tofx[xx]/Tc,Kfactor,full,True]*Log[10];
 
-(*dimensionless (comoving) nucleation rate: a^4 \[CapitalGamma]_nucl(T_PT)*tScale^4 = a^4 (\[CapitalGamma]_nucl(T_PT)/T_c^4)*scale^4 = exp[Ln\[CapitalGamma]+4*LnS] (a dimensionless quantity), regularized if it's too small. The reason for combining the nucleation rate and the overall scale of the integral is to make the exponent bigger*)
-GammaPT[xx_]:=If[(LnGammaPT[xx]+4*Lnscale)>-500,aofx[xx]^4*Exp[LnGammaPT[xx]+4*Lnscale],0];
+(*dimensionless (comoving) nucleation rate: a^4 \[CapitalGamma]_nucl(x)*tScale^4 = a^4 (\[CapitalGamma]_nucl(x)/T_c^4)*scale^4 = exp[ln\[CapitalGamma]+4*lnS] (a dimensionless quantity), regularized if it's too small. The reason for combining the nucleation rate and the overall scale of the integral is to make the exponent bigger*)
+GammaPT[xx_]:=If[(lnGammaPT[xx]+4*lnscale)>-500,aofx[xx]^4*Exp[lnGammaPT[xx]+4*lnscale],0];
 
 (*dimensionless (comoving) bubble radius: w/ or w/o scale factor*)
 radius[x_,xp_]:=vw*(tauofx[x]-tauofx[xp])*HeavisideTheta[x-xp];
@@ -1490,21 +1490,31 @@ radius[x_,xp_]:=vw*(tauofx[x]-tauofx[xp])*HeavisideTheta[x-xp];
 (*integrand, in ln-space*)
 integrand[x_,xp_]:=xp/aofx[xp]*((4\[Pi])/3 (radius[x,xp])^3 * GammaPT[xp]);
 
-(*differentials in ln(x), for the numerical integral*)
-\[CapitalDelta]lx=(Log[xrange[[2]]]-Log[xrange[[1]]])/(Nlx-1);
+(*defining z=x-xA: a time variable offset by xA: it helps to zoom-in to low-x*)
+zrange=xrange-xA;
 
-(*table of ln(x) values*)
-lxTable=Log[xrange[[1]]]+Table[\[CapitalDelta]lx*(i-1),{i,Nlx}];
+(*sampling steps in ln(z) for the numerical integral, so that there are Nlx number of steps*)
+\[CapitalDelta]lz=(Log[zrange[[2]]]-Log[zrange[[1]]])/(Nlx-1);
+
+(*table of Nlx ln(z) values*)
+lzTable=Log[zrange[[1]]]+Table[\[CapitalDelta]lz*(i-1),{i,Nlx}];
+
+(*table of the Nlx corresponding ln(x) values*)
+lxTable=Log[Exp[lzTable]+xA];
+
+(*table of mid-point widths, so that there are Nmids rectangles and midpoints*)
+Nmids=Nlx;
+\[CapitalDelta]lxTable=(Table[lx,{lx,lxTable}]-lxTable[[1]])/Nmids;
 
 (*table of ln(x) mid-points*)
-lxMids=(lxTable[[1;;-2]]+lxTable[[2;;-1]])/2;
+lxMids=Table[Table[(lxTable[[1]]+\[CapitalDelta]lxTable[[i]]/2)+\[CapitalDelta]lxTable[[i]]*(j-1),{j,Nmids}],{i,lxTable//Length}];
 
-(*table to integrate: rows (i) are x, columns (j) are xp. The function 'Outer' performs faster than 'Table'!*)
-table=Outer[integrand,Exp[lxTable],Exp[lxMids]];
+(*table of Riemann sum terms to integrate, already weighted by their widths. The rows (i) are x, columns (j) are xp.*)
+table=Table[Table[\[CapitalDelta]lxTable[[i]]*integrand[Exp[lxTable[[i]]],Exp[lxMids[[i,j]]]],{j,(Dimensions[lxMids][[2]])}],{i,lxTable//Length}];
 
 (*integrating along xp: a simple sum of columns, for each row!*)
-resTable=\[CapitalDelta]lx*Total[table,{2}];
-Clear[table];
+resTable=Total[table,{2}];
+Clear[lzTable,\[CapitalDelta]lxTable,lxMids,table];
 
 (*selecting those that are not 0, to regularize*)
 non0Tab=Select[resTable,#!=0&];
@@ -1541,7 +1551,7 @@ Lmlnh::NoNucleation="The nucleation rate is so small at all times ((\[CapitalGam
 
 Clear[Lnbubble]
 
-Lnbubble[LmlnhLx_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1}]:=Lnbubble[LmlnhLx,TempEvol,coeffs,Tcrit,Kfactor,full,atau]=Block[{Tc=Tcrit,Tofx,tScale,scaleFactor,comovingTime,aofx,tauofx,scale,Lnscale,LnGammaPT,GammaPT,LxA,LxB,LxData,hofx,integrand,lxTable,lxMids,table,resTable,non0Tab,reg,data,res,eps=10^-6,\[CapitalDelta]lx},
+Lnbubble[LmlnhLx_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1}]:=Lnbubble[LmlnhLx,TempEvol,coeffs,Tcrit,Kfactor,full,atau]=Block[{Tc=Tcrit,Tofx,tScale,scaleFactor,comovingTime,aofx,tauofx,LxA,LxB,LxData,scale,lnscale,lnGammaPT,lnh,\[CapitalGamma]h,integrand,lxTable,lxMids,table,integral,Nmids,\[CapitalDelta]lxTable,resTable,non0Tab,reg,Lnorm,data,res,eps=10^-6},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1560,42 +1570,43 @@ aofx[xx_]:=If[scaleFactor===1,1,scaleFactor[xx]];
 (*comoving time*)
 tauofx[xx_]:=If[comovingTime===1,xx,comovingTime[xx]];
 
-(*overall scale of the result*)
-scale=Tc^4*tScale;
-(*LnS \[Congruent] ln(scale)*)
-Lnscale=Log[scale];
-
-(*Ln\[CapitalGamma] \[Congruent] ln(\[CapitalGamma]_nucl(T_PT)/T_c^4)*)
-LnGammaPT[xx_]:=\[CapitalGamma]nucl[coeffs,1,Tofx[xx]/Tc,Kfactor,full,True]*Log[10];
-
-(*dimensionless (comoving) nucleation rate: a^4 \[CapitalGamma]_nucl(T_PT)*tScale = a^4 (\[CapitalGamma]_nucl(T_PT)/T_c^4)*scale = exp[Ln\[CapitalGamma]+LnS] (a dimensionless quantity), regularized if it's too small. The reason for combining the nucleation rate and the overall scale of the integral is to make the exponent bigger*)
-GammaPT[xx_]:=If[(LnGammaPT[xx]+Lnscale)>-500,aofx[xx]^4*Exp[LnGammaPT[xx]+Lnscale],0];
-
 (*anatomy of the interpolating function of the fractional metastable volume. NOTE: must have been computed using the same parameters!*)
 {LxA,LxB}=InterpolatingFunctionDomain[LmlnhLx]//Flatten;
 LxData=InterpolatingFunctionCoordinates[LmlnhLx]//Flatten;
 
-(*fractional volume h(x) in the metastable phase, obtained from LmlnhLx\[Congruent]log10(-ln h(log10(x)))*)
-hofx[xx_]:=If[(-10^LmlnhLx[Log10[xx]])>-500,Exp[-10^LmlnhLx[Log10[xx]]],0];
+(*overall scale of the result: T_c^4*tScale=(T_c*tScale)^4/tScale^3. NOTE: we will need to divide by tScale^3 in the end*)
+scale=Tc*tScale;
+(*lnS \[Congruent] ln(scale)*)
+lnscale=Log[scale];
+
+(*ln\[CapitalGamma] \[Congruent] ln(\[CapitalGamma]_nucl(x)/T_c^4)*)
+lnGammaPT[xx_]:=\[CapitalGamma]nucl[coeffs,1,Tofx[xx]/Tc,Kfactor,full,True]*Log[10];
+
+(*lnh \[Congruent] ln(h(x))*)
+lnh[xx_]:=-10^LmlnhLx[Log10[xx]];
+
+(*dimensionless (comoving) nucleation rate times fractional volume in the metastable phase: a^4*\[CapitalGamma]_nucl(x)*tScale^4*h(x)= a^4*(\[CapitalGamma]_nucl(x)/T_c^4)*scale^4*h(x) = a^4*exp[ln\[CapitalGamma]+4*lnS+lnh] (a dimensionless quantity), regularized if it's too small. The reason for combining the nucleation rate, the overall scale of the integral, and the fractional volume h(x) in the metastable phase, is to make the exponent bigger*)
+\[CapitalGamma]h[xx_]:=If[(lnGammaPT[xx]+4*lnscale+lnh[xx])>-500,aofx[xx]^4*Exp[lnGammaPT[xx]+4*lnscale+lnh[xx]],0];
 
 (*integrand, in ln-space*)
-integrand[x_,xp_]:=aofx[x]^-3*xp/aofx[xp]*(GammaPT[xp]*hofx[xp])*(HeavisideTheta[x-xp]*Sign[x-xp]);
+integrand[x_,xp_]:=aofx[x]^-3*xp/aofx[xp]*\[CapitalGamma]h[xp]*(HeavisideTheta[x-xp]*Sign[x-xp]);
 
-(*differentials in ln(x), for the numerical integral*)
-\[CapitalDelta]lx=(LxData[[2]]-LxData[[1]])*Log[10];
-
-(*table of ln(x) values*)
+(*table of the Nlx sampled ln(x) values*)
 lxTable=(LxData*Log[10]);
 
-(*table of ln(x) mid-points*)
-lxMids=(lxTable[[1;;-2]]+lxTable[[2;;-1]])/2;
+(*table of mid-point widths, so that there are Nmids rectangles and midpoints*)
+Nmids=(LxData//Length);
+\[CapitalDelta]lxTable=(Table[lx,{lx,lxTable}]-lxTable[[1]])/Nmids;
 
-(*table to integrate*)
-table=Outer[integrand,Exp[lxTable],Exp[lxMids]];
+(*table of ln(x) mid-points*)
+lxMids=Table[Table[(lxTable[[1]]+\[CapitalDelta]lxTable[[i]]/2)+\[CapitalDelta]lxTable[[i]]*(j-1),{j,Nmids}],{i,lxTable//Length}];
+
+(*table of Riemann sum terms to integrate, already weighted by their widths. The rows (i) are x, columns (j) are xp.*)
+table=Table[Table[\[CapitalDelta]lxTable[[i]]*integrand[Exp[lxTable[[i]]],Exp[lxMids[[i,j]]]],{j,(Dimensions[lxMids][[2]])}],{i,lxTable//Length}];
 
 (*integrating along xp: a simple sum of columns, for each row!*)
-resTable=\[CapitalDelta]lx*Total[table,{2}];
-Clear[table];
+resTable=Total[table,{2}];
+Clear[\[CapitalDelta]lxTable,lxMids,table];
 
 (*selecting those that are not 0, to regularize*)
 non0Tab=Select[resTable,#!=0&];
@@ -1605,8 +1616,11 @@ If[(Length@non0Tab)==0,Message[Lnbubble::NoNucleation];Abort[]];
 reg=Min[non0Tab]*eps*eps;
 resTable=If[#==0,reg,#]&/@resTable;
 
+(*normalization correction for the scale of the result: dividing by tScale^3: log10 tScale^3 = 3 log10 tScale*)
+Lnorm=3*Log10[tScale];
+
 (*data to interpolate, in log10 (which is ln/ln(10))*)
-data=Transpose[{lxTable/Log[10],Log10[resTable]}];
+data=Transpose[{lxTable/Log[10],Log10[resTable]-Lnorm}];
 Clear[resTable];
 
 (*interpolating the data*)
@@ -1633,7 +1647,7 @@ Lnbubble::NoNucleation="The nucleation rate is so small at all times that there 
 
 Clear[LRbubble]
 
-LRbubble[LmlnhLx_,LnbLx_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1}]:=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tcrit,Kfactor,full,atau]=Block[{Tc=Tcrit,Tofx,tScale,scaleFactor,comovingTime,aofx,tauofx,scale,Lnscale,LnGammaPT,GammaPT,LxA,LxB,LxData,LnbData,hofx,radius,integrand,lxTable,lxMids,table,resTable,non0Tab,reg,Lnorm,data,res,eps=10^-6,\[CapitalDelta]lx},
+LRbubble[LmlnhLx_,LnbLx_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1}]:=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tcrit,Kfactor,full,atau]=Block[{Tc=Tcrit,Tofx,tScale,scaleFactor,comovingTime,aofx,tauofx,LxA,LxB,LxData,LnbData,scale,lnscale,lnGammaPT,lnh,\[CapitalGamma]h,radius,integrand,lxTable,Nmids,\[CapitalDelta]lxTable,lxMids,table,resTable,non0Tab,reg,Lnorm,data,res,eps=10^-6},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1652,17 +1666,6 @@ aofx[xx_]:=If[scaleFactor===1,1,scaleFactor[xx]];
 (*comoving time*)
 tauofx[xx_]:=If[comovingTime===1,xx,comovingTime[xx]];
 
-(*overall scale of the result*)
-scale=Tc^4*tScale^2;
-(*LnS \[Congruent] ln(scale)*)
-Lnscale=Log[scale];
-
-(*Ln\[CapitalGamma] \[Congruent] ln(\[CapitalGamma]_nucl(T_PT)/T_c^4)*)
-LnGammaPT[xx_]:=\[CapitalGamma]nucl[coeffs,1,Tofx[xx]/Tc,Kfactor,full,True]*Log[10];
-
-(*dimensionless (comoving) nucleation rate: a^4 \[CapitalGamma]_nucl(T_PT)*tScale^2 = a^4 (\[CapitalGamma]_nucl(T_PT)/T_c^4)*scale = exp[Ln\[CapitalGamma]+LnS] (a dimensionless quantity), regularized if it's too small. The reason for combining the nucleation rate and the overall scale of the integral is to make the exponent bigger*)
-GammaPT[xx_]:=If[(LnGammaPT[xx]+Lnscale)>-500,aofx[xx]^4*Exp[LnGammaPT[xx]+Lnscale],0];
-
 (*anatomy of the interpolating function of fractional metastable volume. NOTE: must have been computed using the same parameters!*)
 {LxA,LxB}=InterpolatingFunctionDomain[LmlnhLx]//Flatten;
 LxData=InterpolatingFunctionCoordinates[LmlnhLx]//Flatten;
@@ -1670,30 +1673,42 @@ LxData=InterpolatingFunctionCoordinates[LmlnhLx]//Flatten;
 (*extracting data from bubble number density. NOTE: must have been computed using the same parameters!*)
 LnbData=InterpolatingFunctionValuesOnGrid[LnbLx]//Flatten;
 
-(*fractional volume h(x) in the metastable phase, obtained from LmlnhLx\[Congruent]log10(-ln h(log10(x)))*)
-hofx[xx_]:=If[(-10^LmlnhLx[Log10[xx]])>-500,Exp[-10^LmlnhLx[Log10[xx]]],0];
+(*overall scale of the result: T_c^4*tScale^2=(T_c*tScale)^4/tScale^2. NOTE: we will need to divide by tScale^2 in the end*)
+scale=Tc*tScale;
+(*lnS \[Congruent] ln(scale)*)
+lnscale=Log[scale];
+
+(*ln\[CapitalGamma] \[Congruent] ln(\[CapitalGamma]_nucl(x)/T_c^4)*)
+lnGammaPT[xx_]:=\[CapitalGamma]nucl[coeffs,1,Tofx[xx]/Tc,Kfactor,full,True]*Log[10];
+
+(*lnh \[Congruent] ln(h(x))*)
+lnh[xx_]:=-10^LmlnhLx[Log10[xx]];
+
+(*dimensionless (comoving) nucleation rate times fractional volume in the metastable phase: a^4*\[CapitalGamma]_nucl(x)*tScale^4*h(x)= a^4*(\[CapitalGamma]_nucl(x)/T_c^4)*scale^4*h(x) = a^4*exp[ln\[CapitalGamma]+4*lnS+lnh] (a dimensionless quantity), regularized if it's too small. The reason for combining the nucleation rate, the overall scale of the integral, and the fractional volume h(x) in the metastable phase, is to make the exponent bigger*)
+\[CapitalGamma]h[xx_]:=If[(lnGammaPT[xx]+4*lnscale+lnh[xx])>-500,aofx[xx]^4*Exp[lnGammaPT[xx]+4*lnscale+lnh[xx]],0];
 
 (*dimensionless (comoving) bubble radius: w/ or w/o scale factor*)
 radius[x_,xp_]:=vw*(tauofx[x]-tauofx[xp])*HeavisideTheta[x-xp];
 
 (*integrand, in ln-space*)
-integrand[x_,xp_]:=aofx[x]*xp/aofx[xp]*(GammaPT[xp]*hofx[xp]*radius[x,xp]);
+integrand[x_,xp_]:=aofx[x]*xp/aofx[xp]*(\[CapitalGamma]h[xp]*radius[x,xp]);
 
-(*differentials in ln(x), for the numerical integral*)
-\[CapitalDelta]lx=(LxData[[2]]-LxData[[1]])*Log[10];
-
-(*table of ln(x) values*)
+(*table of the Nlx sampled ln(x) values*)
 lxTable=(LxData*Log[10]);
 
-(*table of ln(x) mid-points*)
-lxMids=(lxTable[[1;;-2]]+lxTable[[2;;-1]])/2;
+(*table of mid-point widths, so that there are Nmids rectangles and midpoints*)
+Nmids=(LxData//Length);
+\[CapitalDelta]lxTable=(Table[lx,{lx,lxTable}]-lxTable[[1]])/Nmids;
 
-(*table to integrate*)
-table=Outer[integrand,Exp[lxTable],Exp[lxMids]];
+(*table of ln(x) mid-points*)
+lxMids=Table[Table[(lxTable[[1]]+\[CapitalDelta]lxTable[[i]]/2)+\[CapitalDelta]lxTable[[i]]*(j-1),{j,Nmids}],{i,lxTable//Length}];
+
+(*table of Riemann sum terms to integrate, already weighted by their widths. The rows (i) are x, columns (j) are xp.*)
+table=Table[Table[\[CapitalDelta]lxTable[[i]]*integrand[Exp[lxTable[[i]]],Exp[lxMids[[i,j]]]],{j,(Dimensions[lxMids][[2]])}],{i,lxTable//Length}];
 
 (*integrating along xp: a simple sum of columns, for each row!*)
-resTable=\[CapitalDelta]lx*Total[table,{2}];
-Clear[table];
+resTable=Total[table,{2}];
+Clear[\[CapitalDelta]lxTable,lxMids,table];
 
 (*selecting those that are not 0, to regularize*)
 non0Tab=Select[resTable,#!=0&];
@@ -1703,8 +1718,8 @@ If[(Length@non0Tab)==0,Message[LRbubble::NoNucleation];Abort[]];
 reg=Min[non0Tab]*eps*eps;
 resTable=If[#==0,reg,#]&/@resTable;
 
-(*normalization factor n_b a^3 (present due to dimensionality of the probability distribution) in log10: log10(n_b a^3)=log10 n_b + 3 log10 a*)
-Lnorm=LnbData+3Log10[aofx[Exp[lxTable]]];
+(*normalization factor tScale^2 n_b a^3 (present due to dimensionality of the probability distribution) in log10: log10(tScale^2 n_b a^3)=2 log10 tScale + log10 n_b + 3 log10 a*)
+Lnorm=2*Log10[tScale]+LnbData+3*Log10[aofx[Exp[lxTable]]];
 
 (*data to interpolate, in log10 (which is ln/ln(10))*)
 data=Transpose[{lxTable/Log[10],Log10[resTable]-Lnorm}];
@@ -2103,6 +2118,12 @@ If[method=="analytic",{gamma,t0,tcrit}=TempEvol,
 Toft[tt_]=Tfn[tt/tScale];
 dlnTdt[t_]=D[Log[Toft[t]],t];
 d2lnTdt2[t_]=D[Log[Toft[t]],{t,2}]];
+
+(*finding t_c*)
+If[method!="analytic",
+tcrit=tOfTempNum[Tfn,Tc,tScale];
+tcrit=If[direction=="cold",tcrit[[2]],tcrit[[1]]];
+];
 
 (*\[Lambda]bar*)
 \[Lambda]bar=(\[Lambda]bar/.Mc\[Lambda]barToCoeffs);
