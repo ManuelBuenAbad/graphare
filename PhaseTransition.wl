@@ -856,7 +856,7 @@ THigh=Tc Sqrt[(4 A^2-3 \[Lambda] \[Mu]^2)/((112499 A^2)/25000-3 \[Lambda] \[Mu]^
 (**)
 (*\[Mu]^2/2=1/24  \[Sum]_i c_i g_i^2,*)
 (**)
-(*A/3=1/(12\[Pi]) \[Sum]_B g_B^2,*)
+(*A/3=1/(12\[Pi]) \[Sum]_B g_B^3,*)
 (**)
 (*a = \[Pi]^2/30 g_* = \[Pi]^2/30 \[Sum]_(m_i << T) c_i',*)
 (**)
@@ -875,7 +875,7 @@ cprimeType[type_String]:=Which[type=="B",1,type=="F",7/8]
 \[Mu]FromList[particleContent_List]:=Sqrt[1/12 Total[cType[#[[1]]]*#[[2]]*#[[3]]^2&/@particleContent]];
 
 (*A-coefficient in thermal potential V_T*)
-AFromList[particleContent_List]:=1/(4\[Pi]) Total[cType[#[[1]]]*#[[2]]*#[[3]]^3&/@particleContent];
+AFromList[particleContent_List]:=1/(4\[Pi]) Total[If[#[[1]]=="B",1,0]*cType[#[[1]]]*#[[2]]*#[[3]]^3&/@particleContent];
 
 (*a-coefficient in \[Rho]_rad(T) (a=\[Pi]^2/30 g_* ). Note only massless particles contribute to it*)
 aFromList[particleContent_List,scalarValue_]:=\[Pi]^2/30 Total[cprimeType[#[[1]]]*#[[2]]*HeavisideTheta[-Rationalize[(#[[3]]*scalarValue)]]&/@particleContent]/.{HeavisideTheta[0]->1};

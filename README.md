@@ -6,7 +6,7 @@ Authors: Manuel A. Buen-Abad, Jae Hyeok Chang, Anson Hook
 GraPhaRe
 -----------------------------------
 
-This code has been written in Wolfram language using Mathematica 12.0 by Manuel A. Buen-Abad and Jae Hyeok Chang (April 2022).
+This code has been written in Wolfram language using Mathematica 12.0 by Manuel A. Buen-Abad and Jae Hyeok Chang (2022).
 
 
 
@@ -32,7 +32,7 @@ To call the packages, simply enter the following commands in a Mathematica cell:
 Using the code
 --------------
 
-You can use `GraPhaRe` freely, provided that in your publications, you cite the paper [Buen-Abad, Chang, Hook (2022)](https://arxiv.org/abs/2212.xxxxx).
+You can use `GraPhaRe` freely, provided that in any resulting publications you cite the paper [Buen-Abad, Chang, Hook (2022)](https://arxiv.org/abs/2212.xxxxx).
 
 The BibTeX entry for the paper is:
 
@@ -42,10 +42,10 @@ The BibTeX entry for the paper is:
 		eprint = "2212.xxxxx",
 		archivePrefix = "arXiv",
 		primaryClass = "hep-ph",
-		doi = "10.1103/PhysRevD.102.083010",
-		journal = "Phys. Rev. D",
-		volume = "102",
-		number = "8",
-		pages = "083010",
-		year = "2020"
+		doi = "???",
+		journal = "???",
+		volume = "?",
+		number = "?",
+		pages = "??",
+		year = "2022"
 	}

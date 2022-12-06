@@ -8,7 +8,7 @@ hub::usage="hub: the dimensionless hubble expansion rate, as a function of (dime
 TOfx::usage="TOfx: dark sector temperature interpolated as a function of (dimensionless) time/\nInput: (\[Gamma],\!\(\*SubscriptBox[\(g\), \(*\)]\),\!\(\*SubscriptBox[\(H\), \(i\)]\),w\[Phi],xLarge,prec,accu).\nOutput: T";
 aOfx::usage="aOfx: function to compute scale factor\nInput: (\[Gamma], \!\(\*SubscriptBox[\(a\), \(ini\)]\), sum, w\[Phi], xLarge, prec, accu).\nOutput: a";
 tauOfx::usage="tauOfx: function to compute comoving time\nInput: (\[Gamma], \!\(\*SubscriptBox[\(t\), \(scale\)]\), \!\(\*SubscriptBox[\(a\), \(ini\)]\), sum, w\[Phi], xLarge, prec, accu).\nOutput: \[Tau]";
-redshift::usage="redshift: function to compute the redshift \!\(\*SubscriptBox[\(z\), \(*\)]\)+1 from today to an arbitrary point \!\(\*SubscriptBox[\(x\), \(*\)]\) in the past during reheating.\nInput: (\[Gamma],\!\(\*SubscriptBox[\(g\), \(*\)]\),\!\(\*SubscriptBox[\(H\), \(i\)]\),xRange,instant,g\!\(\*SubscriptBox[\('\), \(IR\)]\),\!\(\*SubscriptBox[\(\[Xi]\), \(IR\)]\),\!\(\*SubscriptBox[\(T\), \(IR\)]\),w\[Phi],xLarge,prec,accu,debug).\nOutput: \!\(\*SubscriptBox[\(z\), \(*\)]\)+1=\!\(\*SubsuperscriptBox[\(a\), \(*\), \(-1\)]\)";
+redshift::usage="redshift: function to compute the redshift \!\(\*SubscriptBox[\(z\), \(*\)]\)+1 from today to an arbitrary point \!\(\*SubscriptBox[\(x\), \(*\)]\) in the past during reheating.\nInput: (\[Gamma],\!\(\*SubscriptBox[\(g\), \(*\)]\),\!\(\*SubscriptBox[\(H\), \(i\)]\),xRange,instantVSRH,{g\!\(\*SubscriptBox[\('\), \(IR\)]\),\!\(\*SubscriptBox[\(\[Xi]\), \(IR\)]\),\!\(\*SubscriptBox[\(g\), \(IR\)]\),\!\(\*SubscriptBox[\(T\), \(IR\)]\)},w\[Phi],xLarge,prec,accu,debug).\nOutput: \!\(\*SubscriptBox[\(z\), \(*\)]\)+1=\!\(\*SubsuperscriptBox[\(a\), \(*\), \(-1\)]\)";
 xCross::usage="xCross: function to compute the two crossing times at which the DS temperature reaches certain value \!\(\*SubscriptBox[\(T\), \(*\)]\), as well as the time at which it reaches the maximum temperature.\nInput: (\[Gamma],\!\(\*SubscriptBox[\(r\), \(r, c\)]\),w\[Phi],xLarge,prec,accu).\nOutput: {\!\(\*SubscriptBox[\(x\), \(c1\)]\),\!\(\*SubscriptBox[\(x\), \(max\)]\),\!\(\*SubscriptBox[\(x\), \(c2\)]\)}";
 gammaRate::usage="gammaRate: function to compute the log derivagive of the dark sector temperature at some time \!\(\*SubscriptBox[\(x\), \(*\)]\).\nInput: (\[Gamma],\!\(\*SubscriptBox[\(x\), \(*\)]\),w\[Phi],\[Delta],xLarge,prec,accu).\nOutput: \!\(\*FractionBox[\(d\\\ ln\\\ T\), \(d\\\ ln\\\ x\)]\)(\!\(\*SubscriptBox[\(x\), \(*\)]\))";
 gsFn::usage="gsFn: function interpolating the Standard Model's relativistic degrees of freedom in entropy."
@@ -353,7 +353,7 @@ taufnx
 
 Clear[redshift]
 
-redshift[gg_?NumberQ,gs_,Hscale_,xRange_List,instant_,gdIR_:0,xiIR_:0,TIR_:10^3,wf_:0,xLarge_:10^3,prec_:30,accu_:20,debug_:False]:=redshift[gg,gs,Hscale,xRange,instant,gdIR,xiIR,TIR,wf,xLarge,prec,accu,debug]=Block[{gstar=gs,Hi=Hscale,w\[Phi]=wf,xStar,xm,r\[Phi],rr,efolds,Tdm,gIR,Gfactor,Z1,Z2,Z3,res},
+redshift[gg_?NumberQ,gs_,Hscale_,xRange_List,instant_,gdIRxiIRgIRTIR_List:{0,0,gSM,10^3},wf_:0,xLarge_:10^3,prec_:30,accu_:20,debug_:False]:=redshift[gg,gs,Hscale,xRange,instant,gdIRxiIRgIRTIR,wf,xLarge,prec,accu,debug]=Block[{gstar=gs,Hi=Hscale,w\[Phi]=wf,xStar,xm,r\[Phi],rr,efolds,Tdm,gdIR,xiIR,gIR,TIR,Gfactor,Z1,Z2,Z3,res},
 
 (*the time-range between GW production at time x_*, and an arbitrary point during DS-RD era (x_m)*)
 {xStar,xm}=xRange;
@@ -368,8 +368,10 @@ Z1=Exp[efolds];
 (*computing the DS temperature at x_m*)
 Tdm=TOfx[gg,gs,Hscale,wf,xLarge,prec,accu][xm];
 
+(*VSRH (IR) quantities: DS d.o.f., DS-to-VS temperature ratio, VS d.o.f., VS temperature*)
+{gdIR,xiIR,gIR,TIR}=gdIRxiIRgIRTIR;
+
 (*computing the entropy dump from DS reheating the VS; whether instantaneously or adiabatically*)
-gIR=gsFn[TIR];
 Gfactor=If[instant,(gs/(gdIR*xiIR^4+gIR))^(1/4),(gs/(gdIR*xiIR^3+gIR))^(1/3)];
 
 (*the redshift factor between x_m and x_IR, at some arbitrary time shortly after VS reheating*)
