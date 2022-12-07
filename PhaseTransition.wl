@@ -2155,12 +2155,22 @@ beta1Rate=If[method=="analytic",beta1OfTempAn[gamma,t0,tcrit,coeffs,Tc,Tpt,Kfact
 (*\[Beta]_2*)
 beta2Rate=If[method=="analytic",beta2OfTempAn[gamma,t0,tcrit,coeffs,Tc,Tpt,Kfactor,full],\[Beta]2Rate[dlnTdt[tpt],d2lnTdt2[tpt],coeffs,Tc,Tpt,Kfactor,full]];
 
-If[MemberQ[{"analytic","semi"},method],
+(*n_b, R_b, \[LeftAngleBracket]R\[RightAngleBracket], \[Beta]_eff*)
+Which[MemberQ[{"analytic","semi"},method],
 nbPT=(beta1Rate^3/(8\[Pi]*vw^3));
 RPT=nbPT^(-1/3);
 Ravg=vw*(tpt-tcrit);
 betaEff=(8\[Pi]*vw^3*nbPT)^(1/3),
 
+method=="numeric",
+LmlnhLx=Lmlnh[direction,vw,TempEvol,coeffs,Tc,Kfactor,full,atau,Nlx];
+LnbLx=Lnbubble[LmlnhLx,TempEvol,coeffs,Tc,Kfactor,full,atau];
+nbPT=10^(LnbLx[Log10[tpt/tScale]]);
+RPT=nbPT^(-1/3);
+Ravg=vw*(tpt-tcrit);
+betaEff=(8\[Pi]*vw^3*nbPT)^(1/3),
+
+method=="alt",
 LmlnhLx=Lmlnh[direction,vw,TempEvol,coeffs,Tc,Kfactor,full,atau,Nlx];
 LnbLx=Lnbubble[LmlnhLx,TempEvol,coeffs,Tc,Kfactor,full,atau];
 LRbLx=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tc,Kfactor,full,atau];
