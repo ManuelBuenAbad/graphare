@@ -68,6 +68,15 @@ noOption::ArgumentsNotAllowed = "Argument `1` not a string from options `2`.";
 Needs["DifferentialEquations`InterpolatingFunctionAnatomy`"];
 
 
+(* ::Section:: *)
+(*Definitions*)
+
+
+Clear[smallnum]
+
+smallnum=10^-6;
+
+
 (* ::Chapter:: *)
 (*1. Potential*)
 
@@ -299,6 +308,13 @@ McTo\[Lambda]bar={Mc->2 A Tc Sqrt[(4 A^2-3 \[Lambda] \[Mu]^2)/(12 A^2 \[Lambda] 
 
 
 ARule={A->Sqrt[3]/2 Sqrt[\[Lambda]]\[Mu] Sqrt[\[CapitalDelta]]};
+
+
+(* ::Text:: *)
+(*From here we can then write T in terms of \[Lambda]bar and \[CapitalDelta], which is particularly simple:*)
+
+
+TTo\[Lambda]bar\[CapitalDelta]={T->Tc Sqrt[(1-\[CapitalDelta])/(1-\[CapitalDelta]*\[Lambda]bar)]}
 
 
 (* ::Text:: *)
@@ -1224,7 +1240,7 @@ tOfTempAn[Tcrit_,tcrit_,gamma_,t0_,Temp_]:=(tcrit-t0)*(Temp/Tcrit)^(1/gamma)+t0
 
 Clear[tTMax,tOfTempNum,noTempFn]
 
-tTMax[Tfn_,argScale_:1]:=tTMax[Tfn,argScale]=Block[{dTdx,xA,xB,xData,prec,Tmx,xmx,result,eps=10^-6},
+tTMax[Tfn_,argScale_:1]:=tTMax[Tfn,argScale]=Block[{dTdx,xA,xB,xData,prec,Tmx,xmx,result,eps=smallnum},
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
 (*derivative*)
@@ -1236,7 +1252,7 @@ xData=(InterpolatingFunctionCoordinates[Tfn]//Flatten);
 prec=Round[Precision[xData[[1]]]];
 
 (*slightly away from the leftmost edge*)
-xA=If[xA<=0,eps,Min[xData[[2]],xA*(1+eps)]];
+xA=If[xA<=0,Min[xData[[2]],eps],Min[xData[[2]],xA*(1+eps)]];
 Clear[xData];
 
 (*searching for the time at which we get the maximum temperature*)
@@ -1248,7 +1264,7 @@ result={xmx*argScale,Tmx}
 ]
 
 
-tOfTempNum[Tfn_,Temp_,argScale_:1]:=tOfTempNum[Tfn,Temp,argScale]=Block[{xA,xB,xData,yData,prec,Tmx,xmx,xLSet,xRSet,yLSet,yRSet,xLGuess,xRGuess,xLe,xRi,result,eps=10^-6},
+tOfTempNum[Tfn_,Temp_,argScale_:1]:=tOfTempNum[Tfn,Temp,argScale]=Block[{xA,xB,xData,yData,prec,Tmx,xmx,xLSet,xRSet,yLSet,yRSet,xLGuess,xRGuess,xLe,xRi,result,eps=smallnum},
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
 (*anatomy of the interpolating function*)
@@ -1258,7 +1274,7 @@ yData=(InterpolatingFunctionValuesOnGrid[Tfn]//Flatten);
 prec=Round[Precision[xData[[1]]]];
 
 (*slightly away from the leftmost edge*)
-xA=If[xA<=0,eps,Min[xData[[2]],xA*(1+eps)]];
+xA=If[xA<=0,Min[xData[[2]],eps],Min[xData[[2]],xA*(1+eps)]];
 
 (*searching for the time at which we get the maximum temperature*)
 {xmx,Tmx}=tTMax[Tfn,1];
@@ -1298,14 +1314,14 @@ result
 tOfTempNum::NoTemp="The temperature Temp=`1` is not in the interval `2` of temperatures probed by the Tfn function.";
 
 
-noTempFn[Tfn_,Temp_,argScale_:1]:=Block[{xA,xB,xData,Tmx,xmx,Tmin,eps=10^-6},
+noTempFn[Tfn_,Temp_,argScale_:1]:=Block[{xA,xB,xData,Tmx,xmx,Tmin,eps=smallnum},
 
 (*anatomy of the interpolating function*)
 {xA,xB}=(InterpolatingFunctionDomain[Tfn]//Flatten);
 xData=(InterpolatingFunctionCoordinates[Tfn]//Flatten);
 
 (*slightly away from the leftmost edge*)
-xA=If[xA<=0,eps,Min[xData[[2]],xA*(1+eps)]];
+xA=If[xA<=0,Min[xData[[2]],eps],Min[xData[[2]],xA*(1+eps)]];
 Clear[xData];
 
 (*searching for the time at which we get the maximum temperature*)
@@ -1403,7 +1419,7 @@ beta2OfTempAn[gamma_,t0_,tcrit_,coeffs_List,Tcrit_,Temp_,Kfactor_:1,full_:False]
 
 Clear[Lmlnh]
 
-Lmlnh[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=Lmlnh[direction,vw,TempEvol,coeffs,Tcrit,Kfactor,full,atau,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,Toffset,Tofx,tScale,xmax,Tmax,TmaxFlag,xA,xB,xData,prec,Trange,xrange,scaleFactor,comovingTime,aofx,tauofx,scale,lnscale,lnGammaPT,GammaPT,radius,integrand,zrange,\[CapitalDelta]lz,lzTable,lxTable,Nmids,\[CapitalDelta]lxTable,lxMids,integral,table,resTable,non0Tab,reg,data,res,eps=10^-6},
+Lmlnh[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=Lmlnh[direction,vw,TempEvol,coeffs,Tcrit,Kfactor,full,atau,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,Toffset,Tofx,tScale,xmax,Tmax,TmaxFlag,xA,xB,xData,prec,Trange,xrange,scaleFactor,comovingTime,aofx,tauofx,scale,lnscale,lnGammaPT,GammaPT,radius,integrand,zrange,\[CapitalDelta]lz,lzTable,lxTable,Nmids,\[CapitalDelta]lxTable,lxMids,integral,table,resTable,non0Tab,reg,data,res,eps=smallnum},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1428,7 +1444,7 @@ xData=(InterpolatingFunctionCoordinates[Tofx]//Flatten);
 prec=Round[Precision[xData[[1]]]];
 
 (*slightly away from the leftmost edge*)
-xA=If[xA<=0,eps,Min[xData[[2]],xA*(1+eps)]];
+xA=If[xA<=0,Min[xData[[2]],eps],Min[xData[[2]],xA*(1+eps)]];
 Clear[xData];
 
 (*time t at which T(t) reaches a maximum*)
@@ -1551,7 +1567,7 @@ Lmlnh::NoNucleation="The nucleation rate is so small at all times ((\[CapitalGam
 
 Clear[Lnbubble]
 
-Lnbubble[LmlnhLx_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1}]:=Lnbubble[LmlnhLx,TempEvol,coeffs,Tcrit,Kfactor,full,atau]=Block[{Tc=Tcrit,Tofx,tScale,scaleFactor,comovingTime,aofx,tauofx,LxA,LxB,LxData,scale,lnscale,lnGammaPT,lnh,\[CapitalGamma]h,integrand,lxTable,lxMids,table,integral,Nmids,\[CapitalDelta]lxTable,resTable,non0Tab,reg,Lnorm,data,res,eps=10^-6},
+Lnbubble[LmlnhLx_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1}]:=Lnbubble[LmlnhLx,TempEvol,coeffs,Tcrit,Kfactor,full,atau]=Block[{Tc=Tcrit,Tofx,tScale,scaleFactor,comovingTime,aofx,tauofx,LxA,LxB,LxData,scale,lnscale,lnGammaPT,lnh,\[CapitalGamma]h,integrand,lxTable,lxMids,table,integral,Nmids,\[CapitalDelta]lxTable,resTable,non0Tab,reg,Lnorm,data,res,eps=smallnum},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1647,7 +1663,7 @@ Lnbubble::NoNucleation="The nucleation rate is so small at all times that there 
 
 Clear[LRbubble]
 
-LRbubble[LmlnhLx_,LnbLx_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1}]:=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tcrit,Kfactor,full,atau]=Block[{Tc=Tcrit,Tofx,tScale,scaleFactor,comovingTime,aofx,tauofx,LxA,LxB,LxData,LnbData,scale,lnscale,lnGammaPT,lnh,\[CapitalGamma]h,radius,integrand,lxTable,Nmids,\[CapitalDelta]lxTable,lxMids,table,resTable,non0Tab,reg,Lnorm,data,res,eps=10^-6},
+LRbubble[LmlnhLx_,LnbLx_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1}]:=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tcrit,Kfactor,full,atau]=Block[{Tc=Tcrit,Tofx,tScale,scaleFactor,comovingTime,aofx,tauofx,LxA,LxB,LxData,LnbData,scale,lnscale,lnGammaPT,lnh,\[CapitalGamma]h,radius,integrand,lxTable,Nmids,\[CapitalDelta]lxTable,lxMids,table,resTable,non0Tab,reg,Lnorm,data,res,eps=smallnum},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1762,7 +1778,7 @@ NoDLogCondPT[vw_,LogGammList_List,betaList_List]:=Log10[8\[Pi]]+3Log10[vw]+LogGa
 
 Clear[tTPT]
 
-tTPT[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,method_:"analytic",Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=tTPT[direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,atau,Nlx]=Block[{gamma,t0,tcrit,Tofx,tScale,dlnTdt,xmax,Tmax,xA,xB,xData,yData,prec,\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,TmaxFlag,PTCritFlag,Toffset,Tini,TLeft,TRight,x0,xlo,xhi,xRange,xLeft,xRight,GammaPT,LogGammaPT,betaPT,cond,LogCond,noDLogCond,LhLx,LnbLx,LRLx,data,xpt,tpt,Tpt,result,eps=10^-6},
+tTPT[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,method_:"analytic",Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=tTPT[direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,atau,Nlx]=Block[{gamma,t0,tcrit,Tofx,tScale,dlnTdt,xmax,Tmax,xA,xB,xData,yData,prec,\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,TmaxFlag,PTCritFlag,Toffset,Tini,TLeft,TRight,x0,xlo,xhi,xRange,xLeft,xRight,GammaPT,LogGammaPT,betaPT,cond,LogCond,noDLogCond,LhLx,LnbLx,LRLx,data,xpt,tpt,Tpt,result,eps=smallnum},
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
 (*distributing the coefficients*)
@@ -1846,7 +1862,7 @@ xData=(InterpolatingFunctionCoordinates[Tofx]//Flatten);
 prec=Round[Precision[xData[[1]]]];
 
 (*slightly away from the leftmost edge*)
-xA=If[xA<=0,eps,Min[xData[[2]],xA*(1+eps)]];
+xA=If[xA<=0,Min[xData[[2]],eps],Min[xData[[2]],xA*(1+eps)]];
 Clear[xData];
 
 (*checking whether T_c is in the interval of temperatures probed by the T(t) function along the stated direction*)
@@ -1916,7 +1932,7 @@ xData=(InterpolatingFunctionCoordinates[Tofx]//Flatten);
 prec=Round[Precision[xData[[1]]]];
 
 (*slightly away from the edges*)
-xA=If[xA<=0,eps,Min[xData[[2]],xA*(1+eps)]];
+xA=If[xA<=0,Min[xData[[2]],eps],Min[xData[[2]],xA*(1+eps)]];
 Clear[xData];
 
 (*time t at which T(t) reaches a maximum*)
@@ -1982,7 +1998,7 @@ xData=(InterpolatingFunctionCoordinates[Tofx]//Flatten);
 prec=Round[Precision[xData[[1]]]];
 
 (*slightly away from the edges*)
-xA=If[xA<=0,eps,Min[xData[[2]],xA*(1+eps)]];
+xA=If[xA<=0,Min[xData[[2]],eps],Min[xData[[2]],xA*(1+eps)]];
 Clear[xData];
 
 (*time t at which T(t) reaches a maximum*)
