@@ -3,7 +3,7 @@
 BeginPackage["PhaseTransition`"];
 
 
-ptParams::usage="ptParams: function to compute parameters of the first order phase transition (1PT).\nInput: (gStar,direction,vw,{Temperature Evolution},coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx).\n\tIf method='analytic' then {Temperature Evolution}={\[Gamma], t0, tcrit};\n\telse if method='semi'/'numeric'/'alt' then {Temperature Evolution}={Tfn, tScale}.\nOutput: {\!\(\*SubscriptBox[\(T\), \(PT\)]\), \!\(\*SubscriptBox[\(t\), \(PT\)]\), \!\(\*OverscriptBox[\(\[Lambda]\), \(_\)]\), \!\(\*SubscriptBox[\(\[Chi]\), \(b\)]\), \[Epsilon], \!\(\*SubscriptBox[\(E\), \(c\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\)', \!\(\*SubscriptBox[\(S\), \(E\)]\)'', \!\(\*SubscriptBox[\(\[CapitalGamma]\), \(nucl\)]\)/\[ScriptCapitalV], \!\(\*SubscriptBox[\(\[Beta]\), \(1\)]\), \!\(\*SubscriptBox[\(\[Beta]\), \(2\)]\), \!\(\*SubscriptBox[\(n\), \(b\)]\), \!\(\*SubscriptBox[\(R\), \(b\)]\), <R>, \!\(\*SubscriptBox[\(\[Beta]\), \(eff\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(\[Infinity]\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(n\)]\), \!\(\*SubscriptBox[\(\[Kappa]\), \(run\)]\)}";
+ptParams::usage="ptParams: function to compute parameters of the first order phase transition (1PT).\nInput: (gStar,direction,vw,{Temperature Evolution},coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx).\n\tIf method='analytic' then {Temperature Evolution}={\[Gamma], t0, tcrit};\n\telse if method='semi'/'numeric'/'alt' then {Temperature Evolution}={Tfn, tScale}.\nOutput: {\!\(\*SubscriptBox[\(T\), \(PT\)]\), \!\(\*SubscriptBox[\(t\), \(PT\)]\), \!\(\*OverscriptBox[\(\[Lambda]\), \(_\)]\), \!\(\*SubscriptBox[\(\[CapitalPhi]\), \(b\)]\), \[Epsilon], \!\(\*SubscriptBox[\(E\), \(c\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\)', \!\(\*SubscriptBox[\(S\), \(E\)]\)'', \!\(\*SubscriptBox[\(\[CapitalGamma]\), \(nucl\)]\)/\[ScriptCapitalV], \!\(\*SubscriptBox[\(\[Beta]\), \(1\)]\), \!\(\*SubscriptBox[\(\[Beta]\), \(2\)]\), \!\(\*SubscriptBox[\(n\), \(b\)]\), \!\(\*SubscriptBox[\(R\), \(b\)]\), <R>, \!\(\*SubscriptBox[\(\[Beta]\), \(eff\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(\[Infinity]\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(n\)]\), \!\(\*SubscriptBox[\(\[Kappa]\), \(run\)]\)}";
 tTPT::usage="tTPT: function to compute the time and temperature of the 1PT.\nInput: (direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx).\n\tIf method='analytic' then {Temperature Evolution}={\[Gamma], t0, tcrit};\n\telse if method='semi'/'numeric'/'alt' then {Temperature Evolution}={Tfn, tScale}.\nOutput: \!\(\*SubscriptBox[\(t\), \(PT\)]\),\!\(\*SubscriptBox[\(T\), \(PT\)]\)";
 Lmlnh::usage="Lmlnh: interpolated function \!\(\*SubscriptBox[\(log\), \(10\)]\)(-ln[h(\!\(\*SubscriptBox[\(log\), \(10\)]\) x)]), where h is the fractional volume in the metastable phase of the 1PT.\nInput: (direction,vw,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor,Nlx).\nOutput: \!\(\*SubscriptBox[\(log\), \(10\)]\)(-ln[h(\!\(\*SubscriptBox[\(log\), \(10\)]\)x)])";
 Lnbubble::usage="Lnbubble: interpolated function \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(n\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x)), where \!\(\*SubscriptBox[\(n\), \(b\)]\) is the mean bubble number density.\nInput: (LmlnhLx,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor).\nOutput: \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(n\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x)))";
@@ -82,7 +82,7 @@ smallnum=10^-6;
 
 
 (* ::Text:: *)
-(*In this Notebook we will assume there is one single scalar \[Chi] undergoing the phase transition.*)
+(*In this Notebook we will assume there is one single scalar \[CapitalPhi] undergoing the phase transition.*)
 
 
 (* ::Section:: *)
@@ -92,11 +92,11 @@ smallnum=10^-6;
 (* ::Text:: *)
 (*We first write the thermal potential (density) of the scalar field. Note that it is equal to the zero-temperature potential (T=0) contribution (from your usual QFT course) plus the thermal free energy density (\[ScriptCapitalF]) contributions from bosons and fermions coupled to it.*)
 (**)
-(*The only assumptions are that: \[Chi] is real, and that M^2(T)>0, \[Delta](T)>0.*)
+(*The only assumptions are that: \[CapitalPhi] is real, and that M^2(T)>0, \[Delta](T)>0.*)
 
 
 (* ::ItemNumbered:: *)
-(*\[Chi] \[Element]R^+*)
+(*\[CapitalPhi] \[Element]R^+*)
 
 
 (* ::ItemNumbered:: *)
@@ -112,7 +112,7 @@ smallnum=10^-6;
 
 
 (* ::Text:: *)
-(*M^2(T)>0 is necessary so that we're above the binodal temperature and the symmetric phase is a minimum and not a maximum. The \[Delta](T)>0 condition can be relaxed and all results will still follow upon the change of variables \[Delta](T)->\[Dash]\[Delta](T), \[Chi]->\[Dash]\[Chi].*)
+(*M^2(T)>0 is necessary so that we're above the binodal temperature and the symmetric phase is a minimum and not a maximum. The \[Delta](T)>0 condition can be relaxed and all results will still follow upon the change of variables \[Delta](T)->\[Dash]\[Delta](T), \[CapitalPhi]->\[Dash]\[CapitalPhi].*)
 
 
 V[x_]=M^2/2 x^2-\[Delta]/3 x^3+(\[Lambda]/4!) (x^4)(*M^2(T) and \[Delta](T) general functions of T, with contributions from bosons and fermions*);
@@ -123,9 +123,9 @@ V[x_]=M^2/2 x^2-\[Delta]/3 x^3+(\[Lambda]/4!) (x^4)(*M^2(T) and \[Delta](T) gene
 
 
 extrema={{x->0},{x->(3 \[Delta]-Sqrt[9 \[Delta]^2-6 M^2 \[Lambda]])/\[Lambda]},{x->(3 \[Delta]+Sqrt[9 \[Delta]^2-6 M^2 \[Lambda]])/\[Lambda]}};
-Xs=(x/.extrema[[1]])(*\[Chi]_s: value in symmetric minimum*);
-Xm=(x/.extrema[[2]])(*\[Chi]_m: value at maximum*);
-Xb=(x/.extrema[[3]])(*\[Chi]_b: value in broken minimum*);
+Fs=(x/.extrema[[1]])(*\[CapitalPhi]_s: value in symmetric minimum*);
+Fm=(x/.extrema[[2]])(*\[CapitalPhi]_m: value at maximum*);
+Fb=(x/.extrema[[3]])(*\[CapitalPhi]_b: value in broken minimum*);
 
 
 (* ::Text:: *)
@@ -137,6 +137,14 @@ Vs=val[[1]];
 Vm=val[[2]];
 Vb=val[[3]];
 Clear[extrema,val]
+
+
+(* ::Text:: *)
+(*As we shall see, at T=0 \[Delta]=0, and therefore the VEV and the potential value is:*)
+
+
+Fb0=(Sqrt[6] Sqrt[-M^2 \[Lambda]])/\[Lambda];
+Vb0=-((3 M^4)/(2 \[Lambda]));
 
 
 (* ::Section:: *)
@@ -163,7 +171,7 @@ PotToMc\[Lambda]bar={M->Mc*Sqrt[\[Lambda]bar],\[Delta]->Sqrt[\[Lambda] Mc^2]*Sqr
 
 
 (* ::Text:: *)
-(*Note that M^2(T) is the \[Chi]-mass (i.e. V''(\[Chi])) in the symmetric phase (\[LeftAngleBracket]\[Chi]\[RightAngleBracket]=\[Chi]_s=0). In the broken phase (\[LeftAngleBracket]\[Chi]\[RightAngleBracket]=\[Chi]_b) the mass M_b^2(T) (V'') is:*)
+(*Note that M^2(T) is the \[CapitalPhi]-mass (i.e. V''(\[CapitalPhi])) in the symmetric phase (\[LeftAngleBracket]\[CapitalPhi]\[RightAngleBracket]=\[CapitalPhi]_s=0). In the broken phase (\[LeftAngleBracket]\[CapitalPhi]\[RightAngleBracket]=\[CapitalPhi]_b) the mass M_b^2(T) (V'') is:*)
 
 
 Mb=(1/2 Mc Sqrt[9+3 Sqrt[9-8 \[Lambda]bar]-8 \[Lambda]bar]);
@@ -190,7 +198,7 @@ VbmVs=((3 Mc^4 (-9 (3+Sqrt[9-8 \[Lambda]bar])+4 (9+2 Sqrt[9-8 \[Lambda]bar]-2 \[
 (* ::Text:: *)
 (*A convenient way to write our equations is in terms of dimensionless quantities. The actual physical quantities can then be obtained from the dimensionless ones by multiplying by the appropriate scales.*)
 (**)
-(*We define \[Chi]bar\[Congruent]\[Chi]/\[Chi]_b and rbar=M\[CenterDot]r. We will see that the dimensionality of the potential is given by M^2 \[Chi]_b^2:*)
+(*We define \[CapitalPhi]bar\[Congruent]\[CapitalPhi]/\[CapitalPhi]_b and rbar=M\[CenterDot]r. We will see that the dimensionality of the potential is given by M^2 \[CapitalPhi]_b^2:*)
 
 
 PotDim=(-((3 Mc^4 \[Lambda]bar (-3 (3+Sqrt[9-8 \[Lambda]bar])+4 \[Lambda]bar))/(2 \[Lambda])));
@@ -311,10 +319,18 @@ ARule={A->Sqrt[3]/2 Sqrt[\[Lambda]]\[Mu] Sqrt[\[CapitalDelta]]};
 
 
 (* ::Text:: *)
-(*From here we can then write T in terms of \[Lambda]bar and \[CapitalDelta], which is particularly simple:*)
+(*From here we can then write T and M_c in terms of \[Lambda]bar and \[CapitalDelta], which is particularly simple:*)
 
 
 TTo\[Lambda]bar\[CapitalDelta]={T->Tc Sqrt[(1-\[CapitalDelta])/(1-\[CapitalDelta]*\[Lambda]bar)]}
+McTo\[Lambda]bar\[CapitalDelta]={Mc->Tc \[Mu] Sqrt[\[CapitalDelta]] Sqrt[(1-\[CapitalDelta])/(1-\[CapitalDelta]*\[Lambda]bar)]}
+
+
+(* ::Text:: *)
+(*For the T=0 case the substitution for the potential coefficients are:*)
+
+
+PotToCoeffs0Temp={M->Tc Sqrt[-1+(4 A^2)/(3 \[Lambda] \[Mu]^2)] \[Mu],\[Delta]->0};
 
 
 (* ::Text:: *)
@@ -337,22 +353,22 @@ d2ln\[Lambda]dlnT2=-((12 T^2 Tc^2 \[Lambda] \[Mu]^2 (-4 A^2+3 \[Lambda] \[Mu]^2)
 
 
 (* ::Text:: *)
-(*The critical bubble is the profile for \[Chi]_bubble(x) \[Congruent] \[Chi]_bub that corresponds to a stationary solution interpolating between the two minima \[Chi]=constant minima (i.e. \[Chi]_s & \[Chi]_b), and are solutions to the stationary equation for the Euclidean action (S_E), which can be written in terms of the energy of the critical bubble, E_T:*)
+(*The critical bubble is the profile for \[CapitalPhi]_bubble(x) \[Congruent] \[CapitalPhi]_bub that corresponds to a stationary solution interpolating between the two minima \[CapitalPhi]=constant minima (i.e. \[CapitalPhi]_s & \[CapitalPhi]_b), and are solutions to the stationary equation for the Euclidean action (S_E), which can be written in terms of the energy of the critical bubble, E_T:*)
 (**)
-(*S_E[\[Chi]] = S_E[\[Chi]]/T=T^-1 \[Integral]d^3 x  1/2 (\[Del]\[Chi])^2+ V_T(\[Chi])*)
+(*S_E[\[CapitalPhi]] = S_E[\[CapitalPhi]]/T=T^-1 \[Integral]d^3 x  1/2 (\[Del]\[CapitalPhi])^2+ V_T(\[CapitalPhi])*)
 (**)
-(*\[Delta]E_T[\[Chi]]/\[Delta]\[Chi]=0   \[DoubleRightArrow]   -\[Del]^2\[Chi]+\[PartialD]V_T(\[Chi])/\[PartialD]\[Chi]=0*)
+(*\[Delta]E_T[\[CapitalPhi]]/\[Delta]\[CapitalPhi]=0   \[DoubleRightArrow]   -\[Del]^2\[CapitalPhi]+\[PartialD]V_T(\[CapitalPhi])/\[PartialD]\[CapitalPhi]=0*)
 (**)
 (*Note that we will be dealing with spherically-symmetric, time-independent expressions, so this equation reduces to:*)
 (**)
-(*-(1/r^2) d/dr (r^2 d\[Chi]_bub/dr) + V_T'(\[Chi]_bub)=0*)
+(*-(1/r^2) d/dr (r^2 d\[CapitalPhi]_bub/dr) + V_T'(\[CapitalPhi]_bub)=0*)
 (**)
-(*The dimensionality of this equation is then M^2 \[Chi]_b. Dividing the whole expression by this dimension (M^2 \[Chi]_b) allows us to find its dimensionless form, which we will use in the next section. On the other hand, the dimensionality of the E_T energy is (\[Chi]_b^2)/M, and thus the action has a prefactor P_S\[Congruent](\[Chi]_b^2)/(M T).*)
+(*The dimensionality of this equation is then M^2 \[CapitalPhi]_b. Dividing the whole expression by this dimension (M^2 \[CapitalPhi]_b) allows us to find its dimensionless form, which we will use in the next section. On the other hand, the dimensionality of the E_T energy is (\[CapitalPhi]_b^2)/M, and thus the action has a prefactor P_S\[Congruent](\[CapitalPhi]_b^2)/(M T).*)
 (**)
 (*This prefactor can be rewritten in terms of \[Lambda]bar. It, and its first and second derivatives w.r.t. \[Lambda]bar, are given by:*)
 
 
-PS=(Sqrt[3] A (9+3 Sqrt[9-8 \[Lambda]bar]-4 \[Lambda]bar))/Sqrt[\[Lambda]^3 \[Lambda]bar];
+PS=(Sqrt[3] A (9+3 Sqrt[9-8 \[Lambda]bar]-4 \[Lambda]bar))/(\[Lambda]^(3/2)*\[Lambda]bar^(1/2));
 
 dPSd\[Lambda]=-((Sqrt[3] A (9 (3+Sqrt[9-8 \[Lambda]bar])+4 Sqrt[9-8 \[Lambda]bar] \[Lambda]bar))/(2 \[Lambda]bar Sqrt[\[Lambda]^3 (9-8 \[Lambda]bar) \[Lambda]bar]));
 
@@ -366,22 +382,22 @@ d2PSd\[Lambda]2=-((Sqrt[3] A (-243 (3+Sqrt[9-8 \[Lambda]bar])+4 \[Lambda]bar (21
 (* ::Text:: *)
 (*The differential equation is:*)
 (**)
-(*-(1/r^2) d/dr (r^2 d\[Chi]_bub/dr) + V_T'(\[Chi]_bub)=0,*)
+(*-(1/r^2) d/dr (r^2 d\[CapitalPhi]_bub/dr) + V_T'(\[CapitalPhi]_bub)=0,*)
 (**)
-(*which has dimensionality M^2 \[Chi]_b. Dividing the whole expression by this dimension (M^2 \[Chi]_b) allows us to find its dimensionless form.*)
+(*which has dimensionality M^2 \[CapitalPhi]_b. Dividing the whole expression by this dimension (M^2 \[CapitalPhi]_b) allows us to find its dimensionless form.*)
 (**)
 (*The term with the derivative in the potential is:*)
 
 
-dimlessVprime[x_,\[Lambda]bar_]=(((-1+x) x (x (9+3 Sqrt[9-8 \[Lambda]bar]-4 \[Lambda]bar)-4 \[Lambda]bar))/(4 \[Lambda]bar));
+dimlessVprime[x_,\[Lambda]bar_]=x+(x^2 (-9-3 Sqrt[9-8 \[Lambda]bar]))/(4 \[Lambda]bar)+(x^3 (9+3 Sqrt[9-8 \[Lambda]bar]-4 \[Lambda]bar))/(4 \[Lambda]bar);
 
 
 (* ::Text:: *)
 (*In terms of these dimensionless quantities, the bubble solution satisfies the following boundary conditions:*)
 (**)
-(*\[Chi]bar(rbar->\[Infinity]) \[Congruent] \[Chi]bar_ini  is the initial value of the scalar field \[Chi]bar in the phase transition: \[Chi]bar_ini = \[Chi]bar_s=0 (\[Chi]bar_ini = \[Chi]bar_b = 1) for a cold/subcritical PT (hot/supercritical PT)*)
+(*\[CapitalPhi]bar(rbar->\[Infinity]) \[Congruent] \[CapitalPhi]bar_fv  is the false vacuum initial value of the scalar field \[CapitalPhi]bar in the phase transition: \[CapitalPhi]bar_fv = \[CapitalPhi]bar_s=0 (\[CapitalPhi]bar_fv = \[CapitalPhi]bar_b = 1) for a cold/subcritical PT (hot/supercritical PT)*)
 (**)
-(*\[Chi]bar(rbar=0) \[Congruent] \[Chi]bar_fin is the final value of the scalar field \[Chi]bar in the phase transition: close to \[Chi]bar_fin = \[Chi]bar_b = 1 (\[Chi]bar_fin = \[Chi]bar_s = 0) for a cold/subcritical PT (hot/supercritical PT)*)
+(*\[CapitalPhi]bar(rbar=0) \[Congruent] \[CapitalPhi]bar_tv is the true vacuum final value of the scalar field \[CapitalPhi]bar in the phase transition: close to \[CapitalPhi]bar_tv = \[CapitalPhi]bar_b = 1 (\[CapitalPhi]bar_tv = \[CapitalPhi]bar_s = 0) for a cold/subcritical PT (hot/supercritical PT)*)
 (**)
 (*Recall that whether we have a hot (supercritical)/cold (subcritical) phase transition depends on the value of \[Lambda]bar (\[GreaterLess]1), and thus whether we tunnel from the broken to the symmetric phase, or vice versa.*)
 
@@ -389,19 +405,19 @@ dimlessVprime[x_,\[Lambda]bar_]=(((-1+x) x (x (9+3 Sqrt[9-8 \[Lambda]bar]-4 \[La
 (* ::Text:: *)
 (*In terms of these dimensionless quantities, the energy in the critical bubble is given by:*)
 (**)
-(*E_T[\[Chi]_bub]=\[Integral]d^3 x  1/2 (\[Del]\[Chi]_bub)^2+ V_T(\[Chi]_bub) = (\[Chi]_b^2)/M 4\[Pi] \[Integral] drbar rbar^2 ( 1/2 (d\[Chi]bar_bub/drbar)^2 + Vbar_T(\[Chi]bar_bub) )*)
+(*E_T[\[CapitalPhi]_bub]=\[Integral]d^3 x  1/2 (\[Del]\[CapitalPhi]_bub)^2+ V_T(\[CapitalPhi]_bub) = (\[CapitalPhi]_b^2)/M 4\[Pi] \[Integral] drbar rbar^2 ( 1/2 (d\[CapitalPhi]bar_bub/drbar)^2 + Vbar_T(\[CapitalPhi]bar_bub) )*)
 (**)
-(*with \[Chi]_bub = \[Chi]_b \[Chi]bar_bub and Vbar_T(\[Chi]bar) = V_T(\[Chi]bar \[Chi]_b)/(\[Chi]_b^2 M^2)*)
+(*with \[CapitalPhi]_bub = \[CapitalPhi]_b \[CapitalPhi]bar_bub and Vbar_T(\[CapitalPhi]bar) = V_T(\[CapitalPhi]bar \[CapitalPhi]_b)/(\[CapitalPhi]_b^2 M^2)*)
 (**)
-(*As we will see more clearly in the thin wall approximation, this expression is formally infinite. However, what the physics depends on is the (finite) difference between the energies of the initial constant-\[Chi] configuration (\[Chi]bar_ini) and the bubble \[Chi]bar_bub configuration. This is called the critical energy, and is given by:*)
+(*As we will see more clearly in the thin wall approximation, this expression is formally infinite. However, what the physics depends on is the (finite) difference between the energies of the initial constant-\[CapitalPhi] configuration (\[CapitalPhi]bar_fv) and the bubble \[CapitalPhi]bar_bub configuration. This is called the critical energy, and is given by:*)
 (**)
-(*E_c\[Congruent]E_T[\[Chi]_bub]-E_T[\[Chi]_ini].*)
+(*E_c\[Congruent]E_T[\[CapitalPhi]_bub]-E_T[\[CapitalPhi]_fv].*)
 
 
 (* ::Text:: *)
 (*Finally, the dimensionless critical bubble equation is:*)
 (**)
-(*\[Chi]bar_bub''(r) + (2/rbar) \[Chi]bar_bub'(r) - Vbar_T(\[Chi]bar_bub) = 0*)
+(*\[CapitalPhi]bar_bub''(r) + (2/rbar) \[CapitalPhi]bar_bub'(r) - Vbar_T(\[CapitalPhi]bar_bub) = 0*)
 
 
 (* ::Section:: *)
@@ -411,15 +427,15 @@ dimlessVprime[x_,\[Lambda]bar_]=(((-1+x) x (x (9+3 Sqrt[9-8 \[Lambda]bar]-4 \[La
 (* ::Text:: *)
 (*In the thin wall approximation (twa) \[Epsilon]\[Congruent]\[CapitalDelta]V/V_m<<1, which means that the gain in the vacuum energy from the bubble (~\[CapitalDelta]V\[CenterDot]R^3\[Proportional]\[Epsilon]\[CenterDot]R^3), only becomes larger than the energy from the bubble surface (~(R^2)) for a large bubble radius R, much larger than the thickness of the bubble wall.*)
 (**)
-(*One can show that in the twa \[Chi]' (r)^2 = 2 V_T(\[Chi]), and that the (dimensionless) critical energy can be written as:*)
+(*One can show that in the twa \[CapitalPhi]' (r)^2 = 2 V_T(\[CapitalPhi]), and that the (dimensionless) critical energy can be written as:*)
 (**)
-(*Ebar_c=Ebar_T[\[Chi]bar_bub]-Ebar_T[\[Chi]bar_ini]=[(4\[Pi])/3 Rbar_c^3 Vbar_T(\[Chi]bar_fin) + 4\[Pi] Rbar_c^2 \[Sigma]bar+(4\[Pi])/3 Vbar_T(\[Chi]bar_ini) (\[Infinity]^3-Rbar_c^3)] - (4\[Pi])/3 Vbar_T(\[Chi]bar_ini) \[Infinity]^3 = -(4\[Pi])/3 Rbar_c^3 \[CapitalDelta] Vbar_T + 4\[Pi] Rbar_c^2 \[Sigma]bar ,*)
+(*Ebar_c=Ebar_T[\[CapitalPhi]bar_bub]-Ebar_T[\[CapitalPhi]bar_fv]=[(4\[Pi])/3 Rbar_c^3 Vbar_T(\[CapitalPhi]bar_tv) + 4\[Pi] Rbar_c^2 \[Sigma]bar+(4\[Pi])/3 Vbar_T(\[CapitalPhi]bar_fv) (\[Infinity]^3-Rbar_c^3)] - (4\[Pi])/3 Vbar_T(\[CapitalPhi]bar_fv) \[Infinity]^3 = -(4\[Pi])/3 Rbar_c^3 \[CapitalDelta] Vbar_T + 4\[Pi] Rbar_c^2 \[Sigma]bar ,*)
 (**)
-(*where R_c is the critical radius, and we have split the contributions to the energy in three parts: the inside (rbar<Rbar_c), the surface (rbar\[TildeTilde]Rbar_c), and the outside (rbar>Rbar_c). The (infinite) energy from the constant-\[Chi] initial configuration cancels out the (infinite) part from the energy of the critical bubble, as promised. What we are left with is a term from the difference \[CapitalDelta]Vbar\[Congruent]Vbar(\[Chi]bar_ini)-Vbar(\[Chi]bar_fin)>0 between the two minima, as well as the surface term.*)
+(*where R_c is the critical radius, and we have split the contributions to the energy in three parts: the inside (rbar<Rbar_c), the surface (rbar\[TildeTilde]Rbar_c), and the outside (rbar>Rbar_c). The (infinite) energy from the constant-\[CapitalPhi] initial configuration cancels out the (infinite) part from the energy of the critical bubble, as promised. What we are left with is a term from the difference \[CapitalDelta]Vbar\[Congruent]Vbar(\[CapitalPhi]bar_fv)-Vbar(\[CapitalPhi]bar_tv)>0 between the two minima, as well as the surface term.*)
 (**)
 (*The contribution from the surface depends on the surface tension \[Sigma]bar, given by:*)
 (**)
-(*\[Sigma]bar\[TildeTilde]|\[Integral]_(\[Chi]bar_ini)^(\[Chi]bar_fin) d\[Chi]bar Sqrt[2 Vbar_T(\[Chi]bar)]| = |\[Integral]_0^1 d\[Chi]bar Sqrt[2 Vbar_T(\[Chi]bar)]|*)
+(*\[Sigma]bar\[TildeTilde]|\[Integral]_(\[CapitalPhi]bar_fv)^(\[CapitalPhi]bar_tv) d\[CapitalPhi]bar Sqrt[2 Vbar_T(\[CapitalPhi]bar)]| = |\[Integral]_0^1 d\[CapitalPhi]bar Sqrt[2 Vbar_T(\[CapitalPhi]bar)]|*)
 
 
 (* ::Subsection:: *)
@@ -431,7 +447,7 @@ dimlessVprime[x_,\[Lambda]bar_]=(((-1+x) x (x (9+3 Sqrt[9-8 \[Lambda]bar]-4 \[La
 
 
 (* ::Text:: *)
-(*Its dimensionality is \[Chi]_b^2 M, as can be seen both from the fact that the dimensionality of E_c is \[Chi]_b^2 /M and that of R_c is 1/M, and from the fact that the dimensionality of V_T is M^2 \[Chi]_b^2 and that of \[Chi] is \[Chi]_b.*)
+(*Its dimensionality is \[CapitalPhi]_b^2 M, as can be seen both from the fact that the dimensionality of E_c is \[CapitalPhi]_b^2 /M and that of R_c is 1/M, and from the fact that the dimensionality of V_T is M^2 \[CapitalPhi]_b^2 and that of \[CapitalPhi] is \[CapitalPhi]_b.*)
 
 
 (* ::Subsection:: *)
@@ -465,26 +481,26 @@ d2Ectwad\[Lambda]2[\[Lambda]bar_]=-((8 \[Pi] (-5-9 Sqrt[9-8 \[Lambda]bar]+4 \[La
 
 
 (* ::Subsection:: *)
-(*Bubble profile \[Chi]_bub(r)*)
+(*Bubble profile \[CapitalPhi]_bub(r)*)
 
 
 (* ::Text:: *)
 (*It can be shown that in the twa*)
 (**)
-(*d \[Chi]bar/d rbar \[TildeTilde] sign(\[Lambda]bar-1)\[CenterDot]Sqrt[2Vbar_T(\[Chi]bar)],*)
+(*d \[CapitalPhi]bar/d rbar \[TildeTilde] sign(\[Lambda]bar-1)\[CenterDot]Sqrt[2Vbar_T(\[CapitalPhi]bar)],*)
 (**)
-(*(i.e. positive/negative derivatives for hot (supercritical)/cold (subcritical) PT). From here we can solve for rbar(\[Chi]bar):*)
+(*(i.e. positive/negative derivatives for hot (supercritical)/cold (subcritical) PT). From here we can solve for rbar(\[CapitalPhi]bar):*)
 (**)
-(*rbar\[TildeTilde]|\[Integral]_(\[Chi]bar_ini)^(\[Chi]bar_fin) d\[Chi]bar'/Sqrt[2 Vbar_T(\[Chi]bar')]*)
+(*rbar\[TildeTilde]|\[Integral]_(\[CapitalPhi]bar_fv)^(\[CapitalPhi]bar_tv) d\[CapitalPhi]bar'/Sqrt[2 Vbar_T(\[CapitalPhi]bar')]*)
 (**)
 (*and then invert the equation.*)
 
 
-\[CapitalDelta]rtwa[\[Chi]lo_,\[Chi]hi_]=(Log[(\[Chi]hi (-1+\[Chi]lo))/((-1+\[Chi]hi) \[Chi]lo)])(*\[CapitalDelta]r change in r due to a change in \[Chi]*);
+\[CapitalDelta]rtwa[\[CapitalPhi]lo_,\[CapitalPhi]hi_]=(Log[(\[CapitalPhi]hi (-1+\[CapitalPhi]lo))/((-1+\[CapitalPhi]hi) \[CapitalPhi]lo)])(*\[CapitalDelta]r change in r due to a change in \[CapitalPhi]*);
 
-\[Chi]fintwa[\[Lambda]bar_]=(E^(1/(-1+\[Lambda]bar))/(E^(1/(-1+\[Lambda]bar))+E^((Sqrt[9-8 \[Lambda]bar]+4 \[Lambda]bar)/(3 (-1+\[Lambda]bar)))))(*final value of \[Chi] from PT (namely, \[Chi](r\[Rule]0)) for a given critical radius R_c(\[Lambda]bar)*);
+\[CapitalPhi]tvtwa[\[Lambda]bar_]=(E^(1/(-1+\[Lambda]bar))/(E^(1/(-1+\[Lambda]bar))+E^((Sqrt[9-8 \[Lambda]bar]+4 \[Lambda]bar)/(3 (-1+\[Lambda]bar)))))(*final value of \[CapitalPhi] from PT (namely, \[CapitalPhi](r\[Rule]0)) for a given critical radius R_c(\[Lambda]bar)*);
 
-\[Chi]twa[r_,\[Lambda]bar_]=(1/(1+E^((-3+Sqrt[9-8 \[Lambda]bar]+4 \[Lambda]bar-3 r Abs[-1+\[Lambda]bar])/(3 (-1+\[Lambda]bar)))))(*the bubble profile in the twa*);
+\[CapitalPhi]twa[r_,\[Lambda]bar_]=(1/(1+E^((-3+Sqrt[9-8 \[Lambda]bar]+4 \[Lambda]bar-3 r Abs[-1+\[Lambda]bar])/(3 (-1+\[Lambda]bar)))))(*the bubble profile in the twa*);
 
 
 (* ::Subsection:: *)
@@ -492,16 +508,16 @@ d2Ectwad\[Lambda]2[\[Lambda]bar_]=-((8 \[Pi] (-5-9 Sqrt[9-8 \[Lambda]bar]+4 \[La
 
 
 (* ::Text:: *)
-(*We can define the wall thickness l_w in terms of the change in radius r upon a certain change \[CapitalDelta] \[Chi]bar in the scalar field, centered around half the field-distance \[Chi]_*=|(\[Chi]_fin-\[Chi]_ini)/2|:*)
+(*We can define the wall thickness l_w in terms of the change in radius r upon a certain change \[CapitalDelta] \[CapitalPhi]bar in the scalar field, centered around half the field-distance \[CapitalPhi]_*=|(\[CapitalPhi]_tv-\[CapitalPhi]_fv)/2|:*)
 (**)
-(*l_w \[Congruent] \[CapitalDelta] rbar = \[Integral]_((1-\[CapitalDelta]\[Chi]bar)/2)^((1+\[CapitalDelta]\[Chi]bar)/2) d\[Chi]bar'/(d\[Chi]bar'/drbar) = \[Integral]_((1-\[CapitalDelta]\[Chi]bar)/2)^((1+\[CapitalDelta]\[Chi]bar)/2) d\[Chi]bar'/(Sqrt[2 Vbar_T(\[Chi]bar')])*)
+(*l_w \[Congruent] \[CapitalDelta] rbar = \[Integral]_((1-\[CapitalDelta]\[CapitalPhi]bar)/2)^((1+\[CapitalDelta]\[CapitalPhi]bar)/2) d\[CapitalPhi]bar'/(d\[CapitalPhi]bar'/drbar) = \[Integral]_((1-\[CapitalDelta]\[CapitalPhi]bar)/2)^((1+\[CapitalDelta]\[CapitalPhi]bar)/2) d\[CapitalPhi]bar'/(Sqrt[2 Vbar_T(\[CapitalPhi]bar')])*)
 
 
-thickness[\[CapitalDelta]\[Chi]_]=(Log[(1+\[CapitalDelta]\[Chi])^2/(-1+\[CapitalDelta]\[Chi])^2])(*wall thickness for arbitrary change \[CapitalDelta]\[Chi]bar in \[Chi]bar around 1/2*);
+thickness[\[CapitalDelta]\[CapitalPhi]_]=(Log[(1+\[CapitalDelta]\[CapitalPhi])^2/(-1+\[CapitalDelta]\[CapitalPhi])^2])(*wall thickness for arbitrary change \[CapitalDelta]\[CapitalPhi]bar in \[CapitalPhi]bar around 1/2*);
 
 
 (* ::Text:: *)
-(*Since what where does the wall start and ends is an arbitrary definition, we simply take its value to be the thickness for changes of \[CapitalDelta]\[Chi]bar=0.9 around 1/2:*)
+(*Since what where does the wall start and ends is an arbitrary definition, we simply take its value to be the thickness for changes of \[CapitalDelta]\[CapitalPhi]bar=0.9 around 1/2:*)
 
 
 lw=thickness[9/10](*bubble thickness*);
@@ -554,7 +570,7 @@ limd2EcThick["cold"][\[Lambda]bar_]=4.312152615329304`;
 (*For supercritical, hot 1PT, Ebar_c is:*)
 
 
-EcThick["hot"][\[Lambda]bar_]=(155.23749415185492` Sqrt[((1-Sqrt[1-Sqrt[9-8 \[Lambda]bar]]+Sqrt[9-8 \[Lambda]bar])^4 \[Lambda]bar)/(9+3 Sqrt[9-8 \[Lambda]bar]-8 \[Lambda]bar)])/(3.` +Sqrt[9-8 \[Lambda]bar])^2;
+EcThick["hot"][\[Lambda]bar_]=(155.23749415185492` Sqrt[((1-Sqrt[1-Sqrt[9-8 \[Lambda]bar]]+Sqrt[9-8 \[Lambda]bar])^4 \[Lambda]bar)/(9+3 Sqrt[9-8 \[Lambda]bar]-8 \[Lambda]bar)])/(3 +Sqrt[9-8 \[Lambda]bar])^2;
 
 
 (* ::Text:: *)
@@ -571,7 +587,7 @@ limd2EcThick["hot"][\[Lambda]bar_]=-(21.19683545752185`/(9/8-\[Lambda]bar)^(5/4)
 
 
 (* ::Text:: *)
-(*We now need to find the critical bubble profiles, i.e. the solutions to the critical bubble differential equation. Note that since \[Chi]bar=1(0) is a minimum (\[Chi]_b or \[Chi]_s respectively), then for both of these values V_T'(\[Chi])=0 and \[Chi]bar is constant in rbar: there is not bubble, just a constant value for all radii. Thus we need to start a bit off from these values, but not so much that we over/undershoot and get stuck in the maximum instead.*)
+(*We now need to find the critical bubble profiles, i.e. the solutions to the critical bubble differential equation. Note that since \[CapitalPhi]bar=1(0) is a minimum (\[CapitalPhi]_b or \[CapitalPhi]_s respectively), then for both of these values V_T'(\[CapitalPhi])=0 and \[CapitalPhi]bar is constant in rbar: there is not bubble, just a constant value for all radii. Thus we need to start a bit off from these values, but not so much that we over/undershoot and get stuck in the maximum instead.*)
 (**)
 (*The whole point of the numerical approach is to perform a shooting algorithm to find the initial condition that allows us to interpolate between the required minima.*)
 
@@ -639,13 +655,13 @@ Clear[i,\[Lambda]bar,fileName]
 (* ::Text:: *)
 (*The energy of the critical bubble is:*)
 (**)
-(*E_T[\[Chi]_bub]=\[Integral]d^3 x  1/2 (\[Del]\[Chi]_bub)^2+ V_T(\[Chi]_bub) = (\[Chi]_b^2)/M 4\[Pi] \[Integral] drbar rbar^2 ( 1/2 (d\[Chi]bar_bub/drbar)^2 + Vbar_T(\[Chi]bar_bub) )*)
+(*E_T[\[CapitalPhi]_bub]=\[Integral]d^3 x  1/2 (\[Del]\[CapitalPhi]_bub)^2+ V_T(\[CapitalPhi]_bub) = (\[CapitalPhi]_b^2)/M 4\[Pi] \[Integral] drbar rbar^2 ( 1/2 (d\[CapitalPhi]bar_bub/drbar)^2 + Vbar_T(\[CapitalPhi]bar_bub) )*)
 (**)
-(*with \[Chi]_bub = \[Chi]_b \[Chi]bar_bub and Vbar_T(\[Chi]bar) = V_T(\[Chi]bar \[Chi]_b)/(\[Chi]_b^2 M^2)*)
+(*with \[CapitalPhi]_bub = \[CapitalPhi]_b \[CapitalPhi]bar_bub and Vbar_T(\[CapitalPhi]bar) = V_T(\[CapitalPhi]bar \[CapitalPhi]_b)/(\[CapitalPhi]_b^2 M^2)*)
 (**)
-(*As we saw, this expression is formally infinite. However, what the physics depends on is the (finite) difference between the energies of the initial constant-\[Chi] configuration (\[Chi]bar_ini) and the bubble \[Chi]bar_bub configuration. This is called the critical energy, and is given by:*)
+(*As we saw, this expression is formally infinite. However, what the physics depends on is the (finite) difference between the energies of the initial constant-\[CapitalPhi] configuration (\[CapitalPhi]bar_fv) and the bubble \[CapitalPhi]bar_bub configuration. This is called the critical energy, and is given by:*)
 (**)
-(*E_c\[Congruent]E_T[\[Chi]_bub]-E_T[\[Chi]_ini].*)
+(*E_c\[Congruent]E_T[\[CapitalPhi]_bub]-E_T[\[CapitalPhi]_fv].*)
 
 
 (* ::Subsection:: *)
@@ -839,6 +855,13 @@ EcAnHot[\[Lambda]bar_]=(1.6441933519976608*(9/8-\[Lambda]bar)^(3/4))/(1-\[Lambda
 EcAn[\[Lambda]bar_]:=Which[0<=\[Lambda]bar<1,EcAnCold[\[Lambda]bar],9/8>=\[Lambda]bar>1,EcAnHot[\[Lambda]bar],\[Lambda]bar==1,\[Infinity]]
 
 
+(* ::Text:: *)
+(*For the action, we multiply P_S by Ebar_c:*)
+
+
+SAn[\[Lambda]bar_]:=Which[0<=\[Lambda]bar<1,((\[Sqrt]3 A (9+3 \[Sqrt](9-8 \[Lambda]bar)-4 \[Lambda]bar))/(\[Lambda]^(3/2) \[Sqrt]\[Lambda]bar))*EcAnCold[\[Lambda]bar],9/8>=\[Lambda]bar>1,((\[Sqrt]3 A (9+3 \[Sqrt](9-8 \[Lambda]bar)-4 \[Lambda]bar))/(\[Lambda]^(3/2) \[Sqrt]\[Lambda]bar))*EcAnHot[\[Lambda]bar],\[Lambda]bar==1,\[Infinity]]
+
+
 (* ::Chapter:: *)
 (*3. Important Physical Quantities*)
 
@@ -860,7 +883,7 @@ THigh=Tc Sqrt[(4 A^2-3 \[Lambda] \[Mu]^2)/((112499 A^2)/25000-3 \[Lambda] \[Mu]^
 
 
 (* ::Subsection:: *)
-(*Transition strength \[Alpha]_n and runaway threshold strength \[Alpha]_\[Infinity]*)
+(*Potential Parameters*)
 
 
 (* ::Text:: *)
@@ -868,13 +891,13 @@ THigh=Tc Sqrt[(4 A^2-3 \[Lambda] \[Mu]^2)/((112499 A^2)/25000-3 \[Lambda] \[Mu]^
 (**)
 (*{type, N_i, g_i},*)
 (**)
-(*where type = "B"/"F" denotes boson/fermion, N_i is the degrees of freedom of the i-th particle, and g_i is its coupling to the higgs \[Chi].*)
+(*where type = "B"/"F" denotes boson/fermion, N_i is the degrees of freedom of the i-th particle, and g_i is its coupling to the higgs \[CapitalPhi].*)
 (**)
-(*\[Mu]^2/2=1/24  \[Sum]_i c_i g_i^2,*)
+(*\[Mu]^2/2=1/24  \[Sum]_i c_i N_i g_i^2,*)
 (**)
-(*A/3=1/(12\[Pi]) \[Sum]_B g_B^3,*)
+(*A/3=1/(12\[Pi]) \[Sum]_B N_B g_B^3,*)
 (**)
-(*a = \[Pi]^2/30 g_* = \[Pi]^2/30 \[Sum]_(m_i << T) c_i',*)
+(*a = \[Pi]^2/30 g_* = \[Pi]^2/30 \[Sum]_(m_i << T) c_i' N_i,*)
 (**)
 (*where g_* is the usual number of relativistic d.o.f. in the dark sector plasma.*)
 
@@ -899,13 +922,72 @@ aFromList[particleContent_List,scalarValue_]:=\[Pi]^2/30 Total[cprimeType[#[[1]]
 
 (* ::Text:: *)
 (*Nevertheless we will most likely not bother nailing down the exact particle content of the dark sector. As such, we will be concerned mostly with \[Mu], A, and a directly.*)
-(**)
+
+
+(* ::Subsection:: *)
+(*Transition strength \[Alpha]_n, runaway threshold strength \[Alpha]_\[Infinity], and runaway condition*)
+
+
+(* ::Text:: *)
 (*From this, let us write some functions that will help us directly write down the phase transition strength in terms of the relevant parameters.*)
+(**)
+(*\[Alpha]_n \[Congruent] -V_b0/\[Rho]_r ,*)
+(**)
+(*\[Alpha]_\[Infinity]\[TildeTilde](\[Mu]^2/2) T^2 \[CapitalPhi]_b^2/\[Rho]_r .*)
+(**)
+(*The runaway condition is*)
+(**)
+(*\[Kappa]_run>0,*)
+(**)
+(*where \[Kappa]_run \[Congruent] sign[1-\[Lambda]bar](\[Alpha]_n - \[Alpha]_\[Infinity])/\[Alpha]_n .*)
 
 
-Clear[\[Alpha]\[Infinity],\[Alpha]n]
+Clear[\[Alpha]n,\[Alpha]\[Infinity],\[Kappa]run]
 
-\[Alpha]\[Infinity][gStar_,coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,\[Lambda]bar,sign,\[Chi]VEV,aN,res},
+\[Alpha]n[gStar_,coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,\[Epsilon]0,an,res},
+
+(*distributing the coefficients*)
+{\[Mu],A,\[Lambda]}=coeffs;
+
+(*checking whether there can be a first order phase transition*)
+noCritTemp[coeffs];
+
+(*vacuum energy density (i.e. at T=0)*)
+\[Epsilon]0=Abs[(Vb0/.PotToCoeffs0Temp)];
+
+(*the coefficient in \[Rho]_rad(T)=a_N T^4 (a_N = \[Pi]^2/30 g_* )*)
+an=\[Pi]^2/30 gStar;
+
+(*\[Alpha]_n*)
+res=\[Epsilon]0/(an*T^4);
+
+res
+]
+
+
+\[Alpha]\[Infinity][gStar_,coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,\[CapitalPhi]VEV,aN,res},
+
+(*distributing the coefficients*)
+{\[Mu],A,\[Lambda]}=coeffs;
+
+(*checking whether there can be a first order phase transition*)
+noCritTemp[coeffs];
+
+(*the <\[CapitalPhi]> VEV, i.e. its value in the broken phase*)
+\[CapitalPhi]VEV=(Fb/.PotToCoeffs);
+
+(*the coefficient in \[Rho]_rad(T)=a_N*T^4 ( a_N=\[Pi]^2/30 g_* )*)
+aN=\[Pi]^2/30 gStar;
+
+(*\[Alpha]_\[Infinity]*)
+res=(\[Mu]^2/2*T^2*\[CapitalPhi]VEV^2)/(aN*T^4);
+
+res
+]
+
+
+
+\[Kappa]run[gStar_,coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,\[Lambda]bar,sign,alphn,alphInf,res},
 
 (*distributing the coefficients*)
 {\[Mu],A,\[Lambda]}=coeffs;
@@ -916,23 +998,35 @@ noCritTemp[coeffs];
 (*\[Lambda]bar*)
 \[Lambda]bar=(\[Lambda]bar/.Mc\[Lambda]barToCoeffs);
 
-(*the sign of the mass change \[CapitalDelta]m_i^2 as the particles move accross the bubble wall: if the PT is cold (subcritical) (\[Lambda]bar<1) \[Implies] \[Chi]_s\[Rule]\[Chi]_b and the mass increases; if the PT is hot (supercritical) (\[Lambda]bar>1) \[Implies] \[Chi]_b\[Rule]\[Chi]_s and the mass decreases  *)
+(*the sign of the runaway condition*)
 sign=Sign[1-\[Lambda]bar];
 
-(*the <\[Chi]> VEV, i.e. its value in the broken phase*)
-\[Chi]VEV=(Xb/.PotToCoeffs);
-
-(*the coefficient in \[Rho]_rad(T)=a_NT^4 ( a_N=\[Pi]^2/30 g_* )*)
-aN=\[Pi]^2/30 gStar;
+(*\[Alpha]_n*)
+alphn=\[Alpha]n[gStar,coeffs,Tc,T];
 
 (*\[Alpha]_\[Infinity]*)
-res=sign*(\[Chi]VEV/T)^2*(\[Mu]^2/2)/aN;
+alphInf=\[Alpha]\[Infinity][gStar,coeffs,Tc,T];
+
+(*\[Kappa]_run*)
+res=sign*((alphn-alphInf)/alphn);
 
 res
 ]
 
 
-\[Alpha]n[gStar_,coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,\[Epsilon],an,res},
+(* ::Subsection:: *)
+(*Daisy contributions*)
+
+
+(* ::Text:: *)
+(*We approximate the daisy contributions as*)
+(**)
+(*daisy\[TildeTilde](1+(T/\[CapitalPhi]_b)^2)^(3/2) - 1*)
+
+
+Clear[daisy]
+
+daisy[coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,\[CapitalPhi]VEV,res},
 
 (*distributing the coefficients*)
 {\[Mu],A,\[Lambda]}=coeffs;
@@ -940,14 +1034,11 @@ res
 (*checking whether there can be a first order phase transition*)
 noCritTemp[coeffs];
 
-(*energy density in PT*)
-\[Epsilon]=(\[CapitalDelta]V/.Mc\[Lambda]barToCoeffs);
+(*the <\[CapitalPhi]> VEV, i.e. its value in the broken phase*)
+\[CapitalPhi]VEV=(Fb/.PotToCoeffs);
 
-(*the coefficient in \[Rho]_rad(T)=a_N T^4 (a_N = \[Pi]^2/30 g_* )*)
-an=\[Pi]^2/30 gStar;
-
-(*\[Alpha]_n*)
-res=\[Epsilon]/(an*T^4);
+(*daisy contributions*)
+res=(1+T^2/\[CapitalPhi]VEV^2)^(3/2)-1;
 
 res
 ]
@@ -958,7 +1049,7 @@ res
 
 
 (* ::Text:: *)
-(*We start by noting that E_c=\[Chi]_b^2/M Ebar_c. We can then define our critical energy function in terms of the potential coefficients {\[Mu],A,\[Lambda]} (in that order) and T_c and T:*)
+(*We start by noting that E_c=\[CapitalPhi]_b^2/M Ebar_c. We can then define our critical energy function in terms of the potential coefficients {\[Mu],A,\[Lambda]} (in that order) and T_c and T:*)
 
 
 Clear[EcTemp]
@@ -977,8 +1068,8 @@ noCritTemp[coeffs];
 (*\[Lambda]bar*)
 \[Lambda]bar=(\[Lambda]bar/.Mc\[Lambda]barToCoeffs);
 
-(*\[Chi]_b^2/(M*T_c): the dimensionality of E_c, in units of T_c*)
-dim=(Xb^2/(M*Tc)/.PotToCoeffs);
+(*\[CapitalPhi]_b^2/(M*T_c): the dimensionality of E_c, in units of T_c*)
+dim=(Fb^2/(M*Tc)/.PotToCoeffs);
 
 (*E_c*)
 ec=Tc*dim*EcFn[\[Lambda]bar];
@@ -2105,18 +2196,18 @@ tTPT::NoTpt="Tpt=`1` is outside the interval `2`. In other words, the PT could n
 (*1. g_* is the # d.o.f. in the radiation (i.e. light particles) outside the bubble,*)
 (*2. the direction is one of the strings "hot" or "cold"*)
 (*3. v_w is the bubble wall speed*)
-(*4. For 'Temperature Evolution': \[Gamma] is the power-law behavior ot T(t), t_0 is a reference time at which T(t_0)=0, t_c is the time at which the critical temperature is reached, T(x) is an interpolated function of the temperature as a function of a time-like variable x, and t_scale is the time scale: x=t/t_scale. *)
+(*4. For 'Temperature Evolution': \[Gamma] is the power-law behavior of T(t), t_0 is a reference time at which T(t_0)=0, t_c is the time at which the critical temperature is reached, T(x) is an interpolated function of the temperature as a function of a time-like variable x, and t_scale is the time scale: x=t/t_scale. *)
 (*5. {\[Mu], A, \[Lambda]} are the dimensionless coefficients in the thermal potential (see their definition in previous section),*)
 (*6. T_c the critical temperature of the phase transition.*)
 (**)
 (*The last five arguments (the method to compute the PT temperature, the numerical coefficient in front of \[CapitalGamma]_nucl/\[ScriptCapitalV], whether we include T-dependent contributions from the 0-modes of the path integral, whether we consider the impact of the scale factor on bubble nucleation, and the number of log steps in time for the full numerical method) are optional parameters.*)
 (**)
-(*Output: T_PT(t_PT), t_PT, \[Lambda]bar(t_PT), \[LeftAngleBracket]\[Chi]_b(t_PT)\[RightAngleBracket], \[CapitalDelta]V(t_PT) (also called \[Epsilon]), E_c(t_PT), S_E(t_PT), S_E'(t_PT), S_E''(t_PT), \[CapitalGamma]_nucl(t_PT)/\[ScriptCapitalV], \[Beta]_1(t_PT), \[Beta]_2(t_PT), n_b(t_PT), R_b(t_PT), \[LeftAngleBracket]R(t_PT)\[RightAngleBracket], \[Beta]_eff(t_PT), \[Alpha]_\[Infinity](t_PT), \[Alpha]_n(t_PT), \[Kappa]_run \[Congruent] (\[Alpha]_n-\[Alpha]_\[Infinity])/\[Alpha]_n.*)
+(*Output: T_PT(t_PT), t_PT, \[Lambda]bar(t_PT), \[LeftAngleBracket]\[CapitalPhi]_b(t_PT)\[RightAngleBracket], \[CapitalDelta]V(t_PT) (also called \[Epsilon]_T), E_c(t_PT), S_E(t_PT), S_E'(t_PT), S_E''(t_PT), \[CapitalGamma]_nucl(t_PT)/\[ScriptCapitalV], \[Beta]_1(t_PT), \[Beta]_2(t_PT), n_b(t_PT), R_b(t_PT), \[LeftAngleBracket]R(t_PT)\[RightAngleBracket], \[Beta]_eff(t_PT), \[Alpha]_\[Infinity](t_PT), \[Alpha]_n(t_PT), \[Kappa]_run \[Congruent] sign[1-\[Lambda]bar] (\[Alpha]_n-\[Alpha]_\[Infinity])/\[Alpha]_n.*)
 
 
 Clear[ptParams]
 
-ptParams[gStar_,direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,method_:"analytic",Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=ptParams[gStar,direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,atau,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,gamma,t0,tcrit,Tfn,Toft,dlnTdt,d2lnTdt2,tt,tScale,Tpt,tpt,T,\[Lambda]bar,\[Chi]b,\[Epsilon],Ec,SE,SE1,SE2,GammaNucl,beta1Rate,beta2Rate,LmlnhLx,LnbLx,LRbLx,nbPT,RPT,Ravg,betaEff,alphInf,alphn,effRun},
+ptParams[gStar_,direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,method_:"analytic",Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=ptParams[gStar,direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,atau,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,gamma,t0,tcrit,Tfn,Toft,dlnTdt,d2lnTdt2,tt,tScale,Tpt,tpt,T,\[Lambda]bar,\[CapitalPhi]b,\[Epsilon],Ec,SE,SE1,SE2,GammaNucl,beta1Rate,beta2Rate,LmlnhLx,LnbLx,LRbLx,nbPT,RPT,Ravg,betaEff,alphInf,alphn,effRun},
 
 (*distributing the coefficients*)
 {\[Mu],A,\[Lambda]}=coeffs;
@@ -2144,8 +2235,8 @@ tcrit=If[direction=="cold",tcrit[[2]],tcrit[[1]]];
 (*\[Lambda]bar*)
 \[Lambda]bar=(\[Lambda]bar/.Mc\[Lambda]barToCoeffs);
 
-(*\[Chi]_b*)
-\[Chi]b=(Xb/.PotToCoeffs);
+(*\[CapitalPhi]_b*)
+\[CapitalPhi]b=(Fb/.PotToCoeffs);
 
 (*\[Epsilon] (|\[CapitalDelta]V|)*)
 \[Epsilon]=(\[CapitalDelta]V/.Mc\[Lambda]barToCoeffs);
@@ -2202,11 +2293,11 @@ alphInf=\[Alpha]\[Infinity][gStar,coeffs,Tc,Tpt];
 (*\[Alpha]_n*)
 alphn=\[Alpha]n[gStar,coeffs,Tc,Tpt];
 
-(*\[Kappa]_run: the "efficiency" for runaway bubbles. This is the fraction of energy that actually goes into accelerating the bubble wall when we have runaway. For runaway bubbles we will take this to be the efficiency corresponding to the energy going into the envelope. For non-runaway bubbles we should NOT use this number.*)
-effRun=(alphn-alphInf)/alphn;
+(*\[Kappa]_run: the "efficiency" for runaway bubbles, if the runaway condition is satisfied (\[Kappa]_run>0). This is the fraction of energy that actually goes into accelerating the bubble wall when we have runaway. For runaway bubbles we will take this to be the efficiency corresponding to the energy going into the envelope. For non-runaway bubbles (when this number is negative) we should NOT use this number.*)
+effRun=\[Kappa]run[gStar,coeffs,Tc,Tpt];
 
-(*final result, 19 parameters: {T_PT, t_PT, \[Lambda]bar, \[Chi]_b, \[Epsilon], E_c, S_E, S_E', S_E'', \[CapitalGamma]_nucl/\[ScriptCapitalV], \[Beta]_1, \[Beta]_2, n_b, R_b, <R>, \[Beta]_eff, \[Alpha]_\[Infinity], \[Alpha]_n, \[Kappa]_run}*)
-{Tpt,tpt,\[Lambda]bar,\[Chi]b,\[Epsilon],Ec,SE,SE1,SE2,GammaNucl,beta1Rate,beta2Rate,nbPT,RPT,Ravg,betaEff,alphInf,alphn,effRun}
+(*final result, 19 parameters: {T_PT, t_PT, \[Lambda]bar, \[CapitalPhi]_b, \[Epsilon], E_c, S_E, S_E', S_E'', \[CapitalGamma]_nucl/\[ScriptCapitalV], \[Beta]_1, \[Beta]_2, n_b, R_b, <R>, \[Beta]_eff, \[Alpha]_\[Infinity], \[Alpha]_n, \[Kappa]_run}*)
+{Tpt,tpt,\[Lambda]bar,\[CapitalPhi]b,\[Epsilon],Ec,SE,SE1,SE2,GammaNucl,beta1Rate,beta2Rate,nbPT,RPT,Ravg,betaEff,alphInf,alphn,effRun}
 
 ]
 

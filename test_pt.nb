@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[   1245213,      21809]
-NotebookOptionsPosition[   1238031,      21682]
-NotebookOutlinePosition[   1238395,      21698]
-CellTagsIndexPosition[   1238352,      21695]
+NotebookDataLength[   1246991,      21829]
+NotebookOptionsPosition[   1239797,      21702]
+NotebookOutlinePosition[   1240160,      21718]
+CellTagsIndexPosition[   1240117,      21715]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -22,7 +22,7 @@ Cell[BoxData[
  RowBox[{"Quit", "[", "]"}]], "Input",
  CellChangeTimes->{{3.860683246543169*^9, 3.860683247332203*^9}, {
   3.860769087137123*^9, 3.860769087678525*^9}},
- CellLabel->"In[30]:=",ExpressionUUID->"d1adb373-ed85-47e3-81ba-618c6af6b276"],
+ CellLabel->"In[33]:=",ExpressionUUID->"d1adb373-ed85-47e3-81ba-618c6af6b276"],
 
 Cell[BoxData[{
  RowBox[{"Needs", "[", "\"\<DSReheating`\>\"", "]"}], "\[IndentingNewLine]", 
@@ -77,9 +77,10 @@ Cell[BoxData[{
    RowBox[{"PrivateDict", "[", "\"\<RH\>\"", "]"}], "=", 
    RowBox[{"{", 
     RowBox[{
-    "x", ",", "r\[Phi]", ",", "rr", ",", "Hi", ",", "gstar", ",", "f", ",", 
+    "x", ",", "r\[Chi]", ",", "rr", ",", "Hi", ",", "gstar", ",", "f", ",", 
      "\[Gamma]"}], "}"}]}], ";"}]}], "Input",
- CellChangeTimes->{{3.876911712966939*^9, 3.876911845182495*^9}},
+ CellChangeTimes->{{3.876911712966939*^9, 3.876911845182495*^9}, {
+  3.8857353033346367`*^9, 3.8857353040671177`*^9}},
  CellLabel->"In[3]:=",ExpressionUUID->"9ef9135b-729a-46af-a3ac-0068c8b6a5ca"],
 
 Cell[BoxData[{
@@ -200,8 +201,9 @@ Cell[BoxData[
    3.877016374285201*^9, 3.878396402551938*^9, 3.878396791709841*^9, 
    3.878397375929187*^9, 3.878552291136697*^9, 3.878553095247106*^9, 
    3.878824530358101*^9, 3.878825197541621*^9, 3.8790019239504766`*^9, 
-   3.8790025927515707`*^9, 3.883825124240543*^9, 3.883827491134375*^9},
- CellLabel->"Out[11]=",ExpressionUUID->"443137b1-3a0f-40dd-8486-579af6c8ca0a"],
+   3.8790025927515707`*^9, 3.883825124240543*^9, 3.883827491134375*^9, 
+   3.885735348761385*^9, 3.8857394868841257`*^9, 3.88573992959634*^9},
+ CellLabel->"Out[11]=",ExpressionUUID->"da4ca0c3-e638-40d3-aec5-b05245f10801"],
 
 Cell[BoxData[
  RowBox[{"Which", "[", 
@@ -220,8 +222,9 @@ Cell[BoxData[
    3.877016374285201*^9, 3.878396402551938*^9, 3.878396791709841*^9, 
    3.878397375929187*^9, 3.878552291136697*^9, 3.878553095247106*^9, 
    3.878824530358101*^9, 3.878825197541621*^9, 3.8790019239504766`*^9, 
-   3.8790025927515707`*^9, 3.883825124240543*^9, 3.883827491163187*^9},
- CellLabel->"Out[12]=",ExpressionUUID->"e03ad4e9-23de-4e83-8a51-b81c4e3c1fa2"],
+   3.8790025927515707`*^9, 3.883825124240543*^9, 3.883827491134375*^9, 
+   3.885735348761385*^9, 3.8857394868841257`*^9, 3.885739929598608*^9},
+ CellLabel->"Out[12]=",ExpressionUUID->"9b59bca7-7e53-4c33-8b7f-759d7e5cec52"],
 
 Cell[BoxData[
  FractionBox[
@@ -240,8 +243,9 @@ Cell[BoxData[
    3.877016374285201*^9, 3.878396402551938*^9, 3.878396791709841*^9, 
    3.878397375929187*^9, 3.878552291136697*^9, 3.878553095247106*^9, 
    3.878824530358101*^9, 3.878825197541621*^9, 3.8790019239504766`*^9, 
-   3.8790025927515707`*^9, 3.883825124240543*^9, 3.8838274911656857`*^9},
- CellLabel->"Out[13]=",ExpressionUUID->"09ca3d2a-4a55-4ccf-8b6f-fc564df6859c"],
+   3.8790025927515707`*^9, 3.883825124240543*^9, 3.883827491134375*^9, 
+   3.885735348761385*^9, 3.8857394868841257`*^9, 3.885739929601042*^9},
+ CellLabel->"Out[13]=",ExpressionUUID->"a860ffd4-2f49-44f6-b580-327d05d09b4f"],
 
 Cell[BoxData[
  FractionBox[
@@ -260,8 +264,9 @@ Cell[BoxData[
    3.877016374285201*^9, 3.878396402551938*^9, 3.878396791709841*^9, 
    3.878397375929187*^9, 3.878552291136697*^9, 3.878553095247106*^9, 
    3.878824530358101*^9, 3.878825197541621*^9, 3.8790019239504766`*^9, 
-   3.8790025927515707`*^9, 3.883825124240543*^9, 3.883827491167728*^9},
- CellLabel->"Out[14]=",ExpressionUUID->"e550c3b5-e53f-44f8-8993-8dab6b877165"],
+   3.8790025927515707`*^9, 3.883825124240543*^9, 3.883827491134375*^9, 
+   3.885735348761385*^9, 3.8857394868841257`*^9, 3.885739929603002*^9},
+ CellLabel->"Out[14]=",ExpressionUUID->"d2be008b-11e9-419b-967b-d95e92ecb473"],
 
 Cell[BoxData["10.337318428321458`"], "Output",
  CellChangeTimes->{{3.8769191175871277`*^9, 3.876919129419138*^9}, {
@@ -270,8 +275,9 @@ Cell[BoxData["10.337318428321458`"], "Output",
    3.877016374285201*^9, 3.878396402551938*^9, 3.878396791709841*^9, 
    3.878397375929187*^9, 3.878552291136697*^9, 3.878553095247106*^9, 
    3.878824530358101*^9, 3.878825197541621*^9, 3.8790019239504766`*^9, 
-   3.8790025927515707`*^9, 3.883825124240543*^9, 3.883827491168906*^9},
- CellLabel->"Out[15]=",ExpressionUUID->"9f230deb-46d7-4537-98d8-e409ef67028c"]
+   3.8790025927515707`*^9, 3.883825124240543*^9, 3.883827491134375*^9, 
+   3.885735348761385*^9, 3.8857394868841257`*^9, 3.885739929604447*^9},
+ CellLabel->"Out[15]=",ExpressionUUID->"10fe0ebf-67e9-4972-bd06-16375d3a4d96"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -281,15 +287,16 @@ Cell[BoxData[
   RowBox[{"\"\<RH\>\"", ",", 
    RowBox[{
     RowBox[{"RHDict", "[", "\"\<solsAn\>\"", "]"}], "[", 
-    RowBox[{"\"\<\[Gamma]<<1\>\"", ",", "\"\<\[Phi]D\>\""}], "]"}]}], 
+    RowBox[{"\"\<\[Gamma]<<1\>\"", ",", "\"\<\[Chi]D\>\""}], "]"}]}], 
   "]"}]], "Input",
+ CellChangeTimes->{{3.885735352672433*^9, 3.885735353490748*^9}},
  CellLabel->"In[16]:=",ExpressionUUID->"8f59918f-458c-40aa-85ce-489bca9c37bf"],
 
 Cell[BoxData[
  RowBox[{"{", 
   RowBox[{
    RowBox[{
-    RowBox[{"r\[Phi]", "[", "x", "]"}], "\[Rule]", 
+    RowBox[{"r\[Chi]", "[", "x", "]"}], "\[Rule]", 
     FractionBox[
      RowBox[{"8", "-", 
       RowBox[{"2", " ", "x", " ", 
@@ -326,8 +333,9 @@ Cell[BoxData[
          RowBox[{"3", " ", "x"}]}]]}], ")"}], " ", "\[Gamma]"}]}]}], 
   "}"}]], "Output",
  CellChangeTimes->{3.8838222438904963`*^9, 3.883825124288065*^9, 
-  3.883827491194408*^9},
- CellLabel->"Out[16]=",ExpressionUUID->"e08b920f-e6ee-41ce-a54a-c40e199dd984"]
+  3.883827491194408*^9, 3.885735354914113*^9, 3.885739486926526*^9, 
+  3.885739929635388*^9},
+ CellLabel->"Out[16]=",ExpressionUUID->"0b5962aa-b26f-4152-a7f3-5c9f4fa84845"]
 }, Open  ]]
 }, Open  ]],
 
@@ -427,6 +435,12 @@ for reheating.\"\>", "InformationUsageText",
                     "1.5192680000000002`*^24"}]},
                     {
                     RowBox[{
+                    RowBox[{"RHDict", "[", "\<\"\[Rho]\[Chi]i\"\>", "]"}], 
+                    "=", 
+                    RowBox[{"1.7792980254736994`*^37", " ", 
+                    SuperscriptBox["DSReheating`Private`Hi", "2"]}]}]},
+                    {
+                    RowBox[{
                     RowBox[{"RHDict", "[", "\<\"\[Rho]crit\"\>", "]"}], "=", 
                     "3.63573088`*^-47"}]},
                     {
@@ -459,12 +473,6 @@ for reheating.\"\>", "InformationUsageText",
                     RowBox[{
                     RowBox[{"RHDict", "[", "\<\"Hz\"\>", "]"}], "=", 
                     "6.58211717748284`*^-25"}]},
-                    {
-                    RowBox[{
-                    RowBox[{"RHDict", "[", "\<\"\[Rho]\[Phi]i\"\>", "]"}], 
-                    "=", 
-                    RowBox[{"1.7792980254736994`*^37", " ", 
-                    SuperscriptBox["DSReheating`Private`Hi", "2"]}]}]},
                     {
                     RowBox[{
                     RowBox[{"RHDict", "[", "\<\"T\[Gamma]0\"\>", "]"}], "=", 
@@ -526,34 +534,27 @@ for reheating.\"\>", "InformationUsageText",
                     RowBox[{
                     RowBox[{
                     RowBox[{"RHDict", "[", "\<\"Lr\"\>", "]"}], "[", 
-                    RowBox[{"\<\"\[Gamma]>>1\"\>", ",", "\<\"\[Phi]D\"\>"}], 
+                    RowBox[{"\<\"\[Gamma]<<1\"\>", ",", "\<\"\[Chi]D\"\>"}], 
                     "]"}], "=", 
-                    FractionBox["1", 
-                    RowBox[{"4", " ", "DSReheating`Private`x"}]]}]},
-                    {
                     RowBox[{
-                    RowBox[{
-                    RowBox[{"RHDict", "[", "\<\"solsAn\"\>", "]"}], "[", 
-                    RowBox[{"\<\"\[Gamma]>>1\"\>", ",", "\<\"\[Phi]D\"\>"}], 
-                    "]"}], "=", 
-                    RowBox[{"{", 
-                    RowBox[{
-                    RowBox[{
-                    RowBox[{
-                    "DSReheating`Private`r\[Phi]", "[", 
-                    "DSReheating`Private`x", "]"}], "\[Rule]", 
-                    RowBox[{"1", "-", 
-                    RowBox[{"DSReheating`Private`x", " ", 
+                    RowBox[{"-", 
+                    FractionBox["2", 
+                    RowBox[{"2", "+", 
+                    RowBox[{"3", " ", "DSReheating`Private`x"}]}]]}], "+", 
+                    FractionBox["5", 
+                    RowBox[{"4", " ", 
                     RowBox[{"(", 
-                    RowBox[{"3", "+", "DSReheating`Private`\[Gamma]"}], 
-                    ")"}]}]}]}], ",", 
-                    RowBox[{
-                    RowBox[{
-                    "DSReheating`Private`rr", "[", "DSReheating`Private`x", 
-                    "]"}], "\[Rule]", 
-                    RowBox[{
-                    "DSReheating`Private`x", " ", 
-                    "DSReheating`Private`\[Gamma]"}]}]}], "}"}]}]},
+                    RowBox[{"2", "+", 
+                    RowBox[{"3", " ", "DSReheating`Private`x"}], "-", 
+                    FractionBox[
+                    RowBox[{"2", " ", 
+                    SuperscriptBox["2", 
+                    RowBox[{"2", "/", "3"}]]}], 
+                    SuperscriptBox[
+                    RowBox[{"(", 
+                    RowBox[{"2", "+", 
+                    RowBox[{"3", " ", "DSReheating`Private`x"}]}], ")"}], 
+                    RowBox[{"2", "/", "3"}]]]}], ")"}]}]]}]}]},
                     {
                     RowBox[{
                     RowBox[{
@@ -589,15 +590,14 @@ for reheating.\"\>", "InformationUsageText",
                     RowBox[{
                     RowBox[{
                     RowBox[{
-                    "DSReheating`Private`r\[Phi]", "[", 
+                    "DSReheating`Private`r\[Chi]", "[", 
                     "DSReheating`Private`x", "]"}], "\[Rule]", 
                     FractionBox[
                     RowBox[{
                     SuperscriptBox["\[ExponentialE]", 
                     RowBox[{
                     FractionBox["1", "2"], "-", 
-                    RowBox[{
-                    "DSReheating`Private`x", " ", 
+                    RowBox[{"DSReheating`Private`x", " ", 
                     "DSReheating`Private`\[Gamma]"}]}]], " ", 
                     RowBox[{"(", 
                     RowBox[{
@@ -642,33 +642,14 @@ for reheating.\"\>", "InformationUsageText",
                     {
                     RowBox[{
                     RowBox[{
-                    RowBox[{"RHDict", "[", "\<\"rEq\"\>", "]"}], 
-                    "[", "\<\"\[Gamma]>>1\"\>", "]"}], "=", 
-                    RowBox[{
-                    FractionBox["1", "2"], "-", 
-                    FractionBox["3", 
-                    RowBox[{"4", " ", "DSReheating`Private`\[Gamma]"}]]}]}]},
-                    {
-                    RowBox[{
-                    RowBox[{
-                    RowBox[{"RHDict", "[", "\<\"xEq\"\>", "]"}], 
-                    "[", "\<\"\[Gamma]<<1\"\>", "]"}], "=", 
-                    RowBox[{
-                    FractionBox["2", "3"], "+", 
-                    FractionBox["10", 
-                    RowBox[{
-                    "11", " ", "DSReheating`Private`\[Gamma]"}]]}]}]},
-                    {
-                    RowBox[{
-                    RowBox[{
                     RowBox[{"RHDict", "[", "\<\"solsAn\"\>", "]"}], "[", 
-                    RowBox[{"\<\"\[Gamma]<<1\"\>", ",", "\<\"\[Phi]D\"\>"}], 
+                    RowBox[{"\<\"\[Gamma]<<1\"\>", ",", "\<\"\[Chi]D\"\>"}], 
                     "]"}], "=", 
                     RowBox[{"{", 
                     RowBox[{
                     RowBox[{
                     RowBox[{
-                    "DSReheating`Private`r\[Phi]", "[", 
+                    "DSReheating`Private`r\[Chi]", "[", 
                     "DSReheating`Private`x", "]"}], "\[Rule]", 
                     FractionBox[
                     RowBox[{"8", "-", 
@@ -711,6 +692,25 @@ for reheating.\"\>", "InformationUsageText",
                     {
                     RowBox[{
                     RowBox[{
+                    RowBox[{"RHDict", "[", "\<\"rEq\"\>", "]"}], 
+                    "[", "\<\"\[Gamma]>>1\"\>", "]"}], "=", 
+                    RowBox[{
+                    FractionBox["1", "2"], "-", 
+                    FractionBox["3", 
+                    RowBox[{"4", " ", "DSReheating`Private`\[Gamma]"}]]}]}]},
+                    {
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"RHDict", "[", "\<\"xEq\"\>", "]"}], 
+                    "[", "\<\"\[Gamma]<<1\"\>", "]"}], "=", 
+                    RowBox[{
+                    FractionBox["2", "3"], "+", 
+                    FractionBox["10", 
+                    RowBox[{
+                    "11", " ", "DSReheating`Private`\[Gamma]"}]]}]}]},
+                    {
+                    RowBox[{
+                    RowBox[{
                     RowBox[{"RHDict", "[", "\<\"solsAn\"\>", "]"}], "[", 
                     RowBox[{"\<\"\[Gamma]<<1\"\>", ",", "\<\"RD\"\>"}], "]"}],
                      "=", 
@@ -718,7 +718,7 @@ for reheating.\"\>", "InformationUsageText",
                     RowBox[{
                     RowBox[{
                     RowBox[{
-                    "DSReheating`Private`r\[Phi]", "[", 
+                    "DSReheating`Private`r\[Chi]", "[", 
                     "DSReheating`Private`x", "]"}], "\[Rule]", 
                     RowBox[{
                     FractionBox["1", "2"], " ", 
@@ -732,7 +732,8 @@ for reheating.\"\>", "InformationUsageText",
                     FractionBox[
                     RowBox[{"2", " ", "DSReheating`Private`\[Gamma]"}], "3"], 
                     "-", 
-                    RowBox[{"DSReheating`Private`x", " ", 
+                    RowBox[{
+                    "DSReheating`Private`x", " ", 
                     "DSReheating`Private`\[Gamma]"}]}]], " ", 
                     SqrtBox[
                     FractionBox["DSReheating`Private`\[Gamma]", 
@@ -790,6 +791,30 @@ for reheating.\"\>", "InformationUsageText",
                     {
                     RowBox[{
                     RowBox[{
+                    RowBox[{"RHDict", "[", "\<\"solsAn\"\>", "]"}], "[", 
+                    RowBox[{"\<\"\[Gamma]>>1\"\>", ",", "\<\"\[Chi]D\"\>"}], 
+                    "]"}], "=", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    "DSReheating`Private`r\[Chi]", "[", 
+                    "DSReheating`Private`x", "]"}], "\[Rule]", 
+                    RowBox[{"1", "-", 
+                    RowBox[{"DSReheating`Private`x", " ", 
+                    RowBox[{"(", 
+                    RowBox[{"3", "+", "DSReheating`Private`\[Gamma]"}], 
+                    ")"}]}]}]}], ",", 
+                    RowBox[{
+                    RowBox[{
+                    "DSReheating`Private`rr", "[", "DSReheating`Private`x", 
+                    "]"}], "\[Rule]", 
+                    RowBox[{
+                    "DSReheating`Private`x", " ", 
+                    "DSReheating`Private`\[Gamma]"}]}]}], "}"}]}]},
+                    {
+                    RowBox[{
+                    RowBox[{
                     RowBox[{"RHDict", "[", "\<\"xcVals\"\>", "]"}], 
                     "[", "\<\"\[Gamma]<<1\"\>", "]"}], "=", 
                     RowBox[{"{", 
@@ -815,6 +840,14 @@ for reheating.\"\>", "InformationUsageText",
                     RowBox[{"15", "+", 
                     RowBox[{"11", " ", "DSReheating`Private`\[Gamma]"}]}], 
                     ")"}], "2"]]}]},
+                    {
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"RHDict", "[", "\<\"Lr\"\>", "]"}], "[", 
+                    RowBox[{"\<\"\[Gamma]>>1\"\>", ",", "\<\"\[Chi]D\"\>"}], 
+                    "]"}], "=", 
+                    FractionBox["1", 
+                    RowBox[{"4", " ", "DSReheating`Private`x"}]]}]},
                     {
                     RowBox[{
                     RowBox[{
@@ -847,32 +880,7 @@ for reheating.\"\>", "InformationUsageText",
                     RowBox[{"RHDict", "[", "\<\"xEq\"\>", "]"}], 
                     "[", "\<\"\[Gamma]>>1\"\>", "]"}], "=", 
                     FractionBox["1", 
-                    RowBox[{"2", " ", "DSReheating`Private`\[Gamma]"}]]}]},
-                    {
-                    RowBox[{
-                    RowBox[{
-                    RowBox[{"RHDict", "[", "\<\"Lr\"\>", "]"}], "[", 
-                    RowBox[{"\<\"\[Gamma]<<1\"\>", ",", "\<\"\[Phi]D\"\>"}], 
-                    "]"}], "=", 
-                    RowBox[{
-                    RowBox[{"-", 
-                    FractionBox["2", 
-                    RowBox[{"2", "+", 
-                    RowBox[{"3", " ", "DSReheating`Private`x"}]}]]}], "+", 
-                    FractionBox["5", 
-                    RowBox[{"4", " ", 
-                    RowBox[{"(", 
-                    RowBox[{"2", "+", 
-                    RowBox[{"3", " ", "DSReheating`Private`x"}], "-", 
-                    FractionBox[
-                    RowBox[{"2", " ", 
-                    SuperscriptBox["2", 
-                    RowBox[{"2", "/", "3"}]]}], 
-                    SuperscriptBox[
-                    RowBox[{"(", 
-                    RowBox[{"2", "+", 
-                    RowBox[{"3", " ", "DSReheating`Private`x"}]}], ")"}], 
-                    RowBox[{"2", "/", "3"}]]]}], ")"}]}]]}]}]}
+                    RowBox[{"2", " ", "DSReheating`Private`\[Gamma]"}]]}]}
                     },
                     DefaultBaseStyle->"Column",
                     GridBoxAlignment->{"Columns" -> {{Left}}},
@@ -1053,6 +1061,8 @@ for reheating.\"\>", "InformationUsageText",
        1.4294583834327531`*^-42, DSReheating`RHDict["GeV"] -> 1, 
        DSReheating`RHDict["H0h1"] -> 2.1335199752727657`*^-42, 
        DSReheating`RHDict["second"] -> 1.5192680000000002`*^24, 
+       DSReheating`RHDict["\[Rho]\[Chi]i"] -> 
+       1.7792980254736994`*^37 DSReheating`Private`Hi^2, 
        DSReheating`RHDict["\[Rho]crit"] -> 3.63573088*^-47, 
        DSReheating`RHDict["gSM"] -> 106.75, DSReheating`RHDict["gs0"] -> 3.94,
         DSReheating`RHDict["A\[Rho]"] -> 
@@ -1060,8 +1070,6 @@ for reheating.\"\>", "InformationUsageText",
        DSReheating`RHDict["ge0"] -> 3.38, DSReheating`RHDict["Mpl"] -> 
        1.22091*^19, DSReheating`RHDict["MeV"] -> Rational[1, 1000], 
        DSReheating`RHDict["Hz"] -> 6.58211717748284*^-25, 
-       DSReheating`RHDict["\[Rho]\[Phi]i"] -> 
-       1.7792980254736994`*^37 DSReheating`Private`Hi^2, 
        DSReheating`RHDict["T\[Gamma]0"] -> 2.4000000000000004`*^-13, 
        DSReheating`RHDict["mpl"] -> 2.435363097824566*^18}], "SubValues" -> 
     Information`InformationValueForm[
@@ -1073,20 +1081,17 @@ for reheating.\"\>", "InformationUsageText",
        DSReheating`Private`\[Gamma]^
          Rational[1, 4] (15 - 4 DSReheating`Private`\[Gamma]^Rational[1, 2] + 
           DSReheating`Private`\[Gamma])^Rational[-1, 4], 
-       DSReheating`RHDict["Lr"]["\[Gamma]>>1", "\[Phi]D"] -> 
-       Rational[1, 4]/DSReheating`Private`x, 
-       DSReheating`RHDict["solsAn"]["\[Gamma]>>1", "\[Phi]D"] -> {
-        DSReheating`Private`r\[Phi][DSReheating`Private`x] -> 
-         1 - DSReheating`Private`x (3 + DSReheating`Private`\[Gamma]), 
-         DSReheating`Private`rr[DSReheating`Private`x] -> 
-         DSReheating`Private`x DSReheating`Private`\[Gamma]}, 
+       DSReheating`RHDict["Lr"][
+        "\[Gamma]<<1", "\[Chi]D"] -> (-2)/(2 + 3 DSReheating`Private`x) + 
+        Rational[5, 4]/(2 + 3 DSReheating`Private`x - 2 
+         2^Rational[2, 3] (2 + 3 DSReheating`Private`x)^Rational[-2, 3]), 
        DSReheating`RHDict["xMax"]["\[Gamma]<<1"] -> 0.5341867009072119, 
        DSReheating`RHDict["Lr"][
         "\[Gamma]>>1", "RD"] -> (-1 - 2 DSReheating`Private`x)^(-1), 
        DSReheating`RHDict["Lr"]["\[Gamma]<<1", "RD"] -> 
        Rational[-1, 2]/DSReheating`Private`x, 
        DSReheating`RHDict["solsAn"]["\[Gamma]>>1", "RD"] -> {
-        DSReheating`Private`r\[Phi][DSReheating`Private`x] -> 
+        DSReheating`Private`r\[Chi][DSReheating`Private`x] -> 
          Rational[1, 4] 
           E^(Rational[1, 2] - DSReheating`Private`x 
             DSReheating`Private`\[Gamma]) 
@@ -1101,12 +1106,8 @@ for reheating.\"\>", "InformationUsageText",
          Rational[1, 4] DSReheating`Private`f^4 DSReheating`Private`\[Gamma], 
          Rational[-15, 16] DSReheating`Private`f^(-4)/
          DSReheating`Private`\[Gamma]}, 
-       DSReheating`RHDict["rEq"]["\[Gamma]>>1"] -> 
-       Rational[1, 2] + Rational[-3, 4]/DSReheating`Private`\[Gamma], 
-       DSReheating`RHDict["xEq"]["\[Gamma]<<1"] -> 
-       Rational[2, 3] + Rational[10, 11]/DSReheating`Private`\[Gamma], 
-       DSReheating`RHDict["solsAn"]["\[Gamma]<<1", "\[Phi]D"] -> {
-        DSReheating`Private`r\[Phi][
+       DSReheating`RHDict["solsAn"]["\[Gamma]<<1", "\[Chi]D"] -> {
+        DSReheating`Private`r\[Chi][
           DSReheating`Private`x] -> (2 + 3 DSReheating`Private`x)^(-3) (8 - 2 
            DSReheating`Private`x (-6 + (4 + 3 DSReheating`Private`x) 
              DSReheating`Private`\[Gamma])), 
@@ -1115,8 +1116,12 @@ for reheating.\"\>", "InformationUsageText",
            4, 5] ((-2) 
             2^Rational[2, 3] (2 + 3 DSReheating`Private`x)^Rational[-8, 3] + (
              2 + 3 DSReheating`Private`x)^(-1)) DSReheating`Private`\[Gamma]},
-        DSReheating`RHDict["solsAn"]["\[Gamma]<<1", "RD"] -> {
-        DSReheating`Private`r\[Phi][DSReheating`Private`x] -> 
+        DSReheating`RHDict["rEq"]["\[Gamma]>>1"] -> 
+       Rational[1, 2] + Rational[-3, 4]/DSReheating`Private`\[Gamma], 
+       DSReheating`RHDict["xEq"]["\[Gamma]<<1"] -> 
+       Rational[2, 3] + Rational[10, 11]/DSReheating`Private`\[Gamma], 
+       DSReheating`RHDict["solsAn"]["\[Gamma]<<1", "RD"] -> {
+        DSReheating`Private`r\[Chi][DSReheating`Private`x] -> 
          Rational[1, 2] Rational[33, 2]^Rational[1, 4] 
           E^(Rational[10, 11] + Rational[2, 3] DSReheating`Private`\[Gamma] - 
             DSReheating`Private`x DSReheating`Private`\[Gamma]) (
@@ -1133,6 +1138,11 @@ for reheating.\"\>", "InformationUsageText",
        DSReheating`RHDict["LrcVals"]["\[Gamma]>>1"] -> {
         Rational[1, 4] DSReheating`Private`f^4 
          DSReheating`Private`\[Gamma], (-1) DSReheating`Private`f^(-2)}, 
+       DSReheating`RHDict["solsAn"]["\[Gamma]>>1", "\[Chi]D"] -> {
+        DSReheating`Private`r\[Chi][DSReheating`Private`x] -> 
+         1 - DSReheating`Private`x (3 + DSReheating`Private`\[Gamma]), 
+         DSReheating`Private`rr[DSReheating`Private`x] -> 
+         DSReheating`Private`x DSReheating`Private`\[Gamma]}, 
        DSReheating`RHDict["xcVals"]["\[Gamma]<<1"] -> {
         DSReheating`Private`f^(-4)/DSReheating`Private`\[Gamma], 
          Rational[4, 15] DSReheating`Private`f^4 
@@ -1140,6 +1150,8 @@ for reheating.\"\>", "InformationUsageText",
        DSReheating`RHDict["rEq"]["\[Gamma]<<1"] -> 
        66 DSReheating`Private`\[Gamma]^2 (15 + 
           11 DSReheating`Private`\[Gamma])^(-2), 
+       DSReheating`RHDict["Lr"]["\[Gamma]>>1", "\[Chi]D"] -> 
+       Rational[1, 4]/DSReheating`Private`x, 
        DSReheating`RHDict["fmin"]["\[Gamma]<<1"] -> 
        2^Rational[19, 20] 3^Rational[-3, 20] 
         DSReheating`Private`\[Gamma]^Rational[-1, 4], 
@@ -1147,19 +1159,15 @@ for reheating.\"\>", "InformationUsageText",
        Rational[-1, 4]/DSReheating`Private`\[Gamma] + 
         Rational[1, 2] DSReheating`Private`\[Gamma]^Rational[-1, 2], 
        DSReheating`RHDict["xEq"]["\[Gamma]>>1"] -> 
-       Rational[1, 2]/DSReheating`Private`\[Gamma], 
-       DSReheating`RHDict["Lr"][
-        "\[Gamma]<<1", "\[Phi]D"] -> (-2)/(2 + 3 DSReheating`Private`x) + 
-        Rational[5, 4]/(2 + 3 DSReheating`Private`x - 2 
-         2^Rational[2, 3] (2 + 3 DSReheating`Private`x)^Rational[-2, 3])}], 
-    "DefaultValues" -> None, "NValues" -> None, "FormatValues" -> None, 
-    "Options" -> None, "Attributes" -> {}, "FullName" -> 
-    "DSReheating`RHDict"], False]]], "Output",
+       Rational[1, 2]/DSReheating`Private`\[Gamma]}], "DefaultValues" -> None,
+     "NValues" -> None, "FormatValues" -> None, "Options" -> None, 
+    "Attributes" -> {}, "FullName" -> "DSReheating`RHDict"], 
+   False]]], "Output",
  CellChangeTimes->{3.876911183264058*^9, 3.878397439431079*^9, 
   3.878397727187785*^9, 3.8785531229780283`*^9, 3.8788252040581493`*^9, 
   3.8790025929211817`*^9, 3.883822340365498*^9, 3.883825124497411*^9, 
-  3.8838275022397127`*^9},
- CellLabel->"Out[17]=",ExpressionUUID->"93a56a7e-9ee6-4c2e-89a1-e0a4d62d8699"]
+  3.8838275022397127`*^9, 3.885739487198915*^9, 3.885739929853239*^9},
+ CellLabel->"Out[17]=",ExpressionUUID->"0ed13336-6b4b-425b-8176-7aee7a52d509"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -1168,15 +1176,16 @@ Cell[BoxData[
  RowBox[{
   RowBox[{
    RowBox[{"RHDict", "[", "\"\<solsAn\>\"", "]"}], "[", 
-   RowBox[{"\"\<\[Gamma]<<1\>\"", ",", "\"\<\[Phi]D\>\""}], "]"}], "/.", 
+   RowBox[{"\"\<\[Gamma]<<1\>\"", ",", "\"\<\[Chi]D\>\""}], "]"}], "/.", 
   RowBox[{"dePrivRule", "[", "\"\<RH\>\"", "]"}]}]], "Input",
+ CellChangeTimes->{{3.885735359819338*^9, 3.8857353605987186`*^9}},
  CellLabel->"In[18]:=",ExpressionUUID->"ba47a388-557b-4cb2-bde0-96ad36c31c46"],
 
 Cell[BoxData[
  RowBox[{"{", 
   RowBox[{
    RowBox[{
-    RowBox[{"r\[Phi]", "[", "x", "]"}], "\[Rule]", 
+    RowBox[{"r\[Chi]", "[", "x", "]"}], "\[Rule]", 
     FractionBox[
      RowBox[{"8", "-", 
       RowBox[{"2", " ", "x", " ", 
@@ -1213,8 +1222,9 @@ Cell[BoxData[
          RowBox[{"3", " ", "x"}]}]]}], ")"}], " ", "\[Gamma]"}]}]}], 
   "}"}]], "Output",
  CellChangeTimes->{3.8838223435417624`*^9, 3.883825124524733*^9, 
-  3.8838275023203278`*^9},
- CellLabel->"Out[18]=",ExpressionUUID->"17f161ad-5a89-4c8a-a4b1-35ef1a6055b5"]
+  3.8838275023203278`*^9, 3.8857353612609663`*^9, 3.885739487229196*^9, 
+  3.885739929880884*^9},
+ CellLabel->"Out[18]=",ExpressionUUID->"09c4e131-f6c1-4519-9d80-d2ed78d9104a"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -8305,8 +8315,9 @@ q5SZmRFAL++xNeOlE0Dwt3AR
  CellChangeTimes->{3.876911269133741*^9, 3.878397439775124*^9, 
   3.878397727446094*^9, 3.878553123264143*^9, 3.878824537742691*^9, 
   3.87882520434695*^9, 3.879001924403454*^9, 3.879002593157507*^9, 
-  3.883822348918511*^9, 3.8838251247672443`*^9, 3.883827502594192*^9},
- CellLabel->"Out[19]=",ExpressionUUID->"f7b3b137-b67a-4140-9c46-25c5a421bb48"]
+  3.883822348918511*^9, 3.8838251247672443`*^9, 3.883827502594192*^9, 
+  3.885735364090469*^9, 3.88573948746452*^9, 3.885739930136861*^9},
+ CellLabel->"Out[19]=",ExpressionUUID->"e3ddfdc6-51c0-4467-b0f1-0162be32dfdb"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -8334,8 +8345,9 @@ Cell[BoxData[
    "30.75041567401394679393125400292226272034`29.465224872774318"}], 
   "}"}]], "Output",
  CellChangeTimes->{{3.883822352887476*^9, 3.883822379265161*^9}, 
-   3.883825124821908*^9, 3.8838275026537647`*^9},
- CellLabel->"Out[20]=",ExpressionUUID->"0a10c105-4527-4072-b4f6-cbf4db5dd561"]
+   3.883825124821908*^9, 3.8838275026537647`*^9, 3.8857353661227283`*^9, 
+   3.885739487514078*^9, 3.8857399301924953`*^9},
+ CellLabel->"Out[20]=",ExpressionUUID->"1101cf10-fcca-49e1-8962-df60567625dc"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -8371,7 +8383,7 @@ Cell[BoxData[
             StyleBox["\<\"HOfx: Hubble expansion rate interpolated as a \
 function of (dimensionless) time.\\nInput: \
 (\[Gamma],\\!\\(\\*SubscriptBox[\\(H\\), \
-\\(i\\)]\\),w\[Phi],xLarge,prec,accu).\\nOutput: H\"\>", 
+\\(i\\)]\\),w\[Chi],xLarge,prec,accu).\\nOutput: H\"\>", 
              "InformationUsageText",
              StripOnInput->False,
              LineSpacing->{1.5, 1.5, 3.}],
@@ -8403,7 +8415,7 @@ function of (dimensionless) time.\\nInput: \
                     RowBox[{
                     RowBox[{"DSReheating`Private`gg_", "?", "NumberQ"}], ",", 
                     "DSReheating`Private`Hscale_", ",", 
-                    RowBox[{"DSReheating`Private`wf_", ":", "0"}], ",", 
+                    RowBox[{"DSReheating`Private`wx_", ":", "0"}], ",", 
                     RowBox[{"DSReheating`Private`xLarge_", ":", "1000"}], ",", 
                     RowBox[{"DSReheating`Private`prec_", ":", "30"}], ",", 
                     RowBox[{"DSReheating`Private`accu_", ":", "20"}]}], "]"}],
@@ -8413,7 +8425,7 @@ function of (dimensionless) time.\\nInput: \
                     RowBox[{
                     "DSReheating`Private`gg", ",", 
                     "DSReheating`Private`Hscale", ",", 
-                    "DSReheating`Private`wf", ",", 
+                    "DSReheating`Private`wx", ",", 
                     "DSReheating`Private`xLarge", ",", 
                     "DSReheating`Private`prec", ",", 
                     "DSReheating`Private`accu"}], "]"}], "=", 
@@ -8425,9 +8437,9 @@ function of (dimensionless) time.\\nInput: \
                     "DSReheating`Private`Hi", "=", 
                     "DSReheating`Private`Hscale"}], ",", 
                     RowBox[{
-                    "DSReheating`Private`w\[Phi]", "=", 
-                    "DSReheating`Private`wf"}], ",", 
-                    "DSReheating`Private`r\[Phi]", ",", 
+                    "DSReheating`Private`w\[Chi]", "=", 
+                    "DSReheating`Private`wx"}], ",", 
+                    "DSReheating`Private`r\[Chi]", ",", 
                     "DSReheating`Private`rr", ",", 
                     "DSReheating`Private`xData", ",", 
                     "DSReheating`Private`yData", ",", 
@@ -8437,11 +8449,11 @@ function of (dimensionless) time.\\nInput: \
                     RowBox[{
                     RowBox[{"{", 
                     RowBox[{
-                    "DSReheating`Private`r\[Phi]", ",", 
+                    "DSReheating`Private`r\[Chi]", ",", 
                     "DSReheating`Private`rr"}], "}"}], "=", 
                     RowBox[{"solEqs", "[", 
                     RowBox[{
-                    "DSReheating`Private`gg", ",", "DSReheating`Private`wf", 
+                    "DSReheating`Private`gg", ",", "DSReheating`Private`wx", 
                     ",", "DSReheating`Private`xLarge", ",", 
                     "DSReheating`Private`prec", ",", 
                     "DSReheating`Private`accu"}], "]"}]}], ";", 
@@ -8580,7 +8592,7 @@ InterpolatingFunctionCoordinates", "[", "DSReheating`Private`rr", "]"}],
             StyleBox["\<\"HOfx: Hubble expansion rate interpolated as a \
 function of (dimensionless) time.\\nInput: \
 (\[Gamma],\\!\\(\\*SubscriptBox[\\(H\\), \
-\\(i\\)]\\),w\[Phi],xLarge,prec,accu).\\nOutput: H\"\>", 
+\\(i\\)]\\),w\[Chi],xLarge,prec,accu).\\nOutput: H\"\>", 
              "InformationUsageText",
              StripOnInput->False,
              LineSpacing->{1.5, 1.5, 3.}],
@@ -8647,7 +8659,7 @@ function of (dimensionless) time.\\nInput: \
    "ObjectType" -> "Symbol", "Usage" -> 
     "HOfx: Hubble expansion rate interpolated as a function of \
 (dimensionless) time.\nInput: (\[Gamma],\!\(\*SubscriptBox[\(H\), \(i\)]\),w\
-\[Phi],xLarge,prec,accu).\nOutput: H", "Documentation" -> None, "OwnValues" -> 
+\[Chi],xLarge,prec,accu).\nOutput: H", "Documentation" -> None, "OwnValues" -> 
     None, "UpValues" -> None, "DownValues" -> 
     Information`InformationValueForm[
      DownValues, DSReheating`HOfx, {DSReheating`HOfx[
@@ -8657,7 +8669,7 @@ function of (dimensionless) time.\\nInput: \
          Pattern[DSReheating`Private`Hscale, 
           Blank[]], 
          Optional[
-          Pattern[DSReheating`Private`wf, 
+          Pattern[DSReheating`Private`wx, 
            Blank[]], 0], 
          Optional[
           Pattern[DSReheating`Private`xLarge, 
@@ -8670,17 +8682,17 @@ function of (dimensionless) time.\\nInput: \
            Blank[]], 20]] :> (
         DSReheating`HOfx[
          DSReheating`Private`gg, DSReheating`Private`Hscale, 
-          DSReheating`Private`wf, DSReheating`Private`xLarge, 
+          DSReheating`Private`wx, DSReheating`Private`xLarge, 
           DSReheating`Private`prec, DSReheating`Private`accu] = 
         Block[{DSReheating`Private`Hi = DSReheating`Private`Hscale, 
-           DSReheating`Private`w\[Phi] = DSReheating`Private`wf, 
-           DSReheating`Private`r\[Phi], DSReheating`Private`rr, 
+           DSReheating`Private`w\[Chi] = DSReheating`Private`wx, 
+           DSReheating`Private`r\[Chi], DSReheating`Private`rr, 
            DSReheating`Private`xData, DSReheating`Private`yData, 
            DSReheating`Private`data, 
            DSReheating`Private`Hfnx}, {
-            DSReheating`Private`r\[Phi], DSReheating`Private`rr} = 
+            DSReheating`Private`r\[Chi], DSReheating`Private`rr} = 
            DSReheating`solEqs[
-            DSReheating`Private`gg, DSReheating`Private`wf, 
+            DSReheating`Private`gg, DSReheating`Private`wx, 
              DSReheating`Private`xLarge, DSReheating`Private`prec, 
              DSReheating`Private`accu]; DSReheating`Private`xData = Flatten[
              
@@ -8699,8 +8711,9 @@ InterpolatingFunctionCoordinates[DSReheating`Private`rr]];
     "Attributes" -> {}, "FullName" -> "DSReheating`HOfx"], False]]], "Output",\
 
  CellChangeTimes->{3.883822482862369*^9, 3.883825124914186*^9, 
-  3.883827502744604*^9},
- CellLabel->"Out[21]=",ExpressionUUID->"492748da-448f-40e6-8187-c7f5bd3f811d"]
+  3.883827502744604*^9, 3.8857353685302477`*^9, 3.885739487613414*^9, 
+  3.8857399303089647`*^9},
+ CellLabel->"Out[21]=",ExpressionUUID->"224ce542-7a60-4279-8bca-e8e7e0c6a929"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -8738,7 +8751,7 @@ Cell[BoxData[
 function of (dimensionless) time/\\nInput: \
 (\[Gamma],\\!\\(\\*SubscriptBox[\\(g\\), \
 \\(*\\)]\\),\\!\\(\\*SubscriptBox[\\(H\\), \
-\\(i\\)]\\),w\[Phi],xLarge,prec,accu).\\nOutput: T\"\>", 
+\\(i\\)]\\),w\[Chi],xLarge,prec,accu).\\nOutput: T\"\>", 
              "InformationUsageText",
              StripOnInput->False,
              LineSpacing->{1.5, 1.5, 3.}],
@@ -8771,7 +8784,7 @@ function of (dimensionless) time/\\nInput: \
                     RowBox[{"DSReheating`Private`gg_", "?", "NumberQ"}], ",", 
                     "DSReheating`Private`gs_", ",", 
                     "DSReheating`Private`Hscale_", ",", 
-                    RowBox[{"DSReheating`Private`wf_", ":", "0"}], ",", 
+                    RowBox[{"DSReheating`Private`wx_", ":", "0"}], ",", 
                     RowBox[{"DSReheating`Private`xLarge_", ":", "1000"}], ",", 
                     RowBox[{"DSReheating`Private`prec_", ":", "30"}], ",", 
                     RowBox[{"DSReheating`Private`accu_", ":", "20"}]}], "]"}],
@@ -8781,7 +8794,7 @@ function of (dimensionless) time/\\nInput: \
                     RowBox[{
                     "DSReheating`Private`gg", ",", "DSReheating`Private`gs", 
                     ",", "DSReheating`Private`Hscale", ",", 
-                    "DSReheating`Private`wf", ",", 
+                    "DSReheating`Private`wx", ",", 
                     "DSReheating`Private`xLarge", ",", 
                     "DSReheating`Private`prec", ",", 
                     "DSReheating`Private`accu"}], "]"}], "=", 
@@ -8796,9 +8809,9 @@ function of (dimensionless) time/\\nInput: \
                     "DSReheating`Private`Hi", "=", 
                     "DSReheating`Private`Hscale"}], ",", 
                     RowBox[{
-                    "DSReheating`Private`w\[Phi]", "=", 
-                    "DSReheating`Private`wf"}], ",", 
-                    "DSReheating`Private`r\[Phi]", ",", 
+                    "DSReheating`Private`w\[Chi]", "=", 
+                    "DSReheating`Private`wx"}], ",", 
+                    "DSReheating`Private`r\[Chi]", ",", 
                     "DSReheating`Private`rr", ",", 
                     "DSReheating`Private`xData", ",", 
                     "DSReheating`Private`yData", ",", 
@@ -8808,11 +8821,11 @@ function of (dimensionless) time/\\nInput: \
                     RowBox[{
                     RowBox[{"{", 
                     RowBox[{
-                    "DSReheating`Private`r\[Phi]", ",", 
+                    "DSReheating`Private`r\[Chi]", ",", 
                     "DSReheating`Private`rr"}], "}"}], "=", 
                     RowBox[{"solEqs", "[", 
                     RowBox[{
-                    "DSReheating`Private`gg", ",", "DSReheating`Private`wf", 
+                    "DSReheating`Private`gg", ",", "DSReheating`Private`wx", 
                     ",", "DSReheating`Private`xLarge", ",", 
                     "DSReheating`Private`prec", ",", 
                     "DSReheating`Private`accu"}], "]"}]}], ";", 
@@ -8833,7 +8846,7 @@ InterpolatingFunctionValuesOnGrid", "[", "DSReheating`Private`rr", "]"}],
                     RowBox[{"(", 
                     FractionBox[
                     RowBox[{
-                    "DSReheating`Private`\[Rho]\[Phi]i", " ", 
+                    "DSReheating`Private`\[Rho]\[Chi]i", " ", 
                     "DSReheating`Private`yData"}], 
                     "DSReheating`Private`A\[Rho]"], ")"}], 
                     RowBox[{"1", "/", "4"}]]}], ";", 
@@ -8954,7 +8967,7 @@ InterpolatingFunctionValuesOnGrid", "[", "DSReheating`Private`rr", "]"}],
 function of (dimensionless) time/\\nInput: \
 (\[Gamma],\\!\\(\\*SubscriptBox[\\(g\\), \
 \\(*\\)]\\),\\!\\(\\*SubscriptBox[\\(H\\), \
-\\(i\\)]\\),w\[Phi],xLarge,prec,accu).\\nOutput: T\"\>", 
+\\(i\\)]\\),w\[Chi],xLarge,prec,accu).\\nOutput: T\"\>", 
              "InformationUsageText",
              StripOnInput->False,
              LineSpacing->{1.5, 1.5, 3.}],
@@ -9021,7 +9034,7 @@ function of (dimensionless) time/\\nInput: \
    "ObjectType" -> "Symbol", "Usage" -> 
     "TOfx: dark sector temperature interpolated as a function of \
 (dimensionless) time/\nInput: (\[Gamma],\!\(\*SubscriptBox[\(g\), \(*\)]\),\!\
-\(\*SubscriptBox[\(H\), \(i\)]\),w\[Phi],xLarge,prec,accu).\nOutput: T", 
+\(\*SubscriptBox[\(H\), \(i\)]\),w\[Chi],xLarge,prec,accu).\nOutput: T", 
     "Documentation" -> None, "OwnValues" -> None, "UpValues" -> None, 
     "DownValues" -> 
     Information`InformationValueForm[
@@ -9034,7 +9047,7 @@ function of (dimensionless) time/\\nInput: \
          Pattern[DSReheating`Private`Hscale, 
           Blank[]], 
          Optional[
-          Pattern[DSReheating`Private`wf, 
+          Pattern[DSReheating`Private`wx, 
            Blank[]], 0], 
          Optional[
           Pattern[DSReheating`Private`xLarge, 
@@ -9047,19 +9060,19 @@ function of (dimensionless) time/\\nInput: \
            Blank[]], 20]] :> (
         DSReheating`TOfx[
          DSReheating`Private`gg, DSReheating`Private`gs, 
-          DSReheating`Private`Hscale, DSReheating`Private`wf, 
+          DSReheating`Private`Hscale, DSReheating`Private`wx, 
           DSReheating`Private`xLarge, DSReheating`Private`prec, 
           DSReheating`Private`accu] = 
         Block[{DSReheating`Private`gstar = DSReheating`Private`gs, 
            DSReheating`Private`Hi = DSReheating`Private`Hscale, 
-           DSReheating`Private`w\[Phi] = DSReheating`Private`wf, 
-           DSReheating`Private`r\[Phi], DSReheating`Private`rr, 
+           DSReheating`Private`w\[Chi] = DSReheating`Private`wx, 
+           DSReheating`Private`r\[Chi], DSReheating`Private`rr, 
            DSReheating`Private`xData, DSReheating`Private`yData, 
            DSReheating`Private`data, 
            DSReheating`Private`Tfnx}, {
-            DSReheating`Private`r\[Phi], DSReheating`Private`rr} = 
+            DSReheating`Private`r\[Chi], DSReheating`Private`rr} = 
            DSReheating`solEqs[
-            DSReheating`Private`gg, DSReheating`Private`wf, 
+            DSReheating`Private`gg, DSReheating`Private`wx, 
              DSReheating`Private`xLarge, DSReheating`Private`prec, 
              DSReheating`Private`accu]; DSReheating`Private`xData = Flatten[
              
@@ -9069,7 +9082,7 @@ InterpolatingFunctionCoordinates[DSReheating`Private`rr]];
              
              DifferentialEquations`InterpolatingFunctionAnatomy`\
 InterpolatingFunctionValuesOnGrid[DSReheating`Private`rr]]; 
-          DSReheating`Private`yData = ((DSReheating`Private`\[Rho]\[Phi]i 
+          DSReheating`Private`yData = ((DSReheating`Private`\[Rho]\[Chi]i 
               DSReheating`Private`yData)/DSReheating`Private`A\[Rho])^(1/4); 
           DSReheating`Private`data = 
            Transpose[{DSReheating`Private`xData, DSReheating`Private`yData}]; 
@@ -9079,8 +9092,9 @@ InterpolatingFunctionValuesOnGrid[DSReheating`Private`rr]];
     "Attributes" -> {}, "FullName" -> "DSReheating`TOfx"], False]]], "Output",\
 
  CellChangeTimes->{3.883822485362953*^9, 3.883825125009962*^9, 
-  3.883827502837731*^9},
- CellLabel->"Out[22]=",ExpressionUUID->"29b7adf3-438b-4f75-919c-6156d69a6ca4"]
+  3.883827502837731*^9, 3.8857353717869463`*^9, 3.885739487702634*^9, 
+  3.8857399304289923`*^9},
+ CellLabel->"Out[22]=",ExpressionUUID->"1a12db35-9a67-43cd-94f9-727b02f4e7fe"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -9115,7 +9129,7 @@ Cell[BoxData[
            PaneBox[
             
             StyleBox["\<\"aOfx: function to compute scale factor\\nInput: (\
-\[Gamma], \\!\\(\\*SubscriptBox[\\(a\\), \\(ini\\)]\\), sum, w\[Phi], xLarge, \
+\[Gamma], \\!\\(\\*SubscriptBox[\\(a\\), \\(ini\\)]\\), sum, w\[Chi], xLarge, \
 prec, accu).\\nOutput: a\"\>", "InformationUsageText",
              StripOnInput->False,
              LineSpacing->{1.5, 1.5, 3.}],
@@ -9149,7 +9163,7 @@ prec, accu).\\nOutput: a\"\>", "InformationUsageText",
                     
                     RowBox[{"DSReheating`Private`aini_", ":", "1"}], ",", 
                     RowBox[{"DSReheating`Private`sum_", ":", "False"}], ",", 
-                    RowBox[{"DSReheating`Private`wf_", ":", "0"}], ",", 
+                    RowBox[{"DSReheating`Private`wx_", ":", "0"}], ",", 
                     RowBox[{"DSReheating`Private`xLarge_", ":", "1000"}], ",", 
                     RowBox[{"DSReheating`Private`prec_", ":", "30"}], ",", 
                     RowBox[{"DSReheating`Private`accu_", ":", "20"}]}], "]"}],
@@ -9159,7 +9173,7 @@ prec, accu).\\nOutput: a\"\>", "InformationUsageText",
                     RowBox[{
                     "DSReheating`Private`gg", ",", "DSReheating`Private`aini",
                      ",", "DSReheating`Private`sum", ",", 
-                    "DSReheating`Private`wf", ",", 
+                    "DSReheating`Private`wx", ",", 
                     "DSReheating`Private`xLarge", ",", 
                     "DSReheating`Private`prec", ",", 
                     "DSReheating`Private`accu"}], "]"}], "=", 
@@ -9168,9 +9182,9 @@ prec, accu).\\nOutput: a\"\>", "InformationUsageText",
                     RowBox[{"{", 
                     RowBox[{
                     RowBox[{
-                    "DSReheating`Private`w\[Phi]", "=", 
-                    "DSReheating`Private`wf"}], ",", 
-                    "DSReheating`Private`r\[Phi]", ",", 
+                    "DSReheating`Private`w\[Chi]", "=", 
+                    "DSReheating`Private`wx"}], ",", 
+                    "DSReheating`Private`r\[Chi]", ",", 
                     "DSReheating`Private`rr", ",", 
                     "DSReheating`Private`domain", ",", 
                     "DSReheating`Private`xData", ",", 
@@ -9182,11 +9196,11 @@ prec, accu).\\nOutput: a\"\>", "InformationUsageText",
                     RowBox[{
                     RowBox[{"{", 
                     RowBox[{
-                    "DSReheating`Private`r\[Phi]", ",", 
+                    "DSReheating`Private`r\[Chi]", ",", 
                     "DSReheating`Private`rr"}], "}"}], "=", 
                     RowBox[{"solEqs", "[", 
                     RowBox[{
-                    "DSReheating`Private`gg", ",", "DSReheating`Private`wf", 
+                    "DSReheating`Private`gg", ",", "DSReheating`Private`wx", 
                     ",", "DSReheating`Private`xLarge", ",", 
                     "DSReheating`Private`prec", ",", 
                     "DSReheating`Private`accu"}], "]"}]}], ";", 
@@ -9412,7 +9426,7 @@ InterpolatingFunctionCoordinates", "[", "DSReheating`Private`rr", "]"}],
            PaneBox[
             
             StyleBox["\<\"aOfx: function to compute scale factor\\nInput: (\
-\[Gamma], \\!\\(\\*SubscriptBox[\\(a\\), \\(ini\\)]\\), sum, w\[Phi], xLarge, \
+\[Gamma], \\!\\(\\*SubscriptBox[\\(a\\), \\(ini\\)]\\), sum, w\[Chi], xLarge, \
 prec, accu).\\nOutput: a\"\>", "InformationUsageText",
              StripOnInput->False,
              LineSpacing->{1.5, 1.5, 3.}],
@@ -9478,7 +9492,7 @@ prec, accu).\\nOutput: a\"\>", "InformationUsageText",
    Association[
    "ObjectType" -> "Symbol", "Usage" -> 
     "aOfx: function to compute scale factor\nInput: (\[Gamma], \
-\!\(\*SubscriptBox[\(a\), \(ini\)]\), sum, w\[Phi], xLarge, prec, accu).\n\
+\!\(\*SubscriptBox[\(a\), \(ini\)]\), sum, w\[Chi], xLarge, prec, accu).\n\
 Output: a", "Documentation" -> None, "OwnValues" -> None, "UpValues" -> None, 
     "DownValues" -> 
     Information`InformationValueForm[
@@ -9493,7 +9507,7 @@ Output: a", "Documentation" -> None, "OwnValues" -> None, "UpValues" -> None,
           Pattern[DSReheating`Private`sum, 
            Blank[]], False], 
          Optional[
-          Pattern[DSReheating`Private`wf, 
+          Pattern[DSReheating`Private`wx, 
            Blank[]], 0], 
          Optional[
           Pattern[DSReheating`Private`xLarge, 
@@ -9506,18 +9520,18 @@ Output: a", "Documentation" -> None, "OwnValues" -> None, "UpValues" -> None,
            Blank[]], 20]] :> (
         DSReheating`aOfx[
          DSReheating`Private`gg, DSReheating`Private`aini, 
-          DSReheating`Private`sum, DSReheating`Private`wf, 
+          DSReheating`Private`sum, DSReheating`Private`wx, 
           DSReheating`Private`xLarge, DSReheating`Private`prec, 
           DSReheating`Private`accu] = 
-        Block[{DSReheating`Private`w\[Phi] = DSReheating`Private`wf, 
-           DSReheating`Private`r\[Phi], DSReheating`Private`rr, 
+        Block[{DSReheating`Private`w\[Chi] = DSReheating`Private`wx, 
+           DSReheating`Private`r\[Chi], DSReheating`Private`rr, 
            DSReheating`Private`domain, DSReheating`Private`xData, 
            DSReheating`Private`efolds, DSReheating`Private`yData, 
            DSReheating`Private`data, 
            DSReheating`Private`afnx}, {
-            DSReheating`Private`r\[Phi], DSReheating`Private`rr} = 
+            DSReheating`Private`r\[Chi], DSReheating`Private`rr} = 
            DSReheating`solEqs[
-            DSReheating`Private`gg, DSReheating`Private`wf, 
+            DSReheating`Private`gg, DSReheating`Private`wx, 
              DSReheating`Private`xLarge, DSReheating`Private`prec, 
              DSReheating`Private`accu]; DSReheating`Private`domain = Flatten[
              
@@ -9572,8 +9586,9 @@ InterpolatingFunctionCoordinates[DSReheating`Private`rr]];
  CellChangeTimes->{{3.8783977278338842`*^9, 3.878397728125683*^9}, 
    3.8785531234209414`*^9, 3.878824540556745*^9, 3.878825204491618*^9, 
    3.8790019246258507`*^9, 3.879002593297352*^9, 3.88382238218786*^9, 
-   3.8838251251075687`*^9, 3.8838275029402018`*^9},
- CellLabel->"Out[23]=",ExpressionUUID->"fd95dff9-f596-4e80-b984-eef667efba12"]
+   3.8838251251075687`*^9, 3.8838275029402018`*^9, 3.885735373573292*^9, 
+   3.8857394877984457`*^9, 3.885739930550815*^9},
+ CellLabel->"Out[23]=",ExpressionUUID->"5504f36a-2571-4c37-a160-f4d3933e88ba"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -9609,7 +9624,7 @@ Cell[BoxData[
             
             StyleBox["\<\"tauOfx: function to compute comoving time\\nInput: \
 (\[Gamma], \\!\\(\\*SubscriptBox[\\(t\\), \\(scale\\)]\\), \
-\\!\\(\\*SubscriptBox[\\(a\\), \\(ini\\)]\\), sum, w\[Phi], xLarge, prec, \
+\\!\\(\\*SubscriptBox[\\(a\\), \\(ini\\)]\\), sum, w\[Chi], xLarge, prec, \
 accu).\\nOutput: \[Tau]\"\>", "InformationUsageText",
              StripOnInput->False,
              LineSpacing->{1.5, 1.5, 3.}],
@@ -9644,7 +9659,7 @@ accu).\\nOutput: \[Tau]\"\>", "InformationUsageText",
                     RowBox[{"DSReheating`Private`tscale_", ":", "1"}], ",", 
                     RowBox[{"DSReheating`Private`aini_", ":", "1"}], ",", 
                     RowBox[{"DSReheating`Private`sum_", ":", "False"}], ",", 
-                    RowBox[{"DSReheating`Private`wf_", ":", "0"}], ",", 
+                    RowBox[{"DSReheating`Private`wx_", ":", "0"}], ",", 
                     RowBox[{"DSReheating`Private`xLarge_", ":", "1000"}], ",", 
                     RowBox[{"DSReheating`Private`prec_", ":", "30"}], ",", 
                     RowBox[{"DSReheating`Private`accu_", ":", "20"}]}], "]"}],
@@ -9655,7 +9670,7 @@ accu).\\nOutput: \[Tau]\"\>", "InformationUsageText",
                     "DSReheating`Private`gg", ",", 
                     "DSReheating`Private`tscale", ",", 
                     "DSReheating`Private`aini", ",", 
-                    "DSReheating`Private`sum", ",", "DSReheating`Private`wf", 
+                    "DSReheating`Private`sum", ",", "DSReheating`Private`wx", 
                     ",", "DSReheating`Private`xLarge", ",", 
                     "DSReheating`Private`prec", ",", 
                     "DSReheating`Private`accu"}], "]"}], "=", 
@@ -9664,8 +9679,8 @@ accu).\\nOutput: \[Tau]\"\>", "InformationUsageText",
                     RowBox[{"{", 
                     RowBox[{
                     RowBox[{
-                    "DSReheating`Private`w\[Phi]", "=", 
-                    "DSReheating`Private`wf"}], ",", 
+                    "DSReheating`Private`w\[Chi]", "=", 
+                    "DSReheating`Private`wx"}], ",", 
                     "DSReheating`Private`taui", ",", "DSReheating`Private`ax",
                      ",", "DSReheating`Private`domain", ",", 
                     "DSReheating`Private`xData", ",", 
@@ -9681,13 +9696,13 @@ accu).\\nOutput: \[Tau]\"\>", "InformationUsageText",
                     "0", ",", 
                     RowBox[{
                     "DSReheating`Private`taubarini", "[", 
-                    "DSReheating`Private`w\[Phi]", "]"}]}], "]"}]}], ";", 
+                    "DSReheating`Private`w\[Chi]", "]"}]}], "]"}]}], ";", 
                     RowBox[{"DSReheating`Private`ax", "=", 
                     RowBox[{"aOfx", "[", 
                     RowBox[{
                     "DSReheating`Private`gg", ",", "DSReheating`Private`aini",
                      ",", "DSReheating`Private`sum", ",", 
-                    "DSReheating`Private`wf", ",", 
+                    "DSReheating`Private`wx", ",", 
                     "DSReheating`Private`xLarge", ",", 
                     "DSReheating`Private`prec", ",", 
                     "DSReheating`Private`accu"}], "]"}]}], ";", 
@@ -9920,7 +9935,7 @@ InterpolatingFunctionCoordinates", "[", "DSReheating`Private`ax", "]"}],
             
             StyleBox["\<\"tauOfx: function to compute comoving time\\nInput: \
 (\[Gamma], \\!\\(\\*SubscriptBox[\\(t\\), \\(scale\\)]\\), \
-\\!\\(\\*SubscriptBox[\\(a\\), \\(ini\\)]\\), sum, w\[Phi], xLarge, prec, \
+\\!\\(\\*SubscriptBox[\\(a\\), \\(ini\\)]\\), sum, w\[Chi], xLarge, prec, \
 accu).\\nOutput: \[Tau]\"\>", "InformationUsageText",
              StripOnInput->False,
              LineSpacing->{1.5, 1.5, 3.}],
@@ -9987,7 +10002,7 @@ accu).\\nOutput: \[Tau]\"\>", "InformationUsageText",
    "ObjectType" -> "Symbol", "Usage" -> 
     "tauOfx: function to compute comoving time\nInput: (\[Gamma], \
 \!\(\*SubscriptBox[\(t\), \(scale\)]\), \!\(\*SubscriptBox[\(a\), \(ini\)]\), \
-sum, w\[Phi], xLarge, prec, accu).\nOutput: \[Tau]", "Documentation" -> None, 
+sum, w\[Chi], xLarge, prec, accu).\nOutput: \[Tau]", "Documentation" -> None, 
     "OwnValues" -> None, "UpValues" -> None, "DownValues" -> 
     Information`InformationValueForm[
      DownValues, DSReheating`tauOfx, {DSReheating`tauOfx[
@@ -10004,7 +10019,7 @@ sum, w\[Phi], xLarge, prec, accu).\nOutput: \[Tau]", "Documentation" -> None,
           Pattern[DSReheating`Private`sum, 
            Blank[]], False], 
          Optional[
-          Pattern[DSReheating`Private`wf, 
+          Pattern[DSReheating`Private`wx, 
            Blank[]], 0], 
          Optional[
           Pattern[DSReheating`Private`xLarge, 
@@ -10018,19 +10033,19 @@ sum, w\[Phi], xLarge, prec, accu).\nOutput: \[Tau]", "Documentation" -> None,
         DSReheating`tauOfx[
          DSReheating`Private`gg, DSReheating`Private`tscale, 
           DSReheating`Private`aini, DSReheating`Private`sum, 
-          DSReheating`Private`wf, DSReheating`Private`xLarge, 
+          DSReheating`Private`wx, DSReheating`Private`xLarge, 
           DSReheating`Private`prec, DSReheating`Private`accu] = 
-        Block[{DSReheating`Private`w\[Phi] = DSReheating`Private`wf, 
+        Block[{DSReheating`Private`w\[Chi] = DSReheating`Private`wx, 
            DSReheating`Private`taui, DSReheating`Private`ax, 
            DSReheating`Private`domain, DSReheating`Private`xData, 
            DSReheating`Private`tau, DSReheating`Private`yData, 
            DSReheating`Private`data, DSReheating`Private`taufnx}, 
           DSReheating`Private`taui = If[DSReheating`Private`xd == 0, 0, 
-             DSReheating`Private`taubarini[DSReheating`Private`w\[Phi]]]; 
+             DSReheating`Private`taubarini[DSReheating`Private`w\[Chi]]]; 
           DSReheating`Private`ax = 
            DSReheating`aOfx[
             DSReheating`Private`gg, DSReheating`Private`aini, 
-             DSReheating`Private`sum, DSReheating`Private`wf, 
+             DSReheating`Private`sum, DSReheating`Private`wx, 
              DSReheating`Private`xLarge, DSReheating`Private`prec, 
              DSReheating`Private`accu]; DSReheating`Private`domain = Flatten[
              
@@ -10085,8 +10100,9 @@ InterpolatingFunctionCoordinates[DSReheating`Private`ax]];
     "DSReheating`tauOfx"], False]]], "Output",
  CellChangeTimes->{3.8788252442527533`*^9, 3.879001924753612*^9, 
   3.87900259340028*^9, 3.88382238488693*^9, 3.8838251252069902`*^9, 
-  3.883827503038631*^9},
- CellLabel->"Out[24]=",ExpressionUUID->"553a577a-047f-494a-b9d7-3228e1127970"]
+  3.883827503038631*^9, 3.885735375875396*^9, 3.885739487895075*^9, 
+  3.885739930660375*^9},
+ CellLabel->"Out[24]=",ExpressionUUID->"6455b99f-efc3-4af9-b455-f3821063d448"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -10101,7 +10117,7 @@ Cell[BoxData[
 
 Cell[BoxData[
  RowBox[{"{", 
-  RowBox[{"0.068019`", ",", 
+  RowBox[{"0.081214`", ",", 
    InterpretationBox[
     RowBox[{
      TagBox["InterpolatingFunction",
@@ -12628,8 +12644,9 @@ q5SZmRFAL++xNeOlE0Dwt3AR
     SelectWithContents->True,
     Selectable->False]}], "}"}]], "Output",
  CellChangeTimes->{3.883822495273039*^9, 3.883825125351709*^9, 
-  3.8838275032032213`*^9},
- CellLabel->"Out[25]=",ExpressionUUID->"8b56c489-58ca-4eaa-82c0-fb6d1d37a644"]
+  3.8838275032032213`*^9, 3.885735377794746*^9, 3.885739488034204*^9, 
+  3.885739930835802*^9},
+ CellLabel->"Out[25]=",ExpressionUUID->"71e7a29d-8e3b-4d41-b7c4-a9a9168c44bf"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -12644,7 +12661,7 @@ Cell[BoxData[
 
 Cell[BoxData[
  RowBox[{"{", 
-  RowBox[{"0.053368`", ",", 
+  RowBox[{"0.050946`", ",", 
    InterpretationBox[
     RowBox[{
      TagBox["InterpolatingFunction",
@@ -15163,8 +15180,9 @@ q5SZmRFAL++xNeOlE0Dwt3AR
     SelectWithContents->True,
     Selectable->False]}], "}"}]], "Output",
  CellChangeTimes->{3.883822504936883*^9, 3.883825125539798*^9, 
-  3.883827503343329*^9},
- CellLabel->"Out[26]=",ExpressionUUID->"de5f8c53-415e-44c1-9698-a8e7371afb02"]
+  3.883827503343329*^9, 3.88573537935225*^9, 3.885739488226973*^9, 
+  3.8857399309865637`*^9},
+ CellLabel->"Out[26]=",ExpressionUUID->"4d51d3b7-48a4-4010-b4c4-55161857aced"]
 }, Open  ]]
 }, Open  ]],
 
@@ -15214,8 +15232,8 @@ method='analytic' then {Temperature Evolution}={\[Gamma], t0, \
 tcrit};\\n\\telse if method='semi'/'numeric'/'alt' then {Temperature \
 Evolution}={Tfn, tScale}.\\nOutput: {\\!\\(\\*SubscriptBox[\\(T\\), \\(PT\\)]\
 \\), \\!\\(\\*SubscriptBox[\\(t\\), \\(PT\\)]\\), \\!\\(\\*OverscriptBox[\\(\
-\[Lambda]\\), \\(_\\)]\\), \\!\\(\\*SubscriptBox[\\(\[Chi]\\), \\(b\\)]\\), \
-\[Epsilon], \\!\\(\\*SubscriptBox[\\(E\\), \\(c\\)]\\), \
+\[Lambda]\\), \\(_\\)]\\), \\!\\(\\*SubscriptBox[\\(\[CapitalPhi]\\), \
+\\(b\\)]\\), \[Epsilon], \\!\\(\\*SubscriptBox[\\(E\\), \\(c\\)]\\), \
 \\!\\(\\*SubscriptBox[\\(S\\), \\(E\\)]\\), \\!\\(\\*SubscriptBox[\\(S\\), \
 \\(E\\)]\\)', \\!\\(\\*SubscriptBox[\\(S\\), \\(E\\)]\\)'', \
 \\!\\(\\*SubscriptBox[\\(\[CapitalGamma]\\), \
@@ -15309,7 +15327,7 @@ Evolution}={Tfn, tScale}.\\nOutput: {\\!\\(\\*SubscriptBox[\\(T\\), \\(PT\\)]\
                     "PhaseTransition`Private`tpt", ",", 
                     "PhaseTransition`Private`T", ",", 
                     "PhaseTransition`Private`\[Lambda]bar", ",", 
-                    "PhaseTransition`Private`\[Chi]b", ",", 
+                    "PhaseTransition`Private`\[CapitalPhi]b", ",", 
                     "PhaseTransition`Private`\[Epsilon]", ",", 
                     "PhaseTransition`Private`Ec", ",", 
                     "PhaseTransition`Private`SE", ",", 
@@ -15440,9 +15458,9 @@ Evolution}={Tfn, tScale}.\\nOutput: {\\!\\(\\*SubscriptBox[\\(T\\), \\(PT\\)]\
                     "PhaseTransition`Private`\[Lambda]bar", "/.", 
                     "\[VeryThinSpace]", 
                     "PhaseTransition`Private`Mc\[Lambda]barToCoeffs"}]}], ";", 
-                    RowBox[{"PhaseTransition`Private`\[Chi]b", "=", 
+                    RowBox[{"PhaseTransition`Private`\[CapitalPhi]b", "=", 
                     RowBox[{
-                    "PhaseTransition`Private`Xb", "/.", "\[VeryThinSpace]", 
+                    "PhaseTransition`Private`Fb", "/.", "\[VeryThinSpace]", 
                     "PhaseTransition`Private`PotToCoeffs"}]}], ";", 
                     RowBox[{"PhaseTransition`Private`\[Epsilon]", "=", 
                     RowBox[{
@@ -15510,7 +15528,8 @@ Evolution}={Tfn, tScale}.\\nOutput: {\\!\\(\\*SubscriptBox[\\(T\\), \\(PT\\)]\
                     "PhaseTransition`Private`Tpt"}], "]"}]}], "]"}]}], ";", 
                     RowBox[{"PhaseTransition`Private`GammaNucl", "=", 
                     RowBox[{"\[CapitalGamma]nucl", "[", 
-                    RowBox[{"PhaseTransition`Private`coeffs", ",", 
+                    RowBox[{
+                    "PhaseTransition`Private`coeffs", ",", 
                     "PhaseTransition`Private`Tc", ",", 
                     "PhaseTransition`Private`Tpt", ",", 
                     "PhaseTransition`Private`Kfactor", ",", 
@@ -15741,7 +15760,7 @@ Evolution}={Tfn, tScale}.\\nOutput: {\\!\\(\\*SubscriptBox[\\(T\\), \\(PT\\)]\
                     "PhaseTransition`Private`Tpt", ",", 
                     "PhaseTransition`Private`tpt", ",", 
                     "PhaseTransition`Private`\[Lambda]bar", ",", 
-                    "PhaseTransition`Private`\[Chi]b", ",", 
+                    "PhaseTransition`Private`\[CapitalPhi]b", ",", 
                     "PhaseTransition`Private`\[Epsilon]", ",", 
                     "PhaseTransition`Private`Ec", ",", 
                     "PhaseTransition`Private`SE", ",", 
@@ -15770,6 +15789,7 @@ Evolution}={Tfn, tScale}.\\nOutput: {\\!\\(\\*SubscriptBox[\\(T\\), \\(PT\\)]\
                     StripOnInput->False],
                     "\"FullName\"",
                     TooltipStyle->"TextStyling"],
+                    
                     Annotation[#, "FullName", 
                     "Tooltip"]& ], "\<\"PhaseTransition`ptParams\"\>"}
                  },
@@ -15867,8 +15887,8 @@ method='analytic' then {Temperature Evolution}={\[Gamma], t0, \
 tcrit};\\n\\telse if method='semi'/'numeric'/'alt' then {Temperature \
 Evolution}={Tfn, tScale}.\\nOutput: {\\!\\(\\*SubscriptBox[\\(T\\), \\(PT\\)]\
 \\), \\!\\(\\*SubscriptBox[\\(t\\), \\(PT\\)]\\), \\!\\(\\*OverscriptBox[\\(\
-\[Lambda]\\), \\(_\\)]\\), \\!\\(\\*SubscriptBox[\\(\[Chi]\\), \\(b\\)]\\), \
-\[Epsilon], \\!\\(\\*SubscriptBox[\\(E\\), \\(c\\)]\\), \
+\[Lambda]\\), \\(_\\)]\\), \\!\\(\\*SubscriptBox[\\(\[CapitalPhi]\\), \
+\\(b\\)]\\), \[Epsilon], \\!\\(\\*SubscriptBox[\\(E\\), \\(c\\)]\\), \
 \\!\\(\\*SubscriptBox[\\(S\\), \\(E\\)]\\), \\!\\(\\*SubscriptBox[\\(S\\), \
 \\(E\\)]\\)', \\!\\(\\*SubscriptBox[\\(S\\), \\(E\\)]\\)'', \
 \\!\\(\\*SubscriptBox[\\(\[CapitalGamma]\\), \
@@ -15949,9 +15969,9 @@ method='analytic' then {Temperature Evolution}={\[Gamma], t0, tcrit};\n\telse \
 if method='semi'/'numeric'/'alt' then {Temperature Evolution}={Tfn, tScale}.\n\
 Output: {\!\(\*SubscriptBox[\(T\), \(PT\)]\), \!\(\*SubscriptBox[\(t\), \
 \(PT\)]\), \!\(\*OverscriptBox[\(\[Lambda]\), \(_\)]\), \!\(\*SubscriptBox[\(\
-\[Chi]\), \(b\)]\), \[Epsilon], \!\(\*SubscriptBox[\(E\), \(c\)]\), \
-\!\(\*SubscriptBox[\(S\), \(E\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\)', \!\(\
-\*SubscriptBox[\(S\), \(E\)]\)'', \!\(\*SubscriptBox[\(\[CapitalGamma]\), \
+\[CapitalPhi]\), \(b\)]\), \[Epsilon], \!\(\*SubscriptBox[\(E\), \(c\)]\), \!\
+\(\*SubscriptBox[\(S\), \(E\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\)', \
+\!\(\*SubscriptBox[\(S\), \(E\)]\)'', \!\(\*SubscriptBox[\(\[CapitalGamma]\), \
 \(nucl\)]\)/\[ScriptCapitalV], \!\(\*SubscriptBox[\(\[Beta]\), \(1\)]\), \!\(\
 \*SubscriptBox[\(\[Beta]\), \(2\)]\), \!\(\*SubscriptBox[\(n\), \(b\)]\), \
 \!\(\*SubscriptBox[\(R\), \(b\)]\), <R>, \!\(\*SubscriptBox[\(\[Beta]\), \
@@ -15995,7 +16015,8 @@ Output: {\!\(\*SubscriptBox[\(T\), \(PT\)]\), \!\(\*SubscriptBox[\(t\), \
           PhaseTransition`Private`method, PhaseTransition`Private`Kfactor, 
           PhaseTransition`Private`full, PhaseTransition`Private`atau, 
           PhaseTransition`Private`Nlx] = 
-        Block[{PhaseTransition`Private`\[Mu], PhaseTransition`Private`A, 
+        Block[{
+          PhaseTransition`Private`\[Mu], PhaseTransition`Private`A, 
            PhaseTransition`Private`\[Lambda], PhaseTransition`Private`Tc = 
            PhaseTransition`Private`Tcrit, PhaseTransition`Private`gamma, 
            PhaseTransition`Private`t0, PhaseTransition`Private`tcrit, 
@@ -16004,7 +16025,7 @@ Output: {\!\(\*SubscriptBox[\(T\), \(PT\)]\), \!\(\*SubscriptBox[\(t\), \
            PhaseTransition`Private`tt, PhaseTransition`Private`tScale, 
            PhaseTransition`Private`Tpt, PhaseTransition`Private`tpt, 
            PhaseTransition`Private`T, PhaseTransition`Private`\[Lambda]bar, 
-           PhaseTransition`Private`\[Chi]b, 
+           PhaseTransition`Private`\[CapitalPhi]b, 
            PhaseTransition`Private`\[Epsilon], PhaseTransition`Private`Ec, 
            PhaseTransition`Private`SE, PhaseTransition`Private`SE1, 
            PhaseTransition`Private`SE2, PhaseTransition`Private`GammaNucl, 
@@ -16063,9 +16084,9 @@ Output: {\!\(\*SubscriptBox[\(T\), \(PT\)]\), \!\(\*SubscriptBox[\(t\), \
            ReplaceAll[
             PhaseTransition`Private`\[Lambda]bar, 
              PhaseTransition`Private`Mc\[Lambda]barToCoeffs]; 
-          PhaseTransition`Private`\[Chi]b = 
+          PhaseTransition`Private`\[CapitalPhi]b = 
            ReplaceAll[
-            PhaseTransition`Private`Xb, PhaseTransition`Private`PotToCoeffs]; 
+            PhaseTransition`Private`Fb, PhaseTransition`Private`PotToCoeffs]; 
           PhaseTransition`Private`\[Epsilon] = 
            ReplaceAll[
             PhaseTransition`Private`\[CapitalDelta]V, 
@@ -16211,7 +16232,7 @@ Output: {\!\(\*SubscriptBox[\(T\), \(PT\)]\), \!\(\*SubscriptBox[\(t\), \
              PhaseTransition`Private`alphInf)/PhaseTransition`Private`alphn; {
            PhaseTransition`Private`Tpt, PhaseTransition`Private`tpt, 
             PhaseTransition`Private`\[Lambda]bar, 
-            PhaseTransition`Private`\[Chi]b, 
+            PhaseTransition`Private`\[CapitalPhi]b, 
             PhaseTransition`Private`\[Epsilon], PhaseTransition`Private`Ec, 
             PhaseTransition`Private`SE, PhaseTransition`Private`SE1, 
             PhaseTransition`Private`SE2, PhaseTransition`Private`GammaNucl, 
@@ -16241,8 +16262,8 @@ Output: {\!\(\*SubscriptBox[\(T\), \(PT\)]\), \!\(\*SubscriptBox[\(t\), \
    3.876911163226321*^9, 3.878396417316572*^9, 3.878396791881978*^9, 
    3.878397383958672*^9, 3.8785522914194927`*^9, 3.8785530954411507`*^9, 
    3.879001925400782*^9, 3.8790025938362503`*^9, 3.8838251515993853`*^9, 
-   3.883827503498888*^9},
- CellLabel->"Out[27]=",ExpressionUUID->"c6a5e6f6-1c31-4f98-a4a2-9b976189eea9"]
+   3.883827503498888*^9, 3.8857353843953876`*^9, 3.8857394913833103`*^9},
+ CellLabel->"Out[27]=",ExpressionUUID->"d195ebed-fa94-4932-b224-a6e3b766a01a"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -16250,7 +16271,7 @@ Cell[CellGroupData[{
 Cell[BoxData[
  RowBox[{"?", "tTPT"}]], "Input",
  CellChangeTimes->{{3.876394527359076*^9, 3.8763945288980103`*^9}},
- CellLabel->"In[28]:=",ExpressionUUID->"39ae791b-5c58-40ac-a8a7-b5082b76b90b"],
+ CellLabel->"In[27]:=",ExpressionUUID->"39ae791b-5c58-40ac-a8a7-b5082b76b90b"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -18853,8 +18874,8 @@ InterpolatingFunctionValuesOnGrid[PhaseTransition`Private`LogCond]];
   3.87690655810916*^9, 3.876907541771007*^9, 3.878396423082294*^9, 
   3.878396791994163*^9, 3.878397384111994*^9, 3.878552291534616*^9, 
   3.878553095558283*^9, 3.879001925527087*^9, 3.879002593980751*^9, 
-  3.883825151758751*^9, 3.883827503613006*^9},
- CellLabel->"Out[28]=",ExpressionUUID->"5954fbb3-ca14-439f-b576-0e220919f1d5"]
+  3.883825151758751*^9, 3.883827503613006*^9, 3.885735705589534*^9},
+ CellLabel->"Out[27]=",ExpressionUUID->"a3d09f83-2d37-4857-bc04-f474202336c7"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -18862,7 +18883,7 @@ Cell[CellGroupData[{
 Cell[BoxData[
  RowBox[{"?", "Lmlnh"}]], "Input",
  CellChangeTimes->{{3.876394530372319*^9, 3.876394533137353*^9}},
- CellLabel->"In[29]:=",ExpressionUUID->"c0876b6b-478a-41cb-96a0-c1cce0e3f733"],
+ CellLabel->"In[28]:=",ExpressionUUID->"c0876b6b-478a-41cb-96a0-c1cce0e3f733"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -20100,8 +20121,8 @@ InterpolatingFunctionCoordinates[PhaseTransition`Private`Tofx]];
   3.8769065603700533`*^9, 3.8769075419434767`*^9, 3.878396425306925*^9, 
   3.8783967920876226`*^9, 3.8783973842049503`*^9, 3.878552291643388*^9, 
   3.878553095666395*^9, 3.879001925674354*^9, 3.879002594080084*^9, 
-  3.8838251518625717`*^9, 3.883827503715817*^9},
- CellLabel->"Out[29]=",ExpressionUUID->"6e08ca9a-f609-4693-a041-fa29ba0cdb9d"]
+  3.8838251518625717`*^9, 3.883827503715817*^9, 3.885735707303207*^9},
+ CellLabel->"Out[28]=",ExpressionUUID->"7e12dd33-9448-477e-8814-213db986fe49"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -20109,7 +20130,7 @@ Cell[CellGroupData[{
 Cell[BoxData[
  RowBox[{"?", "EcTemp"}]], "Input",
  CellChangeTimes->{{3.876394297878388*^9, 3.876394300023505*^9}},
- CellLabel->"In[30]:=",ExpressionUUID->"bf86ca51-fcd9-443e-a7f9-a0c10e679ff8"],
+ CellLabel->"In[29]:=",ExpressionUUID->"bf86ca51-fcd9-443e-a7f9-a0c10e679ff8"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -20209,7 +20230,7 @@ critical bubble of the 1PT.\\nInput: (coeffs,Tcrit,T).\\nOutput: \
                     RowBox[{"PhaseTransition`Private`dim", "=", 
                     RowBox[{
                     FractionBox[
-                    SuperscriptBox["PhaseTransition`Private`Xb", "2"], 
+                    SuperscriptBox["PhaseTransition`Private`Fb", "2"], 
                     RowBox[{"PhaseTransition`Private`M", " ", 
                     "PhaseTransition`Private`Tc"}]], "/.", "\[VeryThinSpace]",
                      "PhaseTransition`Private`PotToCoeffs"}]}], ";", 
@@ -20421,7 +20442,7 @@ critical bubble of the 1PT.\\nInput: (coeffs,Tcrit,T).\\nOutput: \
             PhaseTransition`Private`Mc\[Lambda]barToCoeffs]; 
          PhaseTransition`Private`dim = 
           ReplaceAll[
-           PhaseTransition`Private`Xb^2/(PhaseTransition`Private`M 
+           PhaseTransition`Private`Fb^2/(PhaseTransition`Private`M 
             PhaseTransition`Private`Tc), PhaseTransition`Private`PotToCoeffs]; 
          PhaseTransition`Private`ec = 
           PhaseTransition`Private`Tc PhaseTransition`Private`dim 
@@ -20434,8 +20455,8 @@ critical bubble of the 1PT.\\nInput: (coeffs,Tcrit,T).\\nOutput: \
   3.876906561980022*^9, 3.8769075421033297`*^9, 3.878396427714304*^9, 
   3.878396792175655*^9, 3.878397384293701*^9, 3.878552291767131*^9, 
   3.878553095770996*^9, 3.8790019257921133`*^9, 3.8790025941743307`*^9, 
-  3.8838251519582033`*^9, 3.883827503810396*^9},
- CellLabel->"Out[30]=",ExpressionUUID->"3ce3b717-bcab-491b-9772-c0c29f5de440"]
+  3.8838251519582033`*^9, 3.883827503810396*^9, 3.885735708525648*^9},
+ CellLabel->"Out[29]=",ExpressionUUID->"3ada444d-e07a-46fb-9132-19724ef6cb6e"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -20443,7 +20464,7 @@ Cell[CellGroupData[{
 Cell[BoxData[
  RowBox[{"?", "SETemp"}]], "Input",
  CellChangeTimes->{{3.8763945522048492`*^9, 3.876394552651717*^9}},
- CellLabel->"In[31]:=",ExpressionUUID->"828b6ece-0961-4af9-8e68-94dfe7bf39cb"],
+ CellLabel->"In[30]:=",ExpressionUUID->"828b6ece-0961-4af9-8e68-94dfe7bf39cb"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -20722,8 +20743,8 @@ bubble of the 1PT.\nInput: (coeffs,Tcrit,T).\nOutput: \
   3.876906563608383*^9, 3.8769075422694263`*^9, 3.8783964295742197`*^9, 
   3.878396792265081*^9, 3.878397384381154*^9, 3.8785522918937483`*^9, 
   3.8785530958742456`*^9, 3.8790019259696503`*^9, 3.879002594261157*^9, 
-  3.883825152048276*^9, 3.883827503903899*^9},
- CellLabel->"Out[31]=",ExpressionUUID->"acf6bee6-d6cb-431e-86ea-1b2b3ad13da0"]
+  3.883825152048276*^9, 3.883827503903899*^9, 3.885735709693763*^9},
+ CellLabel->"Out[30]=",ExpressionUUID->"2d4bcd5c-2f94-487e-a9e4-e3c63900fb25"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -20731,7 +20752,7 @@ Cell[CellGroupData[{
 Cell[BoxData[
  RowBox[{"?", "\[CapitalGamma]nucl"}]], "Input",
  CellChangeTimes->{{3.876394561851293*^9, 3.876394562192645*^9}},
- CellLabel->"In[32]:=",ExpressionUUID->"a6c0eece-b8f6-4e47-9221-3aa89daf1d98"],
+ CellLabel->"In[31]:=",ExpressionUUID->"a6c0eece-b8f6-4e47-9221-3aa89daf1d98"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -21076,8 +21097,8 @@ the 1PT.\nInput: (coeffs,Tcrit,T,Kfactor,full).\nOutput: \
   3.876906565279861*^9, 3.876907542440097*^9, 3.878396436245914*^9, 
   3.8783967923544083`*^9, 3.87839738447043*^9, 3.878552292003503*^9, 
   3.878553095977413*^9, 3.8790019261221123`*^9, 3.879002594367703*^9, 
-  3.8838251521411448`*^9, 3.8838275040051107`*^9},
- CellLabel->"Out[32]=",ExpressionUUID->"de094e78-baa6-4200-b79d-01bb34206646"]
+  3.8838251521411448`*^9, 3.8838275040051107`*^9, 3.885735711053232*^9},
+ CellLabel->"Out[31]=",ExpressionUUID->"5019dcae-5640-48a1-a16b-df1ba93221c2"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -21086,7 +21107,7 @@ Cell[BoxData[
  RowBox[{"?", "\[Beta]1Rate"}]], "Input",
  CellChangeTimes->{{3.876394303149826*^9, 3.876394306503181*^9}, 
    3.8783964419780407`*^9},
- CellLabel->"In[33]:=",ExpressionUUID->"19cada03-67ee-4db1-80d1-935f5dd8f847"],
+ CellLabel->"In[32]:=",ExpressionUUID->"19cada03-67ee-4db1-80d1-935f5dd8f847"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -21364,8 +21385,8 @@ Output: \!\(\*SubscriptBox[\(\[Beta]\), \(1\)]\)(t)", "Documentation" -> None,
    3.876907542654352*^9, {3.878396438535084*^9, 3.87839644236165*^9}, 
    3.8783967924438667`*^9, 3.878397384566463*^9, 3.8785522921218576`*^9, 
    3.8785530960788107`*^9, 3.8790019262635193`*^9, 3.8790025944684877`*^9, 
-   3.883825152232246*^9, 3.883827504116557*^9},
- CellLabel->"Out[33]=",ExpressionUUID->"e3f23742-576a-4103-b4d0-03f854e4a499"]
+   3.883825152232246*^9, 3.883827504116557*^9, 3.885735712060906*^9},
+ CellLabel->"Out[32]=",ExpressionUUID->"c85a6ed9-87c2-4983-8442-109c88dbdf4c"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -21384,7 +21405,7 @@ Cell[BoxData[
     RowBox[{"0.5", ",", "0.4", ",", "10"}], "}"}], ",", "10"}], 
   "]"}]], "Input",
  CellChangeTimes->{{3.876906575394918*^9, 3.876906575633103*^9}},
- CellLabel->"In[34]:=",ExpressionUUID->"c8eb7eeb-dfa5-4873-8269-f1b3f442928b"],
+ CellLabel->"In[27]:=",ExpressionUUID->"c8eb7eeb-dfa5-4873-8269-f1b3f442928b"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -21393,18 +21414,19 @@ Cell[BoxData[
    "1.0223391103000217`", ",", "1.5641303348379156`", ",", 
    "0.05985450527456865`", ",", "918.6840180823718`", ",", 
    "91.77261970852747`", ",", 
-   RowBox[{"-", "2.4345485630406128`*^-9"}], ",", "9.416404691492371`*^-20", 
-   ",", "1.397879703776495`*^-36", ",", "2.4345988577937965`*^-9", ",", 
-   RowBox[{"-", "9.41640494444859`*^-20"}], ",", "5.741724920454765`*^-28", 
-   ",", "1.2031484224786966`*^9", ",", "8.278968865210547`*^10", ",", 
-   "2.434598857793799`*^-9", ",", 
-   RowBox[{"-", "0.0009276226316196597`"}], ",", "1.811783191862169`*^-6", 
-   ",", "512.9942804338746`"}], "}"}]], "Output",
+   RowBox[{"-", "2.4345485630406124`*^-9"}], ",", "9.416404691492368`*^-20", 
+   ",", "1.397879703776495`*^-36", ",", "2.434598857793796`*^-9", ",", 
+   RowBox[{"-", "9.416404944448587`*^-20"}], ",", "5.741724920454761`*^-28", 
+   ",", "1.203148422478697`*^9", ",", "8.278968865210547`*^10", ",", 
+   "2.4345988577937986`*^-9", ",", "0.0009276226316196598`", ",", 
+   "0.0023741402006036212`", ",", 
+   RowBox[{"-", "0.6092806012956551`"}]}], "}"}]], "Output",
  CellChangeTimes->{3.876906575980146*^9, 3.876907542794145*^9, 
   3.878396792477469*^9, 3.87839738459265*^9, 3.878552292151737*^9, 
   3.878553096105769*^9, 3.879001926314728*^9, 3.879002594494823*^9, 
-  3.883825152267627*^9, 3.883827504160531*^9},
- CellLabel->"Out[34]=",ExpressionUUID->"c8f2dd57-8704-4749-aad1-7238a4fe739b"]
+  3.883825152267627*^9, 3.883827504160531*^9, 3.885735842601449*^9, 
+  3.885739514185186*^9, 3.8857399347169323`*^9},
+ CellLabel->"Out[27]=",ExpressionUUID->"ad54c653-07ca-4ae6-bd50-259b320619ba"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -21425,7 +21447,7 @@ Cell[BoxData[
  CellChangeTimes->{{3.870430036656699*^9, 3.8704300393864098`*^9}, {
   3.870533086048479*^9, 3.870533088253438*^9}, {3.876906584411622*^9, 
   3.876906584686368*^9}},
- CellLabel->"In[35]:=",ExpressionUUID->"c6f58f4d-2624-498d-b018-273c05f1dc0d"],
+ CellLabel->"In[28]:=",ExpressionUUID->"c6f58f4d-2624-498d-b018-273c05f1dc0d"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -21434,13 +21456,12 @@ Cell[BoxData[
    "1.078473767527044`", ",", "19.588811069888035`", ",", 
    "662.6243037648362`", ",", "1614.4757547438564`", ",", 
    "119.01493817126396`", ",", 
-   RowBox[{"-", "3.620947761711369`*^-12"}], ",", "1.8893512252254735`*^-25", 
-   ",", "6.95327324833937`*^-48", ",", "3.635862464429336`*^-12", ",", 
-   RowBox[{"-", "1.8915757087971267`*^-25"}], ",", "1.9124164912829563`*^-36",
-    ",", "8.056365728297123`*^11", ",", "4.724793376775423`*^13", ",", 
-   "3.6358624644293415`*^-12", ",", 
-   RowBox[{"-", "0.07922962005948003`"}], ",", "0.005947968527428926`", ",", 
-   "14.320450451967659`"}], "}"}]], "Output",
+   RowBox[{"-", "3.620947761711368`*^-12"}], ",", "1.8893512252254726`*^-25", 
+   ",", "6.95327324833937`*^-48", ",", "3.6358624644293346`*^-12", ",", 
+   RowBox[{"-", "1.891575708797126`*^-25"}], ",", "1.9124164912829537`*^-36", 
+   ",", "8.056365728297126`*^11", ",", "4.724793376775423`*^13", ",", 
+   "3.63586246442934`*^-12", ",", "0.07922962005948006`", ",", 
+   "0.00018102369314701945`", ",", "436.67541520177286`"}], "}"}]], "Output",
  CellChangeTimes->{3.8704300543381042`*^9, 3.870433823017604*^9, 
   3.870433958814651*^9, 3.870533144901863*^9, 3.8706179256499357`*^9, 
   3.871556361927227*^9, 3.871556583772031*^9, 3.871556651823884*^9, 
@@ -21448,8 +21469,8 @@ Cell[BoxData[
   3.8769065851296453`*^9, 3.8769075428693*^9, 3.8783968072359743`*^9, 
   3.878397384618174*^9, 3.8785522921825933`*^9, 3.878553096122699*^9, 
   3.879001926348749*^9, 3.879002594519503*^9, 3.883825152290222*^9, 
-  3.883827504191928*^9},
- CellLabel->"Out[35]=",ExpressionUUID->"0ad6eb5b-e3c9-4cbb-8bc8-5838bf91f3e7"]
+  3.883827504191928*^9, 3.885739539971243*^9, 3.885739942569674*^9},
+ CellLabel->"Out[28]=",ExpressionUUID->"7fb426ef-0c44-4723-a362-038a7d679a33"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -21478,7 +21499,7 @@ Cell[BoxData[
    "\"The parameters {\[Mu],A,\[Lambda]}=\\!\\(\\*RowBox[{\\\"{\\\", RowBox[{\
 \\\"0.1`\\\", \\\",\\\", \\\"0.5`\\\", \\\",\\\", \\\"1\\\"}], \\\"}\\\"}]\\) \
 in the potential do not allow for a critical temperature, nor a first order \
-phase transition.\"",2,36,1,24287185267144730137,"Local",
+phase transition.\"",2,36,2,24299718628613188131,"Local",
    "PhaseTransition`Private`noCritTemp"},
   "MessageTemplate2"]], "Message", "MSG",
  CellChangeTimes->{3.866970696853629*^9, 3.870430080040934*^9, 
@@ -21488,10 +21509,10 @@ phase transition.\"",2,36,1,24287185267144730137,"Local",
   3.876394713552623*^9, 3.876906588857362*^9, 3.876907542913931*^9, 
   3.878396811779642*^9, 3.8783973846491327`*^9, 3.87855229227451*^9, 
   3.878553096190241*^9, 3.879001926384212*^9, 3.879002594549721*^9, 
-  3.8838251523204613`*^9, 3.883827504236945*^9},
+  3.8838251523204613`*^9, 3.883827504236945*^9, 3.885739998086194*^9},
  CellLabel->
   "During evaluation of \
-In[36]:=",ExpressionUUID->"0a7e927c-63ad-495f-835f-b07314aec466"],
+In[36]:=",ExpressionUUID->"238a8d21-6b26-4a25-a2f6-314ec6b10a5a"],
 
 Cell[BoxData["$Aborted"], "Output",
  CellChangeTimes->{3.866970696908585*^9, 3.8704300800550013`*^9, 
@@ -21501,8 +21522,8 @@ Cell[BoxData["$Aborted"], "Output",
   3.876394713576014*^9, 3.876906588867984*^9, 3.8769075429219418`*^9, 
   3.8783968117920218`*^9, 3.878397384654503*^9, 3.878552292281618*^9, 
   3.878553096201457*^9, 3.879001926419251*^9, 3.879002594560314*^9, 
-  3.8838251523292418`*^9, 3.8838275042457848`*^9},
- CellLabel->"Out[36]=",ExpressionUUID->"df8a4374-2795-4aff-ad5c-9a0c378fc32f"]
+  3.8838251523292418`*^9, 3.8838275042457848`*^9, 3.885739998106599*^9},
+ CellLabel->"Out[36]=",ExpressionUUID->"30724f01-a9d9-49ab-b1ba-c211287b5839"]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -21602,13 +21623,12 @@ Cell[BoxData[
    "1.081793327075013`", ",", "19.823997410695856`", ",", 
    "739.0758627132992`", ",", "1421.5503790884609`", ",", 
    "102.91392013139544`", ",", 
-   RowBox[{"-", "2.0628707047406928`*^-10"}], ",", "6.012774474119484`*^-22", 
-   ",", "7.348605142216372`*^-41", ",", "2.0730572466557335`*^-10", ",", 
-   RowBox[{"-", "6.018264436984328`*^-22"}], ",", "3.544818680718498`*^-31", 
-   ",", "1.4129777553651337`*^10", ",", "9.544673776005071`*^11", ",", 
-   "2.073057246655736`*^-10", ",", 
-   RowBox[{"-", "0.07825961710535928`"}], ",", "0.00617103474844979`", ",", 
-   "13.681765748445784`"}], "}"}]], "Output",
+   RowBox[{"-", "2.0628707047406933`*^-10"}], ",", "6.012774474119485`*^-22", 
+   ",", "7.348605142216372`*^-41", ",", "2.073057246655734`*^-10", ",", 
+   RowBox[{"-", "6.018264436984329`*^-22"}], ",", "3.5448186807185013`*^-31", 
+   ",", "1.4129777553651333`*^10", ",", "9.544673776005071`*^11", ",", 
+   "2.0730572466557366`*^-10", ",", "0.07825961710535928`", ",", 
+   "0.00016838488041474566`", ",", "463.76629559969683`"}], "}"}]], "Output",
  CellChangeTimes->{{3.8704301698804092`*^9, 3.870430209111878*^9}, {
    3.8704338366851892`*^9, 3.8704338807443943`*^9}, {3.870433958936553*^9, 
    3.870433977685391*^9}, 3.870533149879485*^9, 3.8706179288586597`*^9, {
@@ -21618,8 +21638,8 @@ Cell[BoxData[
    3.87839691798418*^9, 3.878397110145761*^9, 3.878397384692688*^9, 
    3.878397703441534*^9, 3.87839781557183*^9, 3.8785522923164587`*^9, 
    3.878553096249174*^9, 3.8790019264586887`*^9, 3.8790025945905447`*^9, 
-   3.883825152355011*^9, 3.883827517327957*^9},
- CellLabel->"Out[39]=",ExpressionUUID->"fda156b6-e5a8-44b5-843e-030bfa611d4e"],
+   3.883825152355011*^9, 3.883827517327957*^9, 3.885739999005206*^9},
+ CellLabel->"Out[39]=",ExpressionUUID->"307aecfa-ddb2-4561-aa96-6b377f9dc478"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -21632,9 +21652,9 @@ Cell[BoxData[
    ",", "1.3726637829152876`*^-39", ",", "4.309739385580578`*^-10", ",", 
    RowBox[{"-", "2.0491871172419224`*^-21"}], ",", "3.185027353409731`*^-30", 
    ",", "6.79666103459396`*^9", ",", "6.592666846112891`*^11", ",", 
-   "4.3097393855805833`*^-10", ",", "0.1287910378548477`", ",", 
-   "0.01905619695824292`", ",", 
-   RowBox[{"-", "5.7584858687734135`"}]}], "}"}]], "Output",
+   "4.3097393855805833`*^-10", ",", "0.12879103785484772`", ",", 
+   "0.0028097383660694404`", ",", 
+   RowBox[{"-", "44.83737739076904`"}]}], "}"}]], "Output",
  CellChangeTimes->{{3.8704301698804092`*^9, 3.870430209111878*^9}, {
    3.8704338366851892`*^9, 3.8704338807443943`*^9}, {3.870433958936553*^9, 
    3.870433977685391*^9}, 3.870533149879485*^9, 3.8706179288586597`*^9, {
@@ -21644,12 +21664,12 @@ Cell[BoxData[
    3.87839691798418*^9, 3.878397110145761*^9, 3.878397384692688*^9, 
    3.878397703441534*^9, 3.87839781557183*^9, 3.8785522923164587`*^9, 
    3.878553096249174*^9, 3.8790019264586887`*^9, 3.8790025945905447`*^9, 
-   3.883825152355011*^9, 3.8838275173648853`*^9},
- CellLabel->"Out[40]=",ExpressionUUID->"59bdb38f-693b-49bb-b532-02f1e87cf93a"],
+   3.883825152355011*^9, 3.883827517327957*^9, 3.885739999019891*^9},
+ CellLabel->"Out[40]=",ExpressionUUID->"a529fa47-67e5-49dd-8351-42abf6a4f7e0"],
 
 Cell[BoxData[
  RowBox[{"{", 
-  RowBox[{"14.255262`", ",", 
+  RowBox[{"6.378728`", ",", 
    RowBox[{"{", 
     RowBox[{
     "13.748322194931`", ",", 
@@ -21663,9 +21683,9 @@ Cell[BoxData[
      RowBox[{"-", "6.479457218152726`*^-22"}], ",", "2.695618021075423`*^-31",
       ",", "1.54803419469498`*^10", ",", 
      "9.361275259742750447538435122274`15.87323816712303*^11", ",", 
-     "1.8921957829879873`*^-10", ",", 
-     RowBox[{"-", "0.07851075447019386`"}], ",", "0.006114205464147496`", ",",
-      "13.840712490047244`"}], "}"}]}], "}"}]], "Output",
+     "1.8921957829879873`*^-10", ",", "0.07851075447019389`", ",", 
+     "0.0001715761125964237`", ",", "456.58557693205574`"}], "}"}]}], 
+  "}"}]], "Output",
  CellChangeTimes->{{3.8704301698804092`*^9, 3.870430209111878*^9}, {
    3.8704338366851892`*^9, 3.8704338807443943`*^9}, {3.870433958936553*^9, 
    3.870433977685391*^9}, 3.870533149879485*^9, 3.8706179288586597`*^9, {
@@ -21675,13 +21695,13 @@ Cell[BoxData[
    3.87839691798418*^9, 3.878397110145761*^9, 3.878397384692688*^9, 
    3.878397703441534*^9, 3.87839781557183*^9, 3.8785522923164587`*^9, 
    3.878553096249174*^9, 3.8790019264586887`*^9, 3.8790025945905447`*^9, 
-   3.883825152355011*^9, 3.88382753164679*^9},
- CellLabel->"Out[41]=",ExpressionUUID->"039965fc-e8a1-4a97-af06-cf378c672054"]
+   3.883825152355011*^9, 3.883827517327957*^9, 3.885740005396703*^9},
+ CellLabel->"Out[41]=",ExpressionUUID->"1f928c36-3f08-43c0-bbfa-d29ed87be3f4"]
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{1920, 1015},
-WindowMargins->{{0, Automatic}, {0, Automatic}},
+WindowSize->{956, 1015},
+WindowMargins->{{Automatic, 0}, {0, Automatic}},
 Magnification:>1.5 Inherited,
 FrontEndVersion->"12.0 for Linux x86 (64-bit) (April 8, 2019)",
 StyleDefinitions->"Default.nb"
@@ -21701,114 +21721,114 @@ Cell[558, 20, 246, 4, 47, "Input",ExpressionUUID->"d1adb373-ed85-47e3-81ba-618c6
 Cell[807, 26, 504, 7, 89, "Input",ExpressionUUID->"65b9ef58-f551-49a0-bbe9-b06364bcc737"],
 Cell[CellGroupData[{
 Cell[1336, 37, 281, 8, 102, "Section",ExpressionUUID->"5a755e1a-b8d8-4469-af1f-b50759f9a030"],
-Cell[1620, 47, 240, 6, 54, "Text",ExpressionUUID->"7b6b8d02-699e-42de-aeba-546308093c97"],
-Cell[1863, 55, 1060, 27, 184, "Input",ExpressionUUID->"9ef9135b-729a-46af-a3ac-0068c8b6a5ca"],
-Cell[2926, 84, 2820, 65, 252, "Input",ExpressionUUID->"0662cad2-9b3c-42d2-ba49-f1b9cb8f1bf1"],
-Cell[5749, 151, 155, 3, 54, "Text",ExpressionUUID->"1c465536-6261-45a8-aac6-9683b1fd8869"],
+Cell[1620, 47, 240, 6, 90, "Text",ExpressionUUID->"7b6b8d02-699e-42de-aeba-546308093c97"],
+Cell[1863, 55, 1113, 28, 184, "Input",ExpressionUUID->"9ef9135b-729a-46af-a3ac-0068c8b6a5ca"],
+Cell[2979, 85, 2820, 65, 354, "Input",ExpressionUUID->"0662cad2-9b3c-42d2-ba49-f1b9cb8f1bf1"],
+Cell[5802, 152, 155, 3, 54, "Text",ExpressionUUID->"1c465536-6261-45a8-aac6-9683b1fd8869"],
 Cell[CellGroupData[{
-Cell[5929, 158, 907, 20, 213, "Input",ExpressionUUID->"0dfcd08f-3e14-404d-ba47-b114bfe75407"],
-Cell[6839, 180, 1025, 23, 90, "Output",ExpressionUUID->"443137b1-3a0f-40dd-8486-579af6c8ca0a"],
-Cell[7867, 205, 1037, 18, 74, "Output",ExpressionUUID->"e03ad4e9-23de-4e83-8a51-b81c4e3c1fa2"],
-Cell[8907, 225, 889, 18, 98, "Output",ExpressionUUID->"09ca3d2a-4a55-4ccf-8b6f-fc564df6859c"],
-Cell[9799, 245, 887, 18, 98, "Output",ExpressionUUID->"e550c3b5-e53f-44f8-8993-8dab6b877165"],
-Cell[10689, 265, 623, 8, 53, "Output",ExpressionUUID->"9f230deb-46d7-4537-98d8-e409ef67028c"]
+Cell[5982, 159, 907, 20, 213, "Input",ExpressionUUID->"0dfcd08f-3e14-404d-ba47-b114bfe75407"],
+Cell[6892, 181, 1096, 24, 90, "Output",ExpressionUUID->"da4ca0c3-e638-40d3-aec5-b05245f10801"],
+Cell[7991, 207, 1109, 19, 167, "Output",ExpressionUUID->"9b59bca7-7e53-4c33-8b7f-759d7e5cec52"],
+Cell[9103, 228, 959, 19, 98, "Output",ExpressionUUID->"a860ffd4-2f49-44f6-b580-327d05d09b4f"],
+Cell[10065, 249, 959, 19, 98, "Output",ExpressionUUID->"d2be008b-11e9-419b-967b-d95e92ecb473"],
+Cell[11027, 270, 695, 9, 53, "Output",ExpressionUUID->"10fe0ebf-67e9-4972-bd06-16375d3a4d96"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[11349, 278, 309, 7, 47, "Input",ExpressionUUID->"8f59918f-458c-40aa-85ce-489bca9c37bf"],
-Cell[11661, 287, 1297, 42, 88, "Output",ExpressionUUID->"e08b920f-e6ee-41ce-a54a-c40e199dd984"]
+Cell[11759, 284, 375, 8, 47, "Input",ExpressionUUID->"8f59918f-458c-40aa-85ce-489bca9c37bf"],
+Cell[12137, 294, 1366, 43, 154, "Output",ExpressionUUID->"0b5962aa-b26f-4152-a7f3-5c9f4fa84845"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[13007, 335, 199, 4, 102, "Section",ExpressionUUID->"71339323-4788-49cf-a066-d0f175854886"],
+Cell[13552, 343, 199, 4, 102, "Section",ExpressionUUID->"71339323-4788-49cf-a066-d0f175854886"],
 Cell[CellGroupData[{
-Cell[13231, 343, 193, 3, 47, "Input",ExpressionUUID->"8b7aedfe-bbbd-462a-a10d-f980ed0daa3a"],
-Cell[13427, 348, 36194, 813, 141, "Output",ExpressionUUID->"93a56a7e-9ee6-4c2e-89a1-e0a4d62d8699"]
+Cell[13776, 351, 193, 3, 47, "Input",ExpressionUUID->"8b7aedfe-bbbd-462a-a10d-f980ed0daa3a"],
+Cell[13972, 356, 36237, 813, 141, "Output",ExpressionUUID->"0ed13336-6b4b-425b-8176-7aee7a52d509"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[49658, 1166, 306, 6, 47, "Input",ExpressionUUID->"ba47a388-557b-4cb2-bde0-96ad36c31c46"],
-Cell[49967, 1174, 1299, 42, 88, "Output",ExpressionUUID->"17f161ad-5a89-4c8a-a4b1-35ef1a6055b5"]
+Cell[50246, 1174, 374, 7, 47, "Input",ExpressionUUID->"ba47a388-557b-4cb2-bde0-96ad36c31c46"],
+Cell[50623, 1183, 1370, 43, 154, "Output",ExpressionUUID->"09c4e131-f6c1-4519-9d80-d2ed78d9104a"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[51303, 1221, 208, 3, 47, "Input",ExpressionUUID->"6c1194c1-4200-419c-b982-4a84648978e1"],
-Cell[51514, 1226, 471473, 7082, 98, "Output",ExpressionUUID->"f7b3b137-b67a-4140-9c46-25c5a421bb48"]
+Cell[52030, 1231, 208, 3, 47, "Input",ExpressionUUID->"6c1194c1-4200-419c-b982-4a84648978e1"],
+Cell[52241, 1236, 471541, 7083, 283, "Output",ExpressionUUID->"e3ddfdc6-51c0-4467-b0f1-0162be32dfdb"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[523024, 8313, 416, 11, 75, "Input",ExpressionUUID->"bae5d89d-feb2-470f-8de8-60a1e3888264"],
-Cell[523443, 8326, 510, 11, 53, "Output",ExpressionUUID->"0a10c105-4527-4072-b4f6-cbf4db5dd561"]
+Cell[523819, 8324, 416, 11, 75, "Input",ExpressionUUID->"bae5d89d-feb2-470f-8de8-60a1e3888264"],
+Cell[524238, 8337, 584, 12, 122, "Output",ExpressionUUID->"1101cf10-fcca-49e1-8962-df60567625dc"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[523990, 8342, 126, 2, 47, "Input",ExpressionUUID->"577da8fa-c5af-49f3-adc0-0e54e8b59d7e"],
-Cell[524119, 8346, 15326, 356, 215, "Output",ExpressionUUID->"492748da-448f-40e6-8187-c7f5bd3f811d"]
+Cell[524859, 8354, 126, 2, 47, "Input",ExpressionUUID->"577da8fa-c5af-49f3-adc0-0e54e8b59d7e"],
+Cell[524988, 8358, 15399, 357, 251, "Output",ExpressionUUID->"224ce542-7a60-4279-8bca-e8e7e0c6a929"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[539482, 8707, 192, 3, 47, "Input",ExpressionUUID->"5f991e04-3c23-48e4-b50f-62c14557520a"],
-Cell[539677, 8712, 16046, 370, 215, "Output",ExpressionUUID->"29b7adf3-438b-4f75-919c-6156d69a6ca4"]
+Cell[540424, 8720, 192, 3, 47, "Input",ExpressionUUID->"5f991e04-3c23-48e4-b50f-62c14557520a"],
+Cell[540619, 8725, 16119, 371, 251, "Output",ExpressionUUID->"1a12db35-9a67-43cd-94f9-727b02f4e7fe"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[555760, 9087, 192, 3, 47, "Input",ExpressionUUID->"1a4497d8-fa3d-4151-81a9-dc275111ee6e"],
-Cell[555955, 9092, 21758, 483, 215, "Output",ExpressionUUID->"fd95dff9-f596-4e80-b984-eef667efba12"]
+Cell[556775, 9101, 192, 3, 47, "Input",ExpressionUUID->"1a4497d8-fa3d-4151-81a9-dc275111ee6e"],
+Cell[556970, 9106, 21830, 484, 215, "Output",ExpressionUUID->"5504f36a-2571-4c37-a160-f4d3933e88ba"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[577750, 9580, 194, 3, 47, "Input",ExpressionUUID->"cab12a75-bafb-405f-b4a8-2eeed9a3afae"],
-Cell[577947, 9585, 22908, 503, 215, "Output",ExpressionUUID->"553a577a-047f-494a-b9d7-3228e1127970"]
+Cell[578837, 9595, 194, 3, 47, "Input",ExpressionUUID->"cab12a75-bafb-405f-b4a8-2eeed9a3afae"],
+Cell[579034, 9600, 22977, 504, 215, "Output",ExpressionUUID->"6455b99f-efc3-4af9-b455-f3821063d448"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[600892, 10093, 263, 6, 47, "Input",ExpressionUUID->"033bfeb2-5ca0-49c7-ac42-b15b293e60f3"],
-Cell[601158, 10101, 160020, 2530, 98, "Output",ExpressionUUID->"8b56c489-58ca-4eaa-82c0-fb6d1d37a644"]
+Cell[602048, 10109, 263, 6, 47, "Input",ExpressionUUID->"033bfeb2-5ca0-49c7-ac42-b15b293e60f3"],
+Cell[602314, 10117, 160089, 2531, 149, "Output",ExpressionUUID->"71e7a29d-8e3b-4d41-b7c4-a9a9168c44bf"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[761215, 12636, 275, 6, 47, "Input",ExpressionUUID->"60dc25a2-38cd-4225-8878-3a0a3f196f58"],
-Cell[761493, 12644, 159332, 2522, 98, "Output",ExpressionUUID->"de5f8c53-415e-44c1-9698-a8e7371afb02"]
+Cell[762440, 12653, 275, 6, 47, "Input",ExpressionUUID->"60dc25a2-38cd-4225-8878-3a0a3f196f58"],
+Cell[762718, 12661, 159402, 2523, 149, "Output",ExpressionUUID->"4d51d3b7-48a4-4010-b4c4-55161857aced"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[920874, 15172, 200, 4, 102, "Section",ExpressionUUID->"c78ad607-566c-4531-b86e-2e57b76d7484"],
+Cell[922169, 15190, 200, 4, 102, "Section",ExpressionUUID->"c78ad607-566c-4531-b86e-2e57b76d7484"],
 Cell[CellGroupData[{
-Cell[921099, 15180, 194, 3, 47, "Input",ExpressionUUID->"1290f517-7bb9-4443-ac70-703c738d2fce"],
-Cell[921296, 15185, 55486, 1059, 293, "Output",ExpressionUUID->"c6a5e6f6-1c31-4f98-a4a2-9b976189eea9"]
+Cell[922394, 15198, 194, 3, 47, "Input",ExpressionUUID->"1290f517-7bb9-4443-ac70-703c738d2fce"],
+Cell[922591, 15203, 55650, 1062, 443, "Output",ExpressionUUID->"d195ebed-fa94-4932-b224-a6e3b766a01a"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[976819, 16249, 194, 3, 47, "Input",ExpressionUUID->"39ae791b-5c58-40ac-a8a7-b5082b76b90b"],
-Cell[977016, 16254, 131978, 2602, 289, "Output",ExpressionUUID->"5954fbb3-ca14-439f-b576-0e220919f1d5"]
+Cell[978278, 16270, 194, 3, 47, "Input",ExpressionUUID->"39ae791b-5c58-40ac-a8a7-b5082b76b90b"],
+Cell[978475, 16275, 132000, 2602, 363, "Output",ExpressionUUID->"a3d09f83-2d37-4857-bc04-f474202336c7"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1109031, 18861, 193, 3, 47, "Input",ExpressionUUID->"c0876b6b-478a-41cb-96a0-c1cce0e3f733"],
-Cell[1109227, 18866, 60718, 1237, 215, "Output",ExpressionUUID->"6e08ca9a-f609-4693-a041-fa29ba0cdb9d"]
+Cell[1110512, 18882, 193, 3, 47, "Input",ExpressionUUID->"c0876b6b-478a-41cb-96a0-c1cce0e3f733"],
+Cell[1110708, 18887, 60740, 1237, 251, "Output",ExpressionUUID->"7e12dd33-9448-477e-8814-213db986fe49"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1169982, 20108, 194, 3, 47, "Input",ExpressionUUID->"bf86ca51-fcd9-443e-a7f9-a0c10e679ff8"],
-Cell[1170179, 20113, 14271, 324, 215, "Output",ExpressionUUID->"3ce3b717-bcab-491b-9772-c0c29f5de440"]
+Cell[1171485, 20129, 194, 3, 47, "Input",ExpressionUUID->"bf86ca51-fcd9-443e-a7f9-a0c10e679ff8"],
+Cell[1171682, 20134, 14293, 324, 215, "Output",ExpressionUUID->"3ada444d-e07a-46fb-9132-19724ef6cb6e"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1184487, 20442, 196, 3, 47, "Input",ExpressionUUID->"828b6ece-0961-4af9-8e68-94dfe7bf39cb"],
-Cell[1184686, 20447, 11665, 278, 215, "Output",ExpressionUUID->"acf6bee6-d6cb-431e-86ea-1b2b3ad13da0"]
+Cell[1186012, 20463, 196, 3, 47, "Input",ExpressionUUID->"828b6ece-0961-4af9-8e68-94dfe7bf39cb"],
+Cell[1186211, 20468, 11687, 278, 251, "Output",ExpressionUUID->"2d4bcd5c-2f94-487e-a9e4-e3c63900fb25"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1196388, 20730, 207, 3, 47, "Input",ExpressionUUID->"a6c0eece-b8f6-4e47-9221-3aa89daf1d98"],
-Cell[1196598, 20735, 15040, 344, 215, "Output",ExpressionUUID->"de094e78-baa6-4200-b79d-01bb34206646"]
+Cell[1197935, 20751, 207, 3, 47, "Input",ExpressionUUID->"a6c0eece-b8f6-4e47-9221-3aa89daf1d98"],
+Cell[1198145, 20756, 15062, 344, 215, "Output",ExpressionUUID->"5019dcae-5640-48a1-a16b-df1ba93221c2"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1211675, 21084, 228, 4, 47, "Input",ExpressionUUID->"19cada03-67ee-4db1-80d1-935f5dd8f847"],
-Cell[1211906, 21090, 11666, 277, 215, "Output",ExpressionUUID->"e3f23742-576a-4103-b4d0-03f854e4a499"]
+Cell[1213244, 21105, 228, 4, 47, "Input",ExpressionUUID->"19cada03-67ee-4db1-80d1-935f5dd8f847"],
+Cell[1213475, 21111, 11688, 277, 251, "Output",ExpressionUUID->"c85a6ed9-87c2-4983-8442-109c88dbdf4c"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1223609, 21372, 545, 14, 51, "Input",ExpressionUUID->"c8eb7eeb-dfa5-4873-8269-f1b3f442928b"],
-Cell[1224157, 21388, 1039, 18, 95, "Output",ExpressionUUID->"c8f2dd57-8704-4749-aad1-7238a4fe739b"]
+Cell[1225200, 21393, 545, 14, 89, "Input",ExpressionUUID->"c8eb7eeb-dfa5-4873-8269-f1b3f442928b"],
+Cell[1225748, 21409, 1111, 19, 164, "Output",ExpressionUUID->"ad54c653-07ca-4ae6-bd50-259b320619ba"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1225233, 21411, 643, 16, 51, "Input",ExpressionUUID->"c6f58f4d-2624-498d-b018-273c05f1dc0d"],
-Cell[1225879, 21429, 1303, 22, 95, "Output",ExpressionUUID->"0ad6eb5b-e3c9-4cbb-8bc8-5838bf91f3e7"]
+Cell[1226896, 21433, 643, 16, 89, "Input",ExpressionUUID->"c6f58f4d-2624-498d-b018-273c05f1dc0d"],
+Cell[1227542, 21451, 1328, 21, 164, "Output",ExpressionUUID->"7fb426ef-0c44-4723-a362-038a7d679a33"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1227219, 21456, 692, 16, 51, "Input",ExpressionUUID->"63bab12c-6fc4-4028-addb-b81be518c843"],
-Cell[1227914, 21474, 1100, 19, 34, "Message",ExpressionUUID->"0a7e927c-63ad-495f-835f-b07314aec466"],
-Cell[1229017, 21495, 648, 9, 53, "Output",ExpressionUUID->"df8a4374-2795-4aff-ad5c-9a0c378fc32f"]
+Cell[1228907, 21477, 692, 16, 89, "Input",ExpressionUUID->"63bab12c-6fc4-4028-addb-b81be518c843"],
+Cell[1229602, 21495, 1122, 19, 91, "Message",ExpressionUUID->"238a8d21-6b26-4a25-a2f6-314ec6b10a5a"],
+Cell[1230727, 21516, 670, 9, 53, "Output",ExpressionUUID->"30724f01-a9d9-49ab-b1ba-c211287b5839"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[1229702, 21509, 3670, 86, 465, "Input",ExpressionUUID->"2bd2a9b3-2dc6-48f8-b92d-366a4abb257d"],
-Cell[1233375, 21597, 1488, 24, 95, "Output",ExpressionUUID->"fda156b6-e5a8-44b5-843e-030bfa611d4e"],
-Cell[1234866, 21623, 1487, 24, 95, "Output",ExpressionUUID->"59bdb38f-693b-49bb-b532-02f1e87cf93a"],
-Cell[1236356, 21649, 1647, 29, 95, "Output",ExpressionUUID->"039965fc-e8a1-4a97-af06-cf378c672054"]
+Cell[1231434, 21530, 3670, 86, 617, "Input",ExpressionUUID->"2bd2a9b3-2dc6-48f8-b92d-366a4abb257d"],
+Cell[1235107, 21618, 1495, 23, 164, "Output",ExpressionUUID->"307aecfa-ddb2-4561-aa96-6b377f9dc478"],
+Cell[1236605, 21643, 1509, 24, 164, "Output",ExpressionUUID->"a529fa47-67e5-49dd-8351-42abf6a4f7e0"],
+Cell[1238117, 21669, 1652, 29, 198, "Output",ExpressionUUID->"1f928c36-3f08-43c0-bbfa-d29ed87be3f4"]
 }, Open  ]]
 }, Open  ]]
 }

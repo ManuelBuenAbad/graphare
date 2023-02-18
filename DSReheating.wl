@@ -3,15 +3,15 @@
 BeginPackage["DSReheating`"];
 
 
-solEqs::usage="solEqs: solutions to the reheating equations, interpolated as functions of (dimensionless) time.\nInput: (\[Gamma],w\[Phi],xLarge,prec,accu).\nOutput: {\!\(\*SubscriptBox[\(r\), \(\[Phi]\)]\), \!\(\*SubscriptBox[\(r\), \(r\)]\)}";
+solEqs::usage="solEqs: solutions to the reheating equations, interpolated as functions of (dimensionless) time.\nInput: (\[Gamma],w\[Chi],xLarge,prec,accu).\nOutput: {\!\(\*SubscriptBox[\(r\), \(\[Chi]\)]\), \!\(\*SubscriptBox[\(r\), \(r\)]\)}";
 hub::usage="hub: the dimensionless Hubble expansion rate, as a function of (dimensionless) time.\nInput: (x).\nOutput: h(x)";
-HOfx::usage="HOfx: Hubble expansion rate interpolated as a function of (dimensionless) time.\nInput: (\[Gamma],\!\(\*SubscriptBox[\(H\), \(i\)]\),w\[Phi],xLarge,prec,accu).\nOutput: H";
-TOfx::usage="TOfx: dark sector temperature interpolated as a function of (dimensionless) time/\nInput: (\[Gamma],\!\(\*SubscriptBox[\(g\), \(*\)]\),\!\(\*SubscriptBox[\(H\), \(i\)]\),w\[Phi],xLarge,prec,accu).\nOutput: T";
-aOfx::usage="aOfx: function to compute scale factor\nInput: (\[Gamma], \!\(\*SubscriptBox[\(a\), \(ini\)]\), sum, w\[Phi], xLarge, prec, accu).\nOutput: a";
-tauOfx::usage="tauOfx: function to compute comoving time\nInput: (\[Gamma], \!\(\*SubscriptBox[\(t\), \(scale\)]\), \!\(\*SubscriptBox[\(a\), \(ini\)]\), sum, w\[Phi], xLarge, prec, accu).\nOutput: \[Tau]";
-redshift::usage="redshift: function to compute the redshift \!\(\*SubscriptBox[\(z\), \(*\)]\)+1 from today to an arbitrary point \!\(\*SubscriptBox[\(x\), \(*\)]\) in the past during reheating.\nInput: (\[Gamma],\!\(\*SubscriptBox[\(H\), \(i\)]\),xRange,{\!\(\*SubsuperscriptBox[\(g\), \(d\), \(UV\)]\),\!\(\*SuperscriptBox[\(g\), \(UV\)]\)},{\!\(\*SubsuperscriptBox[\(g\), \(d\), \(IR\)]\),\!\(\*SubscriptBox[\(g\), \(d, 0\)]\),\!\(\*SuperscriptBox[\(g\), \(IR\)]\)},instantVSRH,\!\(\*SubscriptBox[\(w\), \(\[Phi]\)]\),xLarge,prec,accu,debug).\nOutput: \!\(\*SubscriptBox[\(z\), \(*\)]\)+1=\!\(\*SubsuperscriptBox[\(a\), \(*\), \(-1\)]\)";
-xCross::usage="xCross: function to compute the two crossing times at which the DS temperature reaches certain value \!\(\*SubscriptBox[\(T\), \(*\)]\), as well as the time at which it reaches the maximum temperature.\nInput: (\[Gamma],\!\(\*SubscriptBox[\(r\), \(r, c\)]\),w\[Phi],xLarge,prec,accu).\nOutput: {\!\(\*SubscriptBox[\(x\), \(c1\)]\),\!\(\*SubscriptBox[\(x\), \(max\)]\),\!\(\*SubscriptBox[\(x\), \(c2\)]\)}";
-gammaRate::usage="gammaRate: function to compute the log derivagive of the dark sector temperature at some time \!\(\*SubscriptBox[\(x\), \(*\)]\).\nInput: (\[Gamma],\!\(\*SubscriptBox[\(x\), \(*\)]\),w\[Phi],\[Delta],xLarge,prec,accu).\nOutput: \!\(\*FractionBox[\(d\\\ ln\\\ T\), \(d\\\ ln\\\ x\)]\)(\!\(\*SubscriptBox[\(x\), \(*\)]\))";
+HOfx::usage="HOfx: Hubble expansion rate interpolated as a function of (dimensionless) time.\nInput: (\[Gamma],\!\(\*SubscriptBox[\(H\), \(i\)]\),w\[Chi],xLarge,prec,accu).\nOutput: H";
+TOfx::usage="TOfx: dark sector temperature interpolated as a function of (dimensionless) time/\nInput: (\[Gamma],\!\(\*SubscriptBox[\(g\), \(*\)]\),\!\(\*SubscriptBox[\(H\), \(i\)]\),w\[Chi],xLarge,prec,accu).\nOutput: T";
+aOfx::usage="aOfx: function to compute scale factor\nInput: (\[Gamma], \!\(\*SubscriptBox[\(a\), \(ini\)]\), sum, w\[Chi], xLarge, prec, accu).\nOutput: a";
+tauOfx::usage="tauOfx: function to compute comoving time\nInput: (\[Gamma], \!\(\*SubscriptBox[\(t\), \(scale\)]\), \!\(\*SubscriptBox[\(a\), \(ini\)]\), sum, w\[Chi], xLarge, prec, accu).\nOutput: \[Tau]";
+redshift::usage="redshift: function to compute the redshift \!\(\*SubscriptBox[\(z\), \(*\)]\)+1 from today to an arbitrary point \!\(\*SubscriptBox[\(x\), \(*\)]\) in the past during reheating.\nInput: (\[Gamma],\!\(\*SubscriptBox[\(H\), \(i\)]\),xRange,{\!\(\*SubsuperscriptBox[\(g\), \(d\), \(UV\)]\),\!\(\*SuperscriptBox[\(g\), \(UV\)]\)},{\!\(\*SubsuperscriptBox[\(g\), \(d\), \(IR\)]\),\!\(\*SubscriptBox[\(g\), \(d, 0\)]\),\!\(\*SuperscriptBox[\(g\), \(IR\)]\)},instantVSRH,\!\(\*SubscriptBox[\(w\), \(\[Chi]\)]\),xLarge,prec,accu,debug).\nOutput: \!\(\*SubscriptBox[\(z\), \(*\)]\)+1=\!\(\*SubsuperscriptBox[\(a\), \(*\), \(-1\)]\)";
+xCross::usage="xCross: function to compute the two crossing times at which the DS temperature reaches certain value \!\(\*SubscriptBox[\(T\), \(*\)]\), as well as the time at which it reaches the maximum temperature.\nInput: (\[Gamma],\!\(\*SubscriptBox[\(r\), \(r, c\)]\),w\[Chi],xLarge,prec,accu).\nOutput: {\!\(\*SubscriptBox[\(x\), \(c1\)]\),\!\(\*SubscriptBox[\(x\), \(max\)]\),\!\(\*SubscriptBox[\(x\), \(c2\)]\)}";
+gammaRate::usage="gammaRate: function to compute the log derivagive of the dark sector temperature at some time \!\(\*SubscriptBox[\(x\), \(*\)]\).\nInput: (\[Gamma],\!\(\*SubscriptBox[\(x\), \(*\)]\),w\[Chi],\[Delta],xLarge,prec,accu).\nOutput: \!\(\*FractionBox[\(d\\\ ln\\\ T\), \(d\\\ ln\\\ x\)]\)(\!\(\*SubscriptBox[\(x\), \(*\)]\))";
 gsFn::usage="gsFn: function interpolating the Standard Model's relativistic degrees of freedom in entropy."
 RHDict::usage="RHDict: dictionary of analytic expressions relevant for reheating.";
 
@@ -26,7 +26,7 @@ Begin["`Private`"];
 (* ::Text:: *)
 (*WRITTEN BY: MANUEL A. BUEN-ABAD, 2022.*)
 (**)
-(*This is a code that computes various quantities associated with the reheating of a Dark Sector (DS) due to the decay of a reheaton \[Phi], which dominates the Universe in an early matter-domination (EDM) era. For the derivation of these hard-coded results, see notebook 01_reheating.nb.*)
+(*This is a code that computes various quantities associated with the reheating of a Dark Sector (DS) due to the decay of a reheaton \[Chi], which dominates the Universe in an early matter-domination (EDM) era. For the derivation of these hard-coded results, see notebook 01_reheating.nb.*)
 
 
 (* ::Chapter:: *)
@@ -51,14 +51,14 @@ Needs["DifferentialEquations`InterpolatingFunctionAnatomy`"];
 (*Assumptions*)
 
 
-$Assumptions=a>amin>0&&x>xmin>0&&w\[Phi]>-1&&y>ymin>0&&\[Gamma]>0&&\[Gamma]i>0&&\[Gamma]d>0&&f>1&&mPL>0&&gstar>0&&Arho>0
+$Assumptions=a>amin>0&&x>xmin>0&&w\[Chi]>-1&&y>ymin>0&&\[Gamma]>0&&\[Gamma]i>0&&\[Gamma]d>0&&f>1&&mPL>0&&gstar>0&&Arho>0
 
 
 (* ::Section:: *)
 (*Definitions*)
 
 
-Clear[GeV,MeV,Mpl,mpl,second,Hz,mHz,h,\[Rho]crit,H0,H0h1,T\[Gamma]0,gs0,ge0,gSM,smallnum,A\[Rho],\[Rho]\[Phi]i]
+Clear[GeV,MeV,Mpl,mpl,second,Hz,mHz,h,\[Rho]crit,H0,H0h1,T\[Gamma]0,gs0,ge0,gSM,smallnum,A\[Rho],\[Rho]\[Chi]i]
 
 
 (* ::Subsection:: *)
@@ -96,7 +96,7 @@ smallnum=10^-6;
 
 
 A\[Rho]=gstar \[Pi]^2/30;
-\[Rho]\[Phi]i=3 Hi^2 mpl^2;
+\[Rho]\[Chi]i=3 Hi^2 mpl^2;
 
 gsdata=Import["./data/entropy_dof.csv"];
 gsInt=Interpolation[gsdata,InterpolationOrder->1];
@@ -109,24 +109,24 @@ gsFn[T_]:=Which[T<gsDomain[[1]],gs0,T<=gsDomain[[2]],gsInt[T],T>gsDomain[[2]],gS
 
 
 (* ::Text:: *)
-(*We will be solving for a two-fluid Universe: one a \[Phi] fluid that starts to decay at some time t_d (equivalently, scale factor a_d and Hubble scale H_d), and the other is made of the dark radiation decay products.*)
+(*We will be solving for a two-fluid Universe: one a \[Chi] fluid that starts to decay at some time t_d (equivalently, scale factor a_d and Hubble scale H_d), and the other is made of the dark radiation decay products.*)
 (**)
 (*The evolution equations are:*)
 (**)
-(*d\[Rho]_\[Phi]/dt +3H \[Rho]_\[Phi] (1+w_\[Phi])+\[CapitalGamma]*\[Rho]_\[Phi]=0*)
-(*d\[Rho]_r/dt +4H \[Rho]_r -\[CapitalGamma]*\[Rho]_\[Phi]=0*)
+(*d\[Rho]_\[Chi]/dt +3H \[Rho]_\[Chi] (1+w_\[Chi])+\[CapitalGamma]*\[Rho]_\[Chi]=0*)
+(*d\[Rho]_r/dt +4H \[Rho]_r -\[CapitalGamma]*\[Rho]_\[Chi]=0*)
 (**)
-(*It may be convenient to rewrite everything in dimensionless quantities, normalized to the value of \[Rho]_\[Phi]d at this time t_d when the decays start:*)
+(*It may be convenient to rewrite everything in dimensionless quantities, normalized to the value of \[Rho]_\[Chi]d at this time t_d when the decays start:*)
 (**)
-(*(1)   (d r_\[Phi])/(d x)+3 h r_\[Phi] (1+w_\[Phi])+\[Gamma] r_\[Phi]=0*)
-(*(d r_r)/(d x)+4 h r_r-\[Gamma] r_\[Phi]=0*)
+(*(1)   (d r_\[Chi])/(d x)+3 h r_\[Chi] (1+w_\[Chi])+\[Gamma] r_\[Chi]=0*)
+(*(d r_r)/(d x)+4 h r_r-\[Gamma] r_\[Chi]=0*)
 (**)
 (*where we have defined*)
 (**)
 (*x\[Congruent]t\[CenterDot]H_d*)
-(*H_d\[Congruent]Sqrt[\[Rho]_\[Phi]d/(3 m_Pl^2)]*)
-(*r\[Congruent]\[Rho]/\[Rho]_\[Phi]d*)
-(*h\[Congruent]H/H_d=Sqrt[r_\[Phi]+r_r]*)
+(*H_d\[Congruent]Sqrt[\[Rho]_\[Chi]d/(3 m_Pl^2)]*)
+(*r\[Congruent]\[Rho]/\[Rho]_\[Chi]d*)
+(*h\[Congruent]H/H_d=Sqrt[r_\[Chi]+r_r]*)
 (*\[Gamma]_d\[Congruent]\[CapitalGamma]/H_d*)
 (**)
 (*with m_Pl being the reduced Planck mass: m_Pl\[Congruent]M_Pl/Sqrt[8\[Pi]].*)
@@ -145,10 +145,10 @@ gsFn[T_]:=Which[T<gsDomain[[1]],gs0,T<=gsDomain[[2]],gsInt[T],T>gsDomain[[2]],gS
 (**)
 (*Defining A_\[Rho]\[Congruent](\[Pi]^2 g'_* )/30 then \[Rho]_r=A_\[Rho] T^4.*)
 (**)
-(*We can also define the factor f: \[Rho]_\[Phi]d\[Congruent]f^4 \[Rho]_rc, i.e. the initial \[Rho]_\[Phi] in terms of \[Rho]_r at the critical temperature. Thus, H_d^2=f^4 \[Rho]_rc/(3 m_Pl^2) and, since \[Rho]_\[Phi]>\[Rho]_r for all times:*)
-(*\[Rho]_\[Phi]>\[Rho]_r \[Implies] f^4 \[Rho]_rc=f^4 A_\[Rho] T_c^4 > A_\[Rho] T^4\[Implies]f>T/T_c, and in particular f>1.*)
+(*We can also define the factor f: \[Rho]_\[Chi]d\[Congruent]f^4 \[Rho]_rc, i.e. the initial \[Rho]_\[Chi] in terms of \[Rho]_r at the critical temperature. Thus, H_d^2=f^4 \[Rho]_rc/(3 m_Pl^2) and, since \[Rho]_\[Chi]>\[Rho]_r for all times:*)
+(*\[Rho]_\[Chi]>\[Rho]_r \[Implies] f^4 \[Rho]_rc=f^4 A_\[Rho] T_c^4 > A_\[Rho] T^4\[Implies]f>T/T_c, and in particular f>1.*)
 (**)
-(*\[Implies] r_r\[Congruent]\[Rho]_r/\[Rho]_\[Phi]=\[Rho]_r/(f^4 \[Rho]_rc)=(T/(f T_c))^4, and r_rc=f^-4.*)
+(*\[Implies] r_r\[Congruent]\[Rho]_r/\[Rho]_\[Chi]=\[Rho]_r/(f^4 \[Rho]_rc)=(T/(f T_c))^4, and r_rc=f^-4.*)
 
 
 (* ::Section:: *)
@@ -156,15 +156,15 @@ gsFn[T_]:=Which[T<gsDomain[[1]],gs0,T<=gsDomain[[2]],gsInt[T],T>gsDomain[[2]],gS
 
 
 (* ::Subsection:: *)
-(*\[Phi]-domination: time as a function of scale factor, x(a)=H_d\[CenterDot]t(a)*)
+(*\[Chi]-domination: time as a function of scale factor, x(a)=H_d\[CenterDot]t(a)*)
 
 
 (* ::Text:: *)
-(*It is illuminating, although not necessary, to compute x(a) during an era of reheaton-domination (\[Phi]-domination, with a constant equation of state w_\[Phi]), assuming that the reheaton decays are negligible or even forbidden (if, for example, the decay products have a mass larger than the reheaton's mass at this time; their mass could afterwards change due to a phase transition).*)
+(*It is illuminating, although not necessary, to compute x(a) during an era of reheaton-domination (\[Chi]-domination, with a constant equation of state w_\[Chi]), assuming that the reheaton decays are negligible or even forbidden (if, for example, the decay products have a mass larger than the reheaton's mass at this time; their mass could afterwards change due to a phase transition).*)
 
 
 Clear[xOfa]
-xOfa[wfi_,aa_]:=Block[{w\[Phi]=wfi,a=aa},(2 a^((3 (1+w\[Phi]))/2))/(3 (1+w\[Phi]))]
+xOfa[wchi_,aa_]:=Block[{w\[Chi]=wchi,a=aa},(2 a^((3 (1+w\[Chi]))/2))/(3 (1+w\[Chi]))]
 
 
 (* ::Text:: *)
@@ -175,7 +175,7 @@ xOfa[wfi_,aa_]:=Block[{w\[Phi]=wfi,a=aa},(2 a^((3 (1+w\[Phi]))/2))/(3 (1+w\[Phi]
 
 Clear[taubarini]
 
-taubarini[wfi_]:=Block[{w\[Phi]=wfi},2/(1+3 w\[Phi])]
+taubarini[wchi_]:=Block[{w\[Chi]=wchi},2/(1+3 w\[Chi])]
 
 
 (* ::Subsection:: *)
@@ -183,26 +183,26 @@ taubarini[wfi_]:=Block[{w\[Phi]=wfi},2/(1+3 w\[Phi])]
 
 
 (* ::Text:: *)
-(*First, solving for r\[Phi] at some x<xd at which the integration starts, by demanding that r\[Phi] at x=0 is equal to 1. Since x<xd there are no decays yet.*)
+(*First, solving for r\[Chi] at some x<xd at which the integration starts, by demanding that r\[Chi] at x=0 is equal to 1. Since x<xd there are no decays yet.*)
 
 
 Clear[hub,eqsX,solEqs]
 
 (*start the clock with x=0 at...*)
-(*(*the beginning of a presumed \[Phi]-domination, before the decays are significant, or maybe before they are even allowed*)
-xd=xOfa[w\[Phi],1];*)
+(*(*the beginning of a presumed \[Chi]-domination, before the decays are significant, or maybe before they are even allowed*)
+xd=xOfa[w\[Chi],1];*)
 
 (*decay time*)
 xd=0;
 
 (*dimensionless hubble*)
-hub[x_]:=Sqrt[r\[Phi][x]+rr[x]]
+hub[x_]:=Sqrt[r\[Chi][x]+rr[x]]
 
 (*evolution equations (in terms of x=t*Hd).*)
-eqsX={D[r\[Phi][x],x]+3hub[x]r\[Phi][x](1+w\[Phi])+\[Gamma]d r\[Phi][x]==0,D[rr[x],x]+4hub[x]rr[x]-\[Gamma]d r\[Phi][x]==0,r\[Phi][xd]==1,rr[xd]==0};
+eqsX={D[r\[Chi][x],x]+3hub[x]r\[Chi][x](1+w\[Chi])+\[Gamma]d r\[Chi][x]==0,D[rr[x],x]+4hub[x]rr[x]-\[Gamma]d r\[Chi][x]==0,r\[Chi][xd]==1,rr[xd]==0};
 
 (*the solution to the system of equations*)
-solEqs[gg_?NumberQ,wf_:0,xLarge_:10^3,prec_:30,accu_:20]:=solEqs[gg,wf,xLarge,prec,accu]=Block[{\[Gamma]d=Rationalize[gg],w\[Phi]=wf,xmin,xmax,sols,dens,r\[Phi]d,hOfx,hd,res},
+solEqs[gg_?NumberQ,wx_:0,xLarge_:10^3,prec_:30,accu_:20]:=solEqs[gg,wx,xLarge,prec,accu]=Block[{\[Gamma]d=Rationalize[gg],w\[Chi]=wx,xmin,xmax,sols,dens,r\[Chi]d,hOfx,hd,res},
 
 xmax=If[\[Gamma]d<1,Max[xLarge,xd+100/gg],xLarge];
 
@@ -210,16 +210,16 @@ xmax=If[\[Gamma]d<1,Max[xLarge,xd+100/gg],xLarge];
 xmin=xd;
 
 (*solving differential equations*)
-sols=NDSolve[eqsX,{r\[Phi],rr},{x,xmin,xmax},WorkingPrecision->prec,AccuracyGoal->accu]//Flatten;
+sols=NDSolve[eqsX,{r\[Chi],rr},{x,xmin,xmax},WorkingPrecision->prec,AccuracyGoal->accu]//Flatten;
 
 (*densities*)
-dens={r\[Phi],rr}/.sols;
+dens={r\[Chi],rr}/.sols;
 
-(*value of r\[Phi] at x=xd*)
-r\[Phi]d=dens[[1]][xd];
+(*value of r\[Chi] at x=xd*)
+r\[Chi]d=dens[[1]][xd];
 
 (*h(x): dimensionless hubble as a function of x*)
-hOfx=hub[x]/.{r\[Phi]->dens[[1]],rr->dens[[2]]};
+hOfx=hub[x]/.{r\[Chi]->dens[[1]],rr->dens[[2]]};
 
 (*h(x_d): dimensionless hubble at decay time a=1*)
 hd=(hOfx/.{x->xd});
@@ -241,10 +241,10 @@ res
 
 Clear[HOfx]
 
-HOfx[gg_?NumberQ,Hscale_,wf_:0,xLarge_:10^3,prec_:30,accu_:20]:=HOfx[gg,Hscale,wf,xLarge,prec,accu]=Block[{Hi=Hscale,w\[Phi]=wf,r\[Phi],rr,xData,yData,data,Hfnx},
+HOfx[gg_?NumberQ,Hscale_,wx_:0,xLarge_:10^3,prec_:30,accu_:20]:=HOfx[gg,Hscale,wx,xLarge,prec,accu]=Block[{Hi=Hscale,w\[Chi]=wx,r\[Chi],rr,xData,yData,data,Hfnx},
 
 (*solving the reheating equations*)
-{r\[Phi],rr}=solEqs[gg,wf,xLarge,prec,accu];
+{r\[Chi],rr}=solEqs[gg,wx,xLarge,prec,accu];
 
 (*getting the hubble parameter*)
 xData=(InterpolatingFunctionCoordinates[rr]//Flatten);
@@ -269,15 +269,15 @@ Hfnx
 
 Clear[TOfx]
 
-TOfx[gg_?NumberQ,gs_,Hscale_,wf_:0,xLarge_:10^3,prec_:30,accu_:20]:=TOfx[gg,gs,Hscale,wf,xLarge,prec,accu]=Block[{gstar=gs,Hi=Hscale,w\[Phi]=wf,r\[Phi],rr,xData,yData,data,Tfnx},
+TOfx[gg_?NumberQ,gs_,Hscale_,wx_:0,xLarge_:10^3,prec_:30,accu_:20]:=TOfx[gg,gs,Hscale,wx,xLarge,prec,accu]=Block[{gstar=gs,Hi=Hscale,w\[Chi]=wx,r\[Chi],rr,xData,yData,data,Tfnx},
 
 (*solving the reheating equations*)
-{r\[Phi],rr}=solEqs[gg,wf,xLarge,prec,accu];
+{r\[Chi],rr}=solEqs[gg,wx,xLarge,prec,accu];
 
 (*getting the temperature*)
 xData=(InterpolatingFunctionCoordinates[rr]//Flatten);
 yData=(InterpolatingFunctionValuesOnGrid[rr]//Flatten);
-yData=((\[Rho]\[Phi]i*yData)/A\[Rho])^(1/4);
+yData=((\[Rho]\[Chi]i*yData)/A\[Rho])^(1/4);
 
 (*building the dataset*)
 data={xData,yData}//Transpose;
@@ -297,10 +297,10 @@ Tfnx
 
 Clear[aOfx]
 
-aOfx[gg_?NumberQ,aini_:1,sum_:False,wf_:0,xLarge_:10^3,prec_:30,accu_:20]:=aOfx[gg,aini,sum,wf,xLarge,prec,accu]=Block[{w\[Phi]=wf,r\[Phi],rr,domain,xData,efolds,yData,data,afnx},
+aOfx[gg_?NumberQ,aini_:1,sum_:False,wx_:0,xLarge_:10^3,prec_:30,accu_:20]:=aOfx[gg,aini,sum,wx,xLarge,prec,accu]=Block[{w\[Chi]=wx,r\[Chi],rr,domain,xData,efolds,yData,data,afnx},
 
 (*solving the reheating equations*)
-{r\[Phi],rr}=solEqs[gg,wf,xLarge,prec,accu];
+{r\[Chi],rr}=solEqs[gg,wx,xLarge,prec,accu];
 
 (*interpolation function properties*)
 domain=(InterpolatingFunctionDomain[rr]//Flatten);
@@ -341,13 +341,13 @@ afnx
 
 Clear[tauOfx]
 
-tauOfx[gg_?NumberQ,tscale_:1,aini_:1,sum_:False,wf_:0,xLarge_:10^3,prec_:30,accu_:20]:=tauOfx[gg,tscale,aini,sum,wf,xLarge,prec,accu]=Block[{w\[Phi]=wf,taui,ax,domain,xData,tau,yData,data,taufnx},
+tauOfx[gg_?NumberQ,tscale_:1,aini_:1,sum_:False,wx_:0,xLarge_:10^3,prec_:30,accu_:20]:=tauOfx[gg,tscale,aini,sum,wx,xLarge,prec,accu]=Block[{w\[Chi]=wx,taui,ax,domain,xData,tau,yData,data,taufnx},
 
 (*initial conformal time*)
-taui=If[xd==0,0,taubarini[w\[Phi]]];
+taui=If[xd==0,0,taubarini[w\[Chi]]];
 
 (*finding the scale factor a(x)*)
-ax=aOfx[gg,aini,sum,wf,xLarge,prec,accu];
+ax=aOfx[gg,aini,sum,wx,xLarge,prec,accu];
 
 (*interpolation function properties*)
 domain=(InterpolatingFunctionDomain[ax]//Flatten);
@@ -395,13 +395,13 @@ taufnx
 
 Clear[redshift]
 
-redshift[gg_?NumberQ,Hscale_,xRange_List,gUVs_List,IRs_List:{Automatic,0,gSM},instant_:True,wf_:0,xLarge_:10^3,prec_:30,accu_:20,debug_:False]:=redshift[gg,Hscale,xRange,gUVs,IRs,instant,wf,xLarge,prec,accu,debug]=Block[{Hi=Hscale,w\[Phi]=wf,xStar,xm,r\[Phi],rr,efolds,Tdm,gdUV,gUV,gstar,gdIR,gd0,gIR,TIR=10^2,Gfactor,Z1,Z2,Z3,res},
+redshift[gg_?NumberQ,Hscale_,xRange_List,gUVs_List,IRs_List:{Automatic,0,gSM},instant_:True,wx_:0,xLarge_:10^3,prec_:30,accu_:20,debug_:False]:=redshift[gg,Hscale,xRange,gUVs,IRs,instant,wx,xLarge,prec,accu,debug]=Block[{Hi=Hscale,w\[Chi]=wx,xStar,xm,r\[Chi],rr,efolds,Tdm,gdUV,gUV,gstar,gdIR,gd0,gIR,TIR=10^2,Gfactor,Z1,Z2,Z3,res},
 
 (*the time-range between GW production at time x_*, and an arbitrary point during DS-RD era (x_m)*)
 {xStar,xm}=xRange;
 
 (*computing the efolds between x_* and x_m*)
-{r\[Phi],rr}=solEqs[gg,wf,xLarge,prec,accu];
+{r\[Chi],rr}=solEqs[gg,wx,xLarge,prec,accu];
 efolds=NIntegrate[hub[x],{x,xStar,xm}];
 
 (*the redshift factor between x_* and x_m*)
@@ -412,7 +412,7 @@ Z1=Exp[efolds];
 gstar=gdUV+gUV;
 
 (*computing the DS temperature at x_m*)
-Tdm=TOfx[gg,gstar,Hscale,wf,xLarge,prec,accu][xm];
+Tdm=TOfx[gg,gstar,Hscale,wx,xLarge,prec,accu][xm];
 
 (*VSRH (IR) quantities: DS IR d.o.f., DS d.o.f. today, VS IR d.o.f.*)
 {gdIR,gd0,gIR}=IRs;
@@ -440,9 +440,9 @@ res
 
 Clear[xCross]
 
-xCross[gg_?NumberQ,rCrit_,wf_:0,xLarge_:10^3,prec_:30,accu_:20]:=xCross[gg,rCrit,wf,xLarge,prec,accu]=Block[{w\[Phi]=wf,r\[Phi],rr,xA,xB,xData,yData,xpk,xLSet,yLSet,xRSet,yRSet,xL0,xR0,xL,xR,eps=smallnum},
+xCross[gg_?NumberQ,rCrit_,wx_:0,xLarge_:10^3,prec_:30,accu_:20]:=xCross[gg,rCrit,wx,xLarge,prec,accu]=Block[{w\[Chi]=wx,r\[Chi],rr,xA,xB,xData,yData,xpk,xLSet,yLSet,xRSet,yRSet,xL0,xR0,xL,xR,eps=smallnum},
 
-{r\[Phi],rr}=solEqs[gg,wf,xLarge,prec,accu];
+{r\[Chi],rr}=solEqs[gg,wx,xLarge,prec,accu];
 {xA,xB}=(InterpolatingFunctionDomain[rr]//Flatten);
 xData=(InterpolatingFunctionCoordinates[rr]//Flatten);
 yData=(InterpolatingFunctionValuesOnGrid[rr]//Flatten);
@@ -479,9 +479,9 @@ xR=10^(LX/.FindRoot[Log10[rr[10^LX]]==Log10[rCrit],{LX,Log10[xR0],Log10[xpk],Log
 
 Clear[gammaRate]
 
-gammaRate[gg_?NumberQ,xCrit_,wf_:0,\[Delta]_:10^-6,xLarge_:10^3,prec_:30,accu_:20]:=gammaRate[gg,xCrit,wf,\[Delta],xLarge,prec,accu]=Block[{r\[Phi],rr,w\[Phi]=wf,\[Gamma]},
+gammaRate[gg_?NumberQ,xCrit_,wx_:0,\[Delta]_:10^-6,xLarge_:10^3,prec_:30,accu_:20]:=gammaRate[gg,xCrit,wx,\[Delta],xLarge,prec,accu]=Block[{r\[Chi],rr,w\[Chi]=wx,\[Gamma]},
 
-{r\[Phi],rr}=solEqs[gg,wf,xLarge,prec,accu];
+{r\[Chi],rr}=solEqs[gg,wx,xLarge,prec,accu];
 
 \[Gamma]=(xCrit-xd)/rr[xCrit]^(1/4)*(rr[(1+\[Delta])xCrit]^(1/4)-rr[xCrit]^(1/4))/(\[Delta] xCrit);
 
@@ -533,7 +533,7 @@ RHDict["gSM"]=gSM;
 
 
 RHDict["A\[Rho]"]=A\[Rho];
-RHDict["\[Rho]\[Phi]i"]=\[Rho]\[Phi]i;
+RHDict["\[Rho]\[Chi]i"]=\[Rho]\[Chi]i;
 
 
 (* ::Subsection:: *)
@@ -552,15 +552,15 @@ RHDict["rrc"]=f^-4;
 
 
 (* ::Subsubsection:: *)
-(*\[Phi]D: reheaton domination (r_r<<r_\[Phi])*)
+(*\[Chi]D: reheaton domination (r_r<<r_\[Chi])*)
 
 
-RHDict["solsAn"]["\[Gamma]<<1","\[Phi]D"]={r\[Phi][x]->(8-2 x (-6+(4+3 x) \[Gamma]))/(2+3 x)^3,rr[x]->4/5 (-((2 2^(2/3))/(2+3 x)^(8/3))+1/(2+3 x)) \[Gamma]};
-RHDict["solsAn"]["\[Gamma]>>1","\[Phi]D"]={r\[Phi][x]->1-x (3+\[Gamma]),rr[x]->x \[Gamma]};
+RHDict["solsAn"]["\[Gamma]<<1","\[Chi]D"]={r\[Chi][x]->(8-2 x (-6+(4+3 x) \[Gamma]))/(2+3 x)^3,rr[x]->4/5 (-((2 2^(2/3))/(2+3 x)^(8/3))+1/(2+3 x)) \[Gamma]};
+RHDict["solsAn"]["\[Gamma]>>1","\[Chi]D"]={r\[Chi][x]->1-x (3+\[Gamma]),rr[x]->x \[Gamma]};
 
 
 (* ::Subsubsection:: *)
-(*\[Phi]R equality: r_eq\[Congruent]r_r(x_eq)=r_\[Phi](x_eq)*)
+(*\[Chi]R equality: r_eq\[Congruent]r_r(x_eq)=r_\[Chi](x_eq)*)
 
 
 RHDict["xEq"]["\[Gamma]<<1"]=2/3+10/(11 \[Gamma]);
@@ -571,22 +571,22 @@ RHDict["rEq"]["\[Gamma]>>1"]=1/2-3/(4 \[Gamma]);
 
 
 (* ::Subsubsection:: *)
-(*RD: radiation domination (r_r>>r_\[Phi])*)
+(*RD: radiation domination (r_r>>r_\[Chi])*)
 
 
-RHDict["solsAn"]["\[Gamma]<<1","RD"]={r\[Phi][x]->1/2 (33/2)^(1/4) E^(10/11+(2 \[Gamma])/3-x \[Gamma]) Sqrt[\[Gamma]/(x^3 (15+11 \[Gamma]))],rr[x]->1/(4 x^2)};
+RHDict["solsAn"]["\[Gamma]<<1","RD"]={r\[Chi][x]->1/2 (33/2)^(1/4) E^(10/11+(2 \[Gamma])/3-x \[Gamma]) Sqrt[\[Gamma]/(x^3 (15+11 \[Gamma]))],rr[x]->1/(4 x^2)};
 
-RHDict["solsAn"]["\[Gamma]>>1","RD"]={r\[Phi][x]->(E^(1/2-x \[Gamma]) (-3+2 \[Gamma]))/(4 \[Gamma]),rr[x]->1/(1+2 x)^2};
+RHDict["solsAn"]["\[Gamma]>>1","RD"]={r\[Chi][x]->(E^(1/2-x \[Gamma]) (-3+2 \[Gamma]))/(4 \[Gamma]),rr[x]->1/(1+2 x)^2};
 
 
 (* ::Subsubsection:: *)
 (*L_r\[Congruent]1/4 (d ln r_r)/(d x)=(d ln T)/(d x)*)
 
 
-RHDict["Lr"]["\[Gamma]<<1","\[Phi]D"]=-(2/(2+3 x))+5/(4 (2+3 x-(2 2^(2/3))/(2+3 x)^(2/3)));
+RHDict["Lr"]["\[Gamma]<<1","\[Chi]D"]=-(2/(2+3 x))+5/(4 (2+3 x-(2 2^(2/3))/(2+3 x)^(2/3)));
 RHDict["Lr"]["\[Gamma]<<1","RD"]=-(1/(2 x));
 
-RHDict["Lr"]["\[Gamma]>>1","\[Phi]D"]=1/(4 x);
+RHDict["Lr"]["\[Gamma]>>1","\[Chi]D"]=1/(4 x);
 RHDict["Lr"]["\[Gamma]>>1","RD"]=1/(-1-2 x);
 
 
@@ -633,7 +633,7 @@ RHDict["LrcVals"]["\[Gamma]>>1"]={(f^4 \[Gamma])/4,-(1/f^2)};
 
 
 (* ::Subsubsection:: *)
-(*H_c\[Congruent]H(x_c)=H_dec Sqrt[r_\[Phi]+r_r]*)
+(*H_c\[Congruent]H(x_c)=H_dec Sqrt[r_\[Chi]+r_r]*)
 
 
 HdecFactor=Assuming[Arho>0&&mPL>0,Sqrt[f^4 Arho/3 Tc^4/mPL^2]//Simplify];
