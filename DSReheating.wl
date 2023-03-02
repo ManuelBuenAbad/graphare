@@ -198,11 +198,11 @@ xd=0;
 (*dimensionless hubble*)
 hub[x_]:=Sqrt[r\[Chi][x]+rr[x]]
 
-(*evolution equations (in terms of x=t*Hd).*)
-eqsX={D[r\[Chi][x],x]+3hub[x]r\[Chi][x](1+w\[Chi])+\[Gamma]d r\[Chi][x]==0,D[rr[x],x]+4hub[x]rr[x]-\[Gamma]d r\[Chi][x]==0,r\[Chi][xd]==1,rr[xd]==0};
+(*evolution equations (in terms of x=t*Hd). Note that we have killed the decay term when r_\[Chi]<<r_r, in order to afford larger values of x*)
+eqsX={D[r\[Chi][x],x]+3hub[x]r\[Chi][x](1+w\[Chi])+\[Gamma]d r\[Chi][x]*HeavisideTheta[r\[Chi][x]-rr[x]*smallnum^2]==0,D[rr[x],x]+4hub[x]rr[x]-\[Gamma]d r\[Chi][x]*HeavisideTheta[r\[Chi][x]-rr[x]*smallnum^2]==0,r\[Chi][xd]==1,rr[xd]==0};
 
 (*the solution to the system of equations*)
-solEqs[gg_?NumberQ,wx_:0,xLarge_:10^3,prec_:30,accu_:20]:=solEqs[gg,wx,xLarge,prec,accu]=Block[{\[Gamma]d=Rationalize[gg],w\[Chi]=wx,xmin,xmax,sols,dens,r\[Chi]d,hOfx,hd,res},
+solEqs[gg_?NumberQ,wx_:0,xLarge_:10^10,prec_:30,accu_:20]:=solEqs[gg,wx,xLarge,prec,accu]=Block[{\[Gamma]d=Rationalize[gg],w\[Chi]=wx,xmin,xmax,sols,dens,r\[Chi]d,hOfx,hd,res},
 
 xmax=If[\[Gamma]d<1,Max[xLarge,xd+100/gg],xLarge];
 
@@ -601,6 +601,14 @@ RHDict["xMax"]["\[Gamma]>>1"]=-(1/(4 \[Gamma]))+1/(2 Sqrt[\[Gamma]]);
 RHDict["rrMax"]["\[Gamma]>>1"]=1-4/Sqrt[\[Gamma]]+15/\[Gamma];
 
 
+(* ::Subsubsection:: *)
+(*L_r,max^(2) \[Congruent]d^2 lnT/dx^2|_max*)
+
+
+RHDict["L2rrMax"]["\[Gamma]>>1"]=-\[Gamma];
+RHDict["L2rrMax"]["\[Gamma]<<1"]=-0.4623052020517196;
+
+
 (* ::Subsection:: *)
 (*Reheating quantities at critical temperature*)
 
@@ -618,16 +626,16 @@ RHDict["fmin"]["\[Gamma]>>1"]=\[Gamma]^(1/4)/(15 +\[Gamma]-4*Sqrt[\[Gamma]])^(1/
 (*x_c: r_rc\[Congruent]r_r(x_c)*)
 
 
-RHDict["xcVals"]["\[Gamma]<<1"]={1/(f^4 \[Gamma]),(4 f^4 \[Gamma])/15};
+RHDict["xcVals"]["\[Gamma]<<1"]={1/(f^4 \[Gamma]),Min[f^2/2,(4 f^4 \[Gamma])/15]};
 
-RHDict["xcVals"]["\[Gamma]>>1"]={1/(f^4 \[Gamma]),1/2 (-1+f^2)};
+RHDict["xcVals"]["\[Gamma]>>1"]={1/(f^4 \[Gamma]),f^2/2};
 
 
 (* ::Subsubsection:: *)
 (*L_rc\[Congruent]L_r(x_c)=1/4  ((d ln r_r)/(d x))(x_c)*)
 
 
-RHDict["LrcVals"]["\[Gamma]<<1"]={(f^4 \[Gamma])/4-7/8+67/(48 f^4 \[Gamma]),-(15/(16 f^4 \[Gamma]))};
+RHDict["LrcVals"]["\[Gamma]<<1"]={(f^4 \[Gamma])/4-7/8+67/(48 f^4 \[Gamma]),If[8 f^2 \[Gamma]<=15,-(15/(16 f^4 \[Gamma])),-(1/f^2)]};
 
 RHDict["LrcVals"]["\[Gamma]>>1"]={(f^4 \[Gamma])/4,-(1/f^2)};
 
@@ -637,8 +645,16 @@ RHDict["LrcVals"]["\[Gamma]>>1"]={(f^4 \[Gamma])/4,-(1/f^2)};
 
 
 HdecFactor=Assuming[Arho>0&&mPL>0,Sqrt[f^4 Arho/3 Tc^4/mPL^2]//Simplify];
-HcVals["\[Gamma]<<1"]=(HdecFactor*{Sqrt[1],Sqrt[(50 f^4 \[Gamma])/(5+2 f^4 \[Gamma])^3]})//Simplify;
-HcVals["\[Gamma]>>1"]=(HdecFactor*{Sqrt[1],Sqrt[f^-4]//Simplify})//Simplify;
+RHDict["HcVals"]["\[Gamma]<<1"]=(HdecFactor*{Sqrt[1],If[8 f^2 \[Gamma]<=15,Sqrt[(50 f^4 \[Gamma])/(5+2 f^4 \[Gamma])^3],Sqrt[f^-4]//Simplify]})//Simplify;
+RHDict["HcVals"]["\[Gamma]>>1"]=(HdecFactor*{Sqrt[1],Sqrt[f^-4]//Simplify})//Simplify;
+
+
+(* ::Subsubsection:: *)
+(*a(x_c2)/a(x_c1)*)
+
+
+RHDict["acRel"]["\[Gamma]<<1"]=If[8 f^2 \[Gamma]<=15,(1+(2 f^4 \[Gamma])/5)^(2/3),(0.9049808797604288 f)/\[Gamma]^(1/6)];
+RHDict["acRel"]["\[Gamma]>>1"]=f;
 
 
 (* ::Chapter:: *)
