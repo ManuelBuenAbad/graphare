@@ -241,7 +241,7 @@ res
 
 Clear[HOfx]
 
-HOfx[gg_?NumberQ,Hscale_,wx_:0,xLarge_:10^3,prec_:30,accu_:20]:=HOfx[gg,Hscale,wx,xLarge,prec,accu]=Block[{Hi=Hscale,w\[Chi]=wx,r\[Chi],rr,xData,yData,data,Hfnx},
+HOfx[gg_?NumberQ,Hscale_,wx_:0,xLarge_:10^10,prec_:30,accu_:20]:=HOfx[gg,Hscale,wx,xLarge,prec,accu]=Block[{Hi=Hscale,w\[Chi]=wx,r\[Chi],rr,xData,yData,data,Hfnx},
 
 (*solving the reheating equations*)
 {r\[Chi],rr}=solEqs[gg,wx,xLarge,prec,accu];
@@ -269,7 +269,7 @@ Hfnx
 
 Clear[TOfx]
 
-TOfx[gg_?NumberQ,gs_,Hscale_,wx_:0,xLarge_:10^3,prec_:30,accu_:20]:=TOfx[gg,gs,Hscale,wx,xLarge,prec,accu]=Block[{gstar=gs,Hi=Hscale,w\[Chi]=wx,r\[Chi],rr,xData,yData,data,Tfnx},
+TOfx[gg_?NumberQ,gs_,Hscale_,wx_:0,xLarge_:10^10,prec_:30,accu_:20]:=TOfx[gg,gs,Hscale,wx,xLarge,prec,accu]=Block[{gstar=gs,Hi=Hscale,w\[Chi]=wx,r\[Chi],rr,xData,yData,data,Tfnx},
 
 (*solving the reheating equations*)
 {r\[Chi],rr}=solEqs[gg,wx,xLarge,prec,accu];
@@ -297,7 +297,7 @@ Tfnx
 
 Clear[aOfx]
 
-aOfx[gg_?NumberQ,aini_:1,sum_:False,wx_:0,xLarge_:10^3,prec_:30,accu_:20]:=aOfx[gg,aini,sum,wx,xLarge,prec,accu]=Block[{w\[Chi]=wx,r\[Chi],rr,domain,xData,efolds,yData,data,afnx},
+aOfx[gg_?NumberQ,aini_:1,sum_:False,wx_:0,xLarge_:10^10,prec_:30,accu_:20]:=aOfx[gg,aini,sum,wx,xLarge,prec,accu]=Block[{w\[Chi]=wx,r\[Chi],rr,domain,xData,efolds,yData,data,afnx},
 
 (*solving the reheating equations*)
 {r\[Chi],rr}=solEqs[gg,wx,xLarge,prec,accu];
@@ -341,7 +341,7 @@ afnx
 
 Clear[tauOfx]
 
-tauOfx[gg_?NumberQ,tscale_:1,aini_:1,sum_:False,wx_:0,xLarge_:10^3,prec_:30,accu_:20]:=tauOfx[gg,tscale,aini,sum,wx,xLarge,prec,accu]=Block[{w\[Chi]=wx,taui,ax,domain,xData,tau,yData,data,taufnx},
+tauOfx[gg_?NumberQ,tscale_:1,aini_:1,sum_:False,wx_:0,xLarge_:10^10,prec_:30,accu_:20]:=tauOfx[gg,tscale,aini,sum,wx,xLarge,prec,accu]=Block[{w\[Chi]=wx,taui,ax,domain,xData,tau,yData,data,taufnx},
 
 (*initial conformal time*)
 taui=If[xd==0,0,taubarini[w\[Chi]]];
@@ -395,7 +395,7 @@ taufnx
 
 Clear[redshift]
 
-redshift[gg_?NumberQ,Hscale_,xRange_List,gUVs_List,IRs_List:{Automatic,0,gSM},instant_:True,wx_:0,xLarge_:10^3,prec_:30,accu_:20,debug_:False]:=redshift[gg,Hscale,xRange,gUVs,IRs,instant,wx,xLarge,prec,accu,debug]=Block[{Hi=Hscale,w\[Chi]=wx,xStar,xm,r\[Chi],rr,efolds,Tdm,gdUV,gUV,gstar,gdIR,gd0,gIR,TIR=10^2,Gfactor,Z1,Z2,Z3,res},
+redshift[gg_?NumberQ,Hscale_,xRange_List,gUVs_List,IRs_List:{Automatic,0,gSM},instant_:True,wx_:0,xLarge_:10^10,prec_:30,accu_:20,debug_:False]:=redshift[gg,Hscale,xRange,gUVs,IRs,instant,wx,xLarge,prec,accu,debug]=Block[{Hi=Hscale,w\[Chi]=wx,xStar,xm,r\[Chi],rr,efolds,Tdm,gdUV,gUV,gstar,gdIR,gd0,gIR,TIR=10^2,Gfactor,Z1,Z2,Z3,res},
 
 (*the time-range between GW production at time x_*, and an arbitrary point during DS-RD era (x_m)*)
 {xStar,xm}=xRange;
@@ -440,7 +440,7 @@ res
 
 Clear[xCross]
 
-xCross[gg_?NumberQ,rCrit_,wx_:0,xLarge_:10^3,prec_:30,accu_:20]:=xCross[gg,rCrit,wx,xLarge,prec,accu]=Block[{w\[Chi]=wx,r\[Chi],rr,xA,xB,xData,yData,xpk,xLSet,yLSet,xRSet,yRSet,xL0,xR0,xL,xR,eps=smallnum},
+xCross[gg_?NumberQ,rCrit_,wx_:0,xLarge_:10^10,prec_:30,accu_:20]:=xCross[gg,rCrit,wx,xLarge,prec,accu]=Block[{w\[Chi]=wx,r\[Chi],rr,xA,xB,xData,yData,xpk,xLSet,yLSet,xRSet,yRSet,xL0,xR0,xL,xR,eps=smallnum},
 
 {r\[Chi],rr}=solEqs[gg,wx,xLarge,prec,accu];
 {xA,xB}=(InterpolatingFunctionDomain[rr]//Flatten);
@@ -479,7 +479,7 @@ xR=10^(LX/.FindRoot[Log10[rr[10^LX]]==Log10[rCrit],{LX,Log10[xR0],Log10[xpk],Log
 
 Clear[gammaRate]
 
-gammaRate[gg_?NumberQ,xCrit_,wx_:0,\[Delta]_:10^-6,xLarge_:10^3,prec_:30,accu_:20]:=gammaRate[gg,xCrit,wx,\[Delta],xLarge,prec,accu]=Block[{r\[Chi],rr,w\[Chi]=wx,\[Gamma]},
+gammaRate[gg_?NumberQ,xCrit_,wx_:0,\[Delta]_:10^-6,xLarge_:10^10,prec_:30,accu_:20]:=gammaRate[gg,xCrit,wx,\[Delta],xLarge,prec,accu]=Block[{r\[Chi],rr,w\[Chi]=wx,\[Gamma]},
 
 {r\[Chi],rr}=solEqs[gg,wx,xLarge,prec,accu];
 
