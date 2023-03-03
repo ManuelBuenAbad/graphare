@@ -210,7 +210,7 @@ xmax=If[\[Gamma]d<1,Max[xLarge,xd+100/gg],xLarge];
 xmin=xd;
 
 (*solving differential equations*)
-sols=NDSolve[eqsX,{r\[Chi],rr},{x,xmin,xmax},WorkingPrecision->prec,AccuracyGoal->accu]//Flatten;
+sols=NDSolve[eqsX,{r\[Chi],rr},{x,xmin,xmax},WorkingPrecision->prec,AccuracyGoal->accu,StartingStepSize->smallnum^3]//Flatten;
 
 (*densities*)
 dens={r\[Chi],rr}/.sols;
@@ -241,13 +241,19 @@ res
 
 Clear[HOfx]
 
-HOfx[gg_?NumberQ,Hscale_,wx_:0,xLarge_:10^10,prec_:30,accu_:20]:=HOfx[gg,Hscale,wx,xLarge,prec,accu]=Block[{Hi=Hscale,w\[Chi]=wx,r\[Chi],rr,xData,yData,data,Hfnx},
+HOfx[gg_?NumberQ,Hscale_,wx_:0,xLarge_:10^10,prec_:30,accu_:20]:=HOfx[gg,Hscale,wx,xLarge,prec,accu]=Block[{Hi=Hscale,w\[Chi]=wx,r\[Chi],rr,xData,yData,Nsteps,data,Hfnx},
 
 (*solving the reheating equations*)
 {r\[Chi],rr}=solEqs[gg,wx,xLarge,prec,accu];
 
-(*getting the hubble parameter*)
+(*getting the x-coordinates*)
 xData=(InterpolatingFunctionCoordinates[rr]//Flatten);
+(*number of steps*)
+Nsteps=(xData//Length)-1;
+(*re-sampling x-coordinates logarithmically*)
+xData={xData[[1]]}~Join~(10^Table[Log10[xData[[2]]]+(Log10[xData[[-1]]]-Log10[xData[[2]]])*((i-1)/(Nsteps-1)),{i,Nsteps}]);
+
+(*getting the hubble parameter*)
 yData=Table[hub[x],{x,xData}];
 yData=Hi*yData;
 
@@ -269,14 +275,22 @@ Hfnx
 
 Clear[TOfx]
 
-TOfx[gg_?NumberQ,gs_,Hscale_,wx_:0,xLarge_:10^10,prec_:30,accu_:20]:=TOfx[gg,gs,Hscale,wx,xLarge,prec,accu]=Block[{gstar=gs,Hi=Hscale,w\[Chi]=wx,r\[Chi],rr,xData,yData,data,Tfnx},
+TOfx[gg_?NumberQ,gs_,Hscale_,wx_:0,xLarge_:10^10,prec_:30,accu_:20]:=TOfx[gg,gs,Hscale,wx,xLarge,prec,accu]=Block[{gstar=gs,Hi=Hscale,w\[Chi]=wx,r\[Chi],rr,xData,yData,Nsteps,data,Tfnx},
 
 (*solving the reheating equations*)
 {r\[Chi],rr}=solEqs[gg,wx,xLarge,prec,accu];
 
-(*getting the temperature*)
+(*getting the x-coordinates*)
 xData=(InterpolatingFunctionCoordinates[rr]//Flatten);
-yData=(InterpolatingFunctionValuesOnGrid[rr]//Flatten);
+(*number of steps*)
+Nsteps=(xData//Length)-1;
+(*re-sampling x-coordinates logarithmically*)
+xData={xData[[1]]}~Join~(10^Table[Log10[xData[[2]]]+(Log10[xData[[-1]]]-Log10[xData[[2]]])*((i-1)/(Nsteps-1)),{i,Nsteps}]);
+
+(*computing y-values*)
+yData=rr[#]&/@xData;
+
+(*getting the temperature*)
 yData=((\[Rho]\[Chi]i*yData)/A\[Rho])^(1/4);
 
 (*building the dataset*)
@@ -297,14 +311,20 @@ Tfnx
 
 Clear[aOfx]
 
-aOfx[gg_?NumberQ,aini_:1,sum_:False,wx_:0,xLarge_:10^10,prec_:30,accu_:20]:=aOfx[gg,aini,sum,wx,xLarge,prec,accu]=Block[{w\[Chi]=wx,r\[Chi],rr,domain,xData,efolds,yData,data,afnx},
+aOfx[gg_?NumberQ,aini_:1,sum_:False,wx_:0,xLarge_:10^10,prec_:30,accu_:20]:=aOfx[gg,aini,sum,wx,xLarge,prec,accu]=Block[{w\[Chi]=wx,r\[Chi],rr,domain,xData,efolds,yData,Nsteps,data,afnx},
 
 (*solving the reheating equations*)
 {r\[Chi],rr}=solEqs[gg,wx,xLarge,prec,accu];
 
 (*interpolation function properties*)
 domain=(InterpolatingFunctionDomain[rr]//Flatten);
+
+(*getting the x-coordinates*)
 xData=(InterpolatingFunctionCoordinates[rr]//Flatten);
+(*number of steps*)
+Nsteps=(xData//Length)-1;
+(*re-sampling x-coordinates logarithmically*)
+xData={xData[[1]]}~Join~(10^Table[Log10[xData[[2]]]+(Log10[xData[[-1]]]-Log10[xData[[2]]])*((i-1)/(Nsteps-1)),{i,Nsteps}]);
 
 (*e-fold function*)
 If[sum,
