@@ -6,8 +6,8 @@ BeginPackage["PhaseTransition`"];
 ptParams::usage="ptParams: function to compute parameters of the first order phase transition (1PT).\nInput: (gStar,direction,vw,{Temperature Evolution},coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx).\n\tIf method='analytic' then {Temperature Evolution}={\[Gamma], t0, tcrit};\n\telse if method='semi'/'numeric'/'alt' then {Temperature Evolution}={Tfn, tScale}.\nOutput: {\!\(\*SubscriptBox[\(T\), \(PT\)]\), \!\(\*SubscriptBox[\(t\), \(PT\)]\), \!\(\*OverscriptBox[\(\[Lambda]\), \(_\)]\), \!\(\*SubscriptBox[\(\[CapitalPhi]\), \(b\)]\), \[Epsilon], \!\(\*SubscriptBox[\(E\), \(c\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\)', \!\(\*SubscriptBox[\(S\), \(E\)]\)'', \!\(\*SubscriptBox[\(\[CapitalGamma]\), \(nucl\)]\)/\[ScriptCapitalV], \!\(\*SubscriptBox[\(\[Beta]\), \(1\)]\), \!\(\*SubscriptBox[\(\[Beta]\), \(2\)]\), \!\(\*SubscriptBox[\(n\), \(b\)]\), \!\(\*SubscriptBox[\(R\), \(b\)]\), <R>, \!\(\*SubscriptBox[\(\[Beta]\), \(eff\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(\[Infinity]\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(n\)]\), \!\(\*SubscriptBox[\(\[Kappa]\), \(run\)]\)}";
 tTPT::usage="tTPT: function to compute the time and temperature of the 1PT.\nInput: (direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx).\n\tIf method='analytic' then {Temperature Evolution}={\[Gamma], t0, tcrit};\n\telse if method='semi'/'numeric'/'alt' then {Temperature Evolution}={Tfn, tScale}.\nOutput: \!\(\*SubscriptBox[\(t\), \(PT\)]\),\!\(\*SubscriptBox[\(T\), \(PT\)]\)";
 Lmlnh::usage="Lmlnh: interpolated function \!\(\*SubscriptBox[\(log\), \(10\)]\)(-ln[h(\!\(\*SubscriptBox[\(log\), \(10\)]\) x)]), where h is the fractional volume in the metastable phase of the 1PT.\nInput: (direction,vw,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor,Nlx).\nOutput: \!\(\*SubscriptBox[\(log\), \(10\)]\)(-ln[h(\!\(\*SubscriptBox[\(log\), \(10\)]\)x)])";
-Lnbubble::usage="Lnbubble: interpolated function \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(n\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x)), where \!\(\*SubscriptBox[\(n\), \(b\)]\) is the mean bubble number density.\nInput: (LmlnhLx,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor).\nOutput: \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(n\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x)))";
-LRbubble::usage="LRbubble: interpolated function \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(R\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x))), where \!\(\*SubscriptBox[\(R\), \(b\)]\) is the average bubble radius.\nInput: (LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor).\nOutput: \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(R\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x)))";
+Lnbubble::usage="Lnbubble: interpolated function \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(n\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x)), where \!\(\*SubscriptBox[\(n\), \(b\)]\) is the mean bubble number density.\nInput: (LmlnhLx,TempEvol,coeffs,Tcrit,xVal,Kfactor,full,scaleFactor).\nOutput: \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(n\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x)))";
+LRbubble::usage="LRbubble: interpolated function \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(R\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x))), where \!\(\*SubscriptBox[\(R\), \(b\)]\) is the average bubble radius.\nInput: (LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tcrit,xVal,Kfactor,full,scaleFactor).\nOutput: \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(R\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x)))";
 EcTemp::usage="EcTemp: function to compute the energy of the critical bubble of the 1PT.\nInput: (coeffs,Tcrit,T).\nOutput: \!\(\*SubscriptBox[\(E\), \(c\)]\)";
 SETemp::usage="SETemp: function to compute the Euclidean bounce action of the critical bubble of the 1PT.\nInput: (coeffs,Tcrit,T).\nOutput: \!\(\*SubscriptBox[\(S\), \(E\)]\)";
 S1Rate::usage="S1Rate: function to compute the first time derivative of the Euclidean bounce action.\nInput: (dlnTdt[t],coeffs,Tcrit,T).\nOutput: \!\(\*SubscriptBox[\(S\), \(E\)]\)'(t)";
@@ -368,7 +368,7 @@ d2ln\[Lambda]dlnT2=-((12 T^2 Tc^2 \[Lambda] \[Mu]^2 (-4 A^2+3 \[Lambda] \[Mu]^2)
 (*This prefactor can be rewritten in terms of \[Lambda]bar. It, and its first and second derivatives w.r.t. \[Lambda]bar, are given by:*)
 
 
-PS=(Sqrt[3] A (9+3 Sqrt[9-8 \[Lambda]bar]-4 \[Lambda]bar))/(\[Lambda]^(3/2)*\[Lambda]bar^(1/2));
+PS=(8Sqrt[3] A)/(\[Lambda]^(3/2) \[Lambda]bar^(1/2)) ((3+Sqrt[9-8 \[Lambda]bar])/4)^2;
 
 dPSd\[Lambda]=-((Sqrt[3] A (9 (3+Sqrt[9-8 \[Lambda]bar])+4 Sqrt[9-8 \[Lambda]bar] \[Lambda]bar))/(2 \[Lambda]bar Sqrt[\[Lambda]^3 (9-8 \[Lambda]bar) \[Lambda]bar]));
 
@@ -850,7 +850,7 @@ d2EcFnd\[Lambda]2[\[Lambda]bar_]:=Which[0<=\[Lambda]bar<D2ColdL,limd2EcThick["co
 (*We can then just fit a non-linear model to both regimes, and find a simple expression that is good to within O(1):*)
 
 
-EcAnCold[\[Lambda]bar_]=(1.14044688781972*\[Lambda]bar^2)/(1-\[Lambda]bar)^2;
+EcAnCold[\[Lambda]bar_]=(1.9764934553839089` (1.1308763363462961` -\[Lambda]bar)^0.9143524346793435` \[Lambda]bar^2)/(1-\[Lambda]bar)^2;
 EcAnHot[\[Lambda]bar_]=(1.6441933519976608*(9/8-\[Lambda]bar)^(3/4))/(1-\[Lambda]bar)^2;
 EcAn[\[Lambda]bar_]:=Which[0<=\[Lambda]bar<1,EcAnCold[\[Lambda]bar],9/8>=\[Lambda]bar>1,EcAnHot[\[Lambda]bar],\[Lambda]bar==1,\[Infinity]]
 
@@ -859,7 +859,27 @@ EcAn[\[Lambda]bar_]:=Which[0<=\[Lambda]bar<1,EcAnCold[\[Lambda]bar],9/8>=\[Lambd
 (*For the action, we multiply P_S by Ebar_c:*)
 
 
-SAn[\[Lambda]bar_]:=Which[0<=\[Lambda]bar<1,((\[Sqrt]3 A (9+3 \[Sqrt](9-8 \[Lambda]bar)-4 \[Lambda]bar))/(\[Lambda]^(3/2) \[Sqrt]\[Lambda]bar))*EcAnCold[\[Lambda]bar],9/8>=\[Lambda]bar>1,((\[Sqrt]3 A (9+3 \[Sqrt](9-8 \[Lambda]bar)-4 \[Lambda]bar))/(\[Lambda]^(3/2) \[Sqrt]\[Lambda]bar))*EcAnHot[\[Lambda]bar],\[Lambda]bar==1,\[Infinity]]
+SAn[\[Lambda]bar_]:=Which[0<=\[Lambda]bar<1,((Sqrt[3] A (3+Sqrt[9-8 \[Lambda]bar])^2)/(2 \[Lambda]^(3/2) Sqrt[\[Lambda]bar]))*EcAnCold[\[Lambda]bar],9/8>=\[Lambda]bar>1,((Sqrt[3] A (3+Sqrt[9-8 \[Lambda]bar])^2)/(2 \[Lambda]^(3/2) Sqrt[\[Lambda]bar]))*EcAnHot[\[Lambda]bar],\[Lambda]bar==1,\[Infinity]]
+
+
+(* ::Text:: *)
+(*A simple power-law estimate for S(\[Lambda]bar), based on the inflection points:*)
+
+
+\[Lambda]barInfCold=0.5229448768554983`;
+\[Lambda]barInfHot=1.075660395061243`;
+
+
+SAnColdPL[\[Lambda]bar_]:=A/\[Lambda]^(3/2) (E^(1.346607299235003`+ 4.854987779449222` \[Lambda]bar))
+SAnHotPL[\[Lambda]bar_]:=A/\[Lambda]^(3/2) (E^(54.86051144998107`- 45.609033621086894` \[Lambda]bar))
+
+
+(* ::Text:: *)
+(*The inverse \[Lambda]bar(S):*)
+
+
+\[Lambda]barColdS[S_]:=-0.27736574434545125`+ 0.20597374193873785`*Log[(S \[Lambda]^(3/2))/A]
+\[Lambda]barHotS[S_]:=1.2028431013415912`- 0.02192548099808148` *Log[(S \[Lambda]^(3/2))/A]
 
 
 (* ::Chapter:: *)
@@ -1510,7 +1530,7 @@ beta2OfTempAn[gamma_,t0_,tcrit_,coeffs_List,Tcrit_,Temp_,Kfactor_:1,full_:False]
 
 Clear[Lmlnh]
 
-Lmlnh[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=Lmlnh[direction,vw,TempEvol,coeffs,Tcrit,Kfactor,full,atau,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,Toffset,Tofx,tScale,xmax,Tmax,TmaxFlag,xA,xB,xData,prec,Trange,xrange,scaleFactor,comovingTime,aofx,tauofx,scale,lnscale,lnGammaPT,GammaPT,radius,integrand,zrange,\[CapitalDelta]lz,lzTable,lxTable,Nmids,\[CapitalDelta]lxTable,lxMids,integral,table,resTable,non0Tab,reg,data,res,eps=smallnum},
+Lmlnh[direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=Lmlnh[direction,vw,TempEvol,coeffs,Tcrit,Kfactor,full,atau,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,Tlo,Thi,Toffset,Tofx,tScale,xmax,Tmax,TmaxFlag,xA,xB,xData,prec,Trange,xrange,scaleFactor,comovingTime,aofx,tauofx,scale,lnscale,lnGammaPT,GammaPT,radius,integrand,OnlyHot,zrange,\[CapitalDelta]lz,lzTable,lxTable,Nmids,\[CapitalDelta]lxTable,lxMids,integral,table,resTable,non0Tab,reg,data,res,eps=smallnum},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1522,6 +1542,9 @@ noCritTemp[coeffs];
 
 (*the phase transition is either cold (subcritical) or hot (supercritical):*)
 noOption[direction,{"cold","hot"}];
+
+(*For the hot PT case we will need to offset the leftmost value of x*)
+OnlyHot=If[direction=="hot",1,0];
 
 (*checking consistency of 'TempEvol' arguments.*)
 If[(Length@TempEvol)!=2,Message[Lmlnh::TempEvolError];Abort[]];
@@ -1561,8 +1584,8 @@ If[direction=="hot",{Tc,Thi},{Tc,Max[Tofx[xB],Tlo]}]
 
 (* the corresponding range of times for the temperatures probed. Note that if TmaxFlag\[Equal]True then the latest temperature explored in the hot (supercritical) PT is the critical temperature (after passing by Tmax), which is located in the "downwards" trajectory of the concave temperature curve.*)
 xrange=If[TmaxFlag,
-If[direction=="hot",{tOfTempNum[Tofx,Trange[[1]],1][[1]],tOfTempNum[Tofx,Trange[[2]],1][[2]]}(*hot: {t_c1,t_c2}*),{tOfTempNum[Tofx,Trange[[1]],1][[2]],tOfTempNum[Tofx,Trange[[2]],1][[2]]}(*cold: {t_c2,t_end}*)],
-If[direction=="hot",{tOfTempNum[Tofx,Trange[[1]],1][[1]],tOfTempNum[Tofx,Trange[[2]],1][[1]]}(*hot: {t_c1,t_hi}*),{tOfTempNum[Tofx,Trange[[1]],1][[2]],tOfTempNum[Tofx,Trange[[2]],1][[2]]}(*cold: {t_c2,t_end}*)]
+If[direction=="hot",{tOfTempNum[Tofx,Trange[[1]],1][[1]],tOfTempNum[Tofx,Trange[[2]],1][[2]]}(*hot: {t_c1,t_c2}*),{tOfTempNum[Tofx,Trange[[1]],1][[2]],tOfTempNum[Tofx,Trange[[2]],1][[2]]}(*cold: {t_c2,t_lo/end}*)],
+If[direction=="hot",{tOfTempNum[Tofx,Trange[[1]],1][[1]],tOfTempNum[Tofx,Trange[[2]],1][[1]]}(*hot: {t_c1,t_hi}*),{tOfTempNum[Tofx,Trange[[1]],1][[2]],tOfTempNum[Tofx,Trange[[2]],1][[2]]}(*cold: {t_c2,t_lo/end}*)]
 ];
 
 (*updating xrange: offset from xcrit (when T=Tcrit)*)
@@ -1598,7 +1621,7 @@ radius[x_,xp_]:=vw*(tauofx[x]-tauofx[xp])*HeavisideTheta[x-xp];
 integrand[x_,xp_]:=xp/aofx[xp]*((4\[Pi])/3 (radius[x,xp])^3 * GammaPT[xp]);
 
 (*defining z=x-xA: a time variable offset by xA: it helps to zoom-in to low-x*)
-zrange=xrange-xA;
+zrange=xrange-xA*OnlyHot;
 
 (*sampling steps in ln(z) for the numerical integral, so that there are Nlx number of steps*)
 \[CapitalDelta]lz=(Log[zrange[[2]]]-Log[zrange[[1]]])/(Nlx-1);
@@ -1607,7 +1630,7 @@ zrange=xrange-xA;
 lzTable=Log[zrange[[1]]]+Table[\[CapitalDelta]lz*(i-1),{i,Nlx}];
 
 (*table of the Nlx corresponding ln(x) values*)
-lxTable=Log[Exp[lzTable]+xA];
+lxTable=Log[Exp[lzTable]+xA*OnlyHot];
 
 (*table of mid-point widths, so that there are Nmids rectangles and midpoints*)
 Nmids=Nlx;
@@ -1658,7 +1681,7 @@ Lmlnh::NoNucleation="The nucleation rate is so small at all times ((\[CapitalGam
 
 Clear[Lnbubble]
 
-Lnbubble[LmlnhLx_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1}]:=Lnbubble[LmlnhLx,TempEvol,coeffs,Tcrit,Kfactor,full,atau]=Block[{Tc=Tcrit,Tofx,tScale,scaleFactor,comovingTime,aofx,tauofx,LxA,LxB,LxData,scale,lnscale,lnGammaPT,lnh,\[CapitalGamma]h,integrand,lxTable,lxMids,table,integral,Nmids,\[CapitalDelta]lxTable,resTable,non0Tab,reg,Lnorm,data,res,eps=smallnum},
+Lnbubble[LmlnhLx_,TempEvol_List,coeffs_List,Tcrit_,xVal_:"all",Kfactor_:1,full_:False,atau_:{1,1}]:=Lnbubble[LmlnhLx,TempEvol,coeffs,Tcrit,xVal,Kfactor,full,atau]=Block[{Tc=Tcrit,Tofx,tScale,scaleFactor,comovingTime,aofx,tauofx,LxA,LxB,LxData,scale,lnscale,lnGammaPT,lnh,\[CapitalGamma]h,integrand,lxTable,lxMids,table,integral,Nmids,\[CapitalDelta]lx,\[CapitalDelta]lxTable,resTable,non0Tab,reg,Lnorm,data,res,eps=smallnum},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1698,6 +1721,11 @@ lnh[xx_]:=-10^LmlnhLx[Log10[xx]];
 (*integrand, in ln-space*)
 integrand[x_,xp_]:=aofx[x]^-3*xp/aofx[xp]*\[CapitalGamma]h[xp]*(HeavisideTheta[x-xp]*Sign[x-xp]);
 
+(*calculating result in two cases: for all x-values, or for a specific value*)
+If[xVal=="all",
+
+
+(*A: no specific x-value: compute full function*)
 (*table of the Nlx sampled ln(x) values*)
 lxTable=(LxData*Log[10]);
 
@@ -1723,15 +1751,43 @@ If[(Length@non0Tab)==0,Message[Lnbubble::NoNucleation];Abort[]];
 reg=Min[non0Tab]*eps*eps;
 resTable=If[#==0,reg,#]&/@resTable;
 
-(*normalization correction for the scale of the result: dividing by tScale^3: log10 tScale^3 = 3 log10 tScale*)
+(*normalization correction for the scale of the result: dividing by tScale^3: Subscript[log, 10]tScale^3 = 3 Subscript[log, 10]tScale*)
 Lnorm=3*Log10[tScale];
 
-(*data to interpolate, in log10 (which is ln/ln(10))*)
+(*data to interpolate, in Subscript[log, 10] (which is ln/ln(10))*)
 data=Transpose[{lxTable/Log[10],Log10[resTable]-Lnorm}];
 Clear[resTable];
 
 (*interpolating the data*)
-res=Interpolation[data];
+res=Interpolation[data],
+
+
+(*B: specific x-value: compute result at that point*)
+(*number of mid-points to use*)
+Nmids=(LxData//Length);
+
+(*size of steps*)
+\[CapitalDelta]lx=((Log[xVal]-LxA*Log[10])/Nmids);
+
+(*table of sampled ln(x) values*)
+lxTable=(LxA*Log[10]+Table[\[CapitalDelta]lx*i,{i,0,Nmids}]);
+
+(*table of ln(x) mid-points*)
+lxMids=Table[(lxTable[[1]]+\[CapitalDelta]lx/2)+\[CapitalDelta]lx*(j-1),{j,Nmids}];
+
+(*table of Riemann sum terms to integrate, already weighted by their widths.*)
+table=Table[\[CapitalDelta]lx*integrand[xVal,Exp[lxMids[[j]]]],{j,lxMids//Length}];
+
+(*integrating along xp: a simple sum of columns, for each row!*)
+res=Total[table];
+Clear[\[CapitalDelta]lx,lxMids,table];
+
+(*normalization correction for the scale of the result: dividing by tScale^3: Subscript[log, 10]tScale^3 = 3 Subscript[log, 10]tScale*)
+Lnorm=3*Log10[tScale];
+
+(*final result*)
+res=Log10[res]-Lnorm;
+];
 
 res
 ]
@@ -1754,7 +1810,7 @@ Lnbubble::NoNucleation="The nucleation rate is so small at all times that there 
 
 Clear[LRbubble]
 
-LRbubble[LmlnhLx_,LnbLx_,vw_,TempEvol_List,coeffs_List,Tcrit_,Kfactor_:1,full_:False,atau_:{1,1}]:=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tcrit,Kfactor,full,atau]=Block[{Tc=Tcrit,Tofx,tScale,scaleFactor,comovingTime,aofx,tauofx,LxA,LxB,LxData,LnbData,scale,lnscale,lnGammaPT,lnh,\[CapitalGamma]h,radius,integrand,lxTable,Nmids,\[CapitalDelta]lxTable,lxMids,table,resTable,non0Tab,reg,Lnorm,data,res,eps=smallnum},
+LRbubble[LmlnhLx_,LnbLx_,vw_,TempEvol_List,coeffs_List,Tcrit_,xVal_:"all",Kfactor_:1,full_:False,atau_:{1,1}]:=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tcrit,xVal,Kfactor,full,atau]=Block[{Tc=Tcrit,Tofx,tScale,scaleFactor,comovingTime,aofx,tauofx,LxA,LxB,LxData,LnbData,scale,lnscale,lnGammaPT,lnh,\[CapitalGamma]h,radius,integrand,lxTable,Nmids,\[CapitalDelta]lx,\[CapitalDelta]lxTable,lxMids,table,resTable,non0Tab,reg,Lnorm,data,res,eps=smallnum},
 
 (*NOTE: CRUCIAL FOR NUMERICAL METHOD: we assume T(t) is a concave function, and that therefore it has a maximum in its domain. True during reheating.*)
 
@@ -1800,6 +1856,11 @@ radius[x_,xp_]:=vw*(tauofx[x]-tauofx[xp])*HeavisideTheta[x-xp];
 (*integrand, in ln-space*)
 integrand[x_,xp_]:=aofx[x]*xp/aofx[xp]*(\[CapitalGamma]h[xp]*radius[x,xp]);
 
+(*calculating result in two cases: for all x-values, or for a specific value*)
+If[xVal=="all",
+
+
+(*A: no specific x-value: compute full function*)
 (*table of the Nlx sampled ln(x) values*)
 lxTable=(LxData*Log[10]);
 
@@ -1825,15 +1886,43 @@ If[(Length@non0Tab)==0,Message[LRbubble::NoNucleation];Abort[]];
 reg=Min[non0Tab]*eps*eps;
 resTable=If[#==0,reg,#]&/@resTable;
 
-(*normalization factor tScale^2 n_b a^3 (present due to dimensionality of the probability distribution) in log10: log10(tScale^2 n_b a^3)=2 log10 tScale + log10 n_b + 3 log10 a*)
-Lnorm=2*Log10[tScale]+LnbData+3*Log10[aofx[Exp[lxTable]]];
+(*normalization factor tScale^2\[CenterDot]Subscript[n, b]\[CenterDot]a^3 (present due to dimensionality of the probability distribution) in Subscript[log, 10]: Subscript[log, 10](tScale^2Subscript[n, b]a^3)=2 Subscript[log, 10]tScale + Subscript[log, 10]Subscript[n, b] + 3 Subscript[log, 10]a*)
+Lnorm=2*Log10[tScale]+LnbData+3Log10[aofx[Exp[lxTable]]];
 
-(*data to interpolate, in log10 (which is ln/ln(10))*)
+(*data to interpolate, in Subscript[log, 10] (which is ln/ln(10))*)
 data=Transpose[{lxTable/Log[10],Log10[resTable]-Lnorm}];
 Clear[resTable,LnbData,Lnorm];
 
 (*interpolating the data*)
-res=Interpolation[data];
+res=Interpolation[data],
+
+
+(*B: specific x-value: compute result at that point*)
+(*number of mid-points to use*)
+Nmids=(LxData//Length);
+
+(*size of steps*)
+\[CapitalDelta]lx=((Log[xVal]-LxA*Log[10])/Nmids);
+
+(*table of sampled ln(x) values*)
+lxTable=(LxA*Log[10]+Table[\[CapitalDelta]lx*i,{i,0,Nmids}]);
+
+(*table of ln(x) mid-points*)
+lxMids=Table[(lxTable[[1]]+\[CapitalDelta]lx/2)+\[CapitalDelta]lx*(j-1),{j,Nmids}];
+
+(*table of Riemann sum terms to integrate, already weighted by their widths.*)
+table=Table[\[CapitalDelta]lx*integrand[xVal,Exp[lxMids[[j]]]],{j,lxMids//Length}];
+
+(*integrating along xp: a simple sum of columns, for each row!*)
+res=Total[table];
+Clear[\[CapitalDelta]lx,lxMids,table];
+
+(*normalization factor tScale^2\[CenterDot]Subscript[n, b]\[CenterDot]a^3 (present due to dimensionality of the probability distribution) in Subscript[log, 10]: Subscript[log, 10](tScale^2Subscript[n, b]a^3)=2 Subscript[log, 10]tScale + Subscript[log, 10]Subscript[n, b] + 3 Subscript[log, 10]a*)
+Lnorm=2*Log10[tScale]+LnbLx[Log10[xVal]]+3Log10[aofx[xVal]];
+
+(*final result*)
+res=Log10[res]-Lnorm;
+];
 
 res
 ]
@@ -2105,10 +2194,10 @@ TmaxFlag=IntervalMemberQ[Interval[{Tlo,Thi}],Tmax];
 LhLx=Lmlnh[direction,vw,TempEvol,coeffs,Tc,Kfactor,full,atau,Nlx];
 
 (*computing log10(n_b(log10 x))*)
-LnbLx=Lnbubble[LhLx,TempEvol,coeffs,Tc,Kfactor,full,atau];
+LnbLx=Lnbubble[LhLx,TempEvol,coeffs,Tc,"all",Kfactor,full,atau];
 
 (*computing log10(\[LeftAngleBracket]R(log10 x)\[RightAngleBracket])*)
-LRLx=LRbubble[LhLx,LnbLx,vw,TempEvol,coeffs,Tc,Kfactor,full,atau];
+LRLx=LRbubble[LhLx,LnbLx,vw,TempEvol,coeffs,Tc,"all",Kfactor,full,atau];
 
 (*computing the PT condition: log10 R_b - log10\[LeftAngleBracket]R\[RightAngleBracket], where R_b\[Congruent]n_b^(-1/3)*)
 xData=(InterpolatingFunctionCoordinates[LnbLx]//Flatten);
@@ -2271,19 +2360,19 @@ betaEff=(8\[Pi]*vw^3*nbPT)^(1/3),
 
 method=="numeric",
 LmlnhLx=Lmlnh[direction,vw,TempEvol,coeffs,Tc,Kfactor,full,atau,Nlx];
-LnbLx=Lnbubble[LmlnhLx,TempEvol,coeffs,Tc,Kfactor,full,atau];
-nbPT=10^(LnbLx[Log10[tpt/tScale]]);
+LnbLx=Lnbubble[LmlnhLx,TempEvol,coeffs,Tc,tpt/tScale,Kfactor,full,atau];
+nbPT=10^(LnbLx);
 RPT=nbPT^(-1/3);
 Ravg=vw*(tpt-tcrit);
 betaEff=(8\[Pi]*vw^3*nbPT)^(1/3),
 
 method=="alt",
 LmlnhLx=Lmlnh[direction,vw,TempEvol,coeffs,Tc,Kfactor,full,atau,Nlx];
-LnbLx=Lnbubble[LmlnhLx,TempEvol,coeffs,Tc,Kfactor,full,atau];
-LRbLx=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tc,Kfactor,full,atau];
-nbPT=10^(LnbLx[Log10[tpt/tScale]]);
+LnbLx=Lnbubble[LmlnhLx,TempEvol,coeffs,Tc,tpt/tScale,Kfactor,full,atau];
+LRbLx=LRbubble[LmlnhLx,LnbLx,vw,TempEvol,coeffs,Tc,tpt/tScale,Kfactor,full,atau];
+nbPT=10^(LnbLx);
 RPT=nbPT^(-1/3);
-Ravg=10^(LRbLx[Log10[tpt/tScale]]);
+Ravg=10^(LRbLx);
 betaEff=(8\[Pi]*vw^3*nbPT)^(1/3)
 ];
 
