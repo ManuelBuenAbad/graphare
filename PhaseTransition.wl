@@ -3,7 +3,7 @@
 BeginPackage["PhaseTransition`"];
 
 
-ptParams::usage="ptParams: function to compute parameters of the first order phase transition (1PT).\nInput: (gStar,direction,vw,{Temperature Evolution},coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx).\n\tIf method='analytic' then {Temperature Evolution}={\[Gamma], t0, tcrit};\n\telse if method='semi'/'numeric'/'alt' then {Temperature Evolution}={Tfn, tScale}.\nOutput: {\!\(\*SubscriptBox[\(T\), \(PT\)]\), \!\(\*SubscriptBox[\(t\), \(PT\)]\), \!\(\*OverscriptBox[\(\[Lambda]\), \(_\)]\), \!\(\*SubscriptBox[\(\[CapitalPhi]\), \(b\)]\), \[Epsilon], \!\(\*SubscriptBox[\(E\), \(c\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\)', \!\(\*SubscriptBox[\(S\), \(E\)]\)'', \!\(\*SubscriptBox[\(\[CapitalGamma]\), \(nucl\)]\)/\[ScriptCapitalV], \!\(\*SubscriptBox[\(\[Beta]\), \(1\)]\), \!\(\*SubscriptBox[\(\[Beta]\), \(2\)]\), \!\(\*SubscriptBox[\(n\), \(b\)]\), \!\(\*SubscriptBox[\(R\), \(b\)]\), <R>, \!\(\*SubscriptBox[\(\[Beta]\), \(eff\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(\[Infinity]\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(n\)]\), \!\(\*SubscriptBox[\(\[Kappa]\), \(run\)]\)}";
+ptParams::usage="ptParams: function to compute parameters of the first order phase transition (1PT).\nInput: (gStar,direction,vw,{Temperature Evolution},coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx).\n\tIf method='analytic' then {Temperature Evolution}={\[Gamma], t0, tcrit};\n\telse if method='semi'/'numeric'/'alt' then {Temperature Evolution}={Tfn, tScale}.\nOutput: {\!\(\*SubscriptBox[\(T\), \(PT\)]\), \!\(\*SubscriptBox[\(t\), \(PT\)]\), \!\(\*OverscriptBox[\(\[Lambda]\), \(_\)]\), \!\(\*SubscriptBox[\(\[CapitalPhi]\), \(b\)]\), \!\(\*SubscriptBox[\(\[CapitalDelta]V\), \(T\)]\), \!\(\*SubscriptBox[\(E\), \(c\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\), \!\(\*SubscriptBox[\(S\), \(E\)]\)', \!\(\*SubscriptBox[\(S\), \(E\)]\)'', \!\(\*SubscriptBox[\(\[CapitalGamma]\), \(nucl\)]\)/\[ScriptCapitalV], \!\(\*SubscriptBox[\(\[Beta]\), \(1\)]\), \!\(\*SubscriptBox[\(\[Beta]\), \(2\)]\), \!\(\*SubscriptBox[\(n\), \(b\)]\), \!\(\*SubscriptBox[\(R\), \(b\)]\), <R>, \!\(\*SubscriptBox[\(\[Beta]\), \(eff\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(\[Infinity]\)]\), {\!\(\*SubscriptBox[\(\[Alpha]\), \(n\)]\)}={\!\(\*SubscriptBox[\(\[Alpha]\), \(\[Epsilon]\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(V\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(L\)]\), \!\(\*SubscriptBox[\(\[Alpha]\), \(\[Theta]\)]\)}, {\!\(\*SubscriptBox[\(\[Kappa]\), \(run\)]\)}={\!\(\*SubscriptBox[\(\[Kappa]\), \(run, \[Epsilon]\)]\), \!\(\*SubscriptBox[\(\[Kappa]\), \(run, V\)]\), \!\(\*SubscriptBox[\(\[Kappa]\), \(run, L\)]\), \!\(\*SubscriptBox[\(\[Kappa]\), \(run, \[Theta]\)]\)}}";
 tTPT::usage="tTPT: function to compute the time and temperature of the 1PT.\nInput: (direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,scaleFactor,Nlx).\n\tIf method='analytic' then {Temperature Evolution}={\[Gamma], t0, tcrit};\n\telse if method='semi'/'numeric'/'alt' then {Temperature Evolution}={Tfn, tScale}.\nOutput: \!\(\*SubscriptBox[\(t\), \(PT\)]\),\!\(\*SubscriptBox[\(T\), \(PT\)]\)";
 Lmlnh::usage="Lmlnh: interpolated function \!\(\*SubscriptBox[\(log\), \(10\)]\)(-ln[h(\!\(\*SubscriptBox[\(log\), \(10\)]\) x)]), where h is the fractional volume in the metastable phase of the 1PT.\nInput: (direction,vw,TempEvol,coeffs,Tcrit,Kfactor,full,scaleFactor,Nlx).\nOutput: \!\(\*SubscriptBox[\(log\), \(10\)]\)(-ln[h(\!\(\*SubscriptBox[\(log\), \(10\)]\)x)])";
 Lnbubble::usage="Lnbubble: interpolated function \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(n\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x)), where \!\(\*SubscriptBox[\(n\), \(b\)]\) is the mean bubble number density.\nInput: (LmlnhLx,TempEvol,coeffs,Tcrit,xVal,Kfactor,full,scaleFactor).\nOutput: \!\(\*SubscriptBox[\(log\), \(10\)]\)(\!\(\*SubscriptBox[\(n\), \(b\)]\)(\!\(\*SubscriptBox[\(log\), \(10\)]\)(x)))";
@@ -951,9 +951,15 @@ aFromList[particleContent_List,scalarValue_]:=\[Pi]^2/30 Total[cprimeType[#[[1]]
 (* ::Text:: *)
 (*From this, let us write some functions that will help us directly write down the phase transition strength in terms of the relevant parameters.*)
 (**)
-(*\[Alpha]_n \[Congruent] -V_b0/\[Rho]_r ,*)
+(*\[Alpha]_\[Epsilon]=-V_b0/\[Rho]_r (vacuum energy),*)
 (**)
-(*\[Alpha]_\[Infinity]\[TildeTilde](\[Mu]^2/2) T^2 \[CapitalPhi]_b^2/\[Rho]_r .*)
+(*Subscript[\[Alpha], V]\[Congruent]\[CapitalDelta]V_T/\[Rho]_r  (potential energy),*)
+(**)
+(*Subscript[\[Alpha], L]\[Congruent]\[CapitalDelta]L/\[Rho]_r=\[CapitalDelta](V_T-T*dV_T/dT)/\[Rho]_r  (latent heat),*)
+(**)
+(*Subscript[\[Alpha], \[Theta]]\[Congruent]\[CapitalDelta]\[Theta]/\[Rho]_r=\[CapitalDelta](V_T-(T/4)*dV_T/dT)/\[Rho]_r (trace anomaly),*)
+(**)
+(*\[Alpha]_\[Infinity]\[TildeTilde](\[Mu]^2/2) T^2 \[CapitalPhi]_b^2/\[Rho]_r (=\[CapitalDelta]P_LO in Ellis et al. 1903.09642)*)
 (**)
 (*The runaway condition is*)
 (**)
@@ -962,9 +968,89 @@ aFromList[particleContent_List,scalarValue_]:=\[Pi]^2/30 Total[cprimeType[#[[1]]
 (*where \[Kappa]_run \[Congruent] sign[1-\[Lambda]bar](\[Alpha]_n - \[Alpha]_\[Infinity])/\[Alpha]_n .*)
 
 
-Clear[\[Alpha]n,\[Alpha]\[Infinity],\[Kappa]run]
+Clear[\[CapitalDelta]VT,\[CapitalDelta]Lheat,\[CapitalDelta]\[Theta]an]
 
-\[Alpha]n[gStar_,coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,\[Epsilon]0,an,res},
+\[CapitalDelta]VT[coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T,\[Lambda]bar,sign,res},
+(*distributing the coefficients*)
+{\[Mu],A,\[Lambda]}=coeffs;
+
+(*checking whether there can be a first order phase transition*)
+noCritTemp[coeffs];
+
+(*\[Lambda]bar*)
+\[Lambda]bar=(\[Lambda]bar/.Mc\[Lambda]barToCoeffs)/.T->Temp;
+
+(*>0 if <\[CapitalPhi]>_b is the true vacuum (cPTs), <0 if it's the false vacuum (hPTs)*)
+sign=Sign[1-\[Lambda]bar];
+
+(*\[CapitalDelta]V_T: the potential energy difference \[CapitalDelta]V_T=(V_T+)-(V_T-)*)
+res=(sign*(Vs-Vb)/.PotToCoeffs)/.T->Temp;
+
+res
+];
+
+
+
+\[CapitalDelta]Lheat[coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T,\[Lambda]bar,sign,sterm,VbT,bterm,res},
+(*distributing the coefficients*)
+{\[Mu],A,\[Lambda]}=coeffs;
+
+(*checking whether there can be a first order phase transition*)
+noCritTemp[coeffs];
+
+(*\[Lambda]bar*)
+\[Lambda]bar=(\[Lambda]bar/.Mc\[Lambda]barToCoeffs)/.T->Temp;
+
+(*>0 if <\[CapitalPhi]>_b is the true vacuum (cPTs), <0 if it's the false vacuum (hPTs)*)
+sign=Sign[1-\[Lambda]bar];
+
+(*symmetric phase term: V_T-T*dV_T/dT*)
+sterm=(Vs-T*D[Vs,T]);
+
+(*broken phase term: V_T-T*dV_T/dT*)
+VbT=(Vb/.PotToCoeffs);
+bterm=(VbT-T*D[VbT,T])/.T->Temp;
+
+(*\[CapitalDelta]L: the difference in latent heat*)
+res=sign*(sterm-bterm);
+
+res
+];
+
+
+
+\[CapitalDelta]\[Theta]an[coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T,\[Lambda]bar,sign,sterm,VbT,bterm,res},
+(*distributing the coefficients*)
+{\[Mu],A,\[Lambda]}=coeffs;
+
+(*checking whether there can be a first order phase transition*)
+noCritTemp[coeffs];
+
+(*\[Lambda]bar*)
+\[Lambda]bar=(\[Lambda]bar/.Mc\[Lambda]barToCoeffs)/.T->Temp;
+
+(*>0 if <\[CapitalPhi]>_b is the true vacuum (cPTs), <0 if it's the false vacuum (hPTs)*)
+sign=Sign[1-\[Lambda]bar];
+
+(*symmetric phase term: V_T-(T/4)*dV_T/dT*)
+sterm=(Vs-T/4*D[Vs,T]);
+
+(*broken phase term: V_T-(T/4)*dV_T/dT*)
+VbT=(Vb/.PotToCoeffs);
+bterm=(VbT-T/4*D[VbT,T])/.T->Temp;
+
+(*\[CapitalDelta]\[Theta]: the difference in trace anomaly*)
+res=sign*(sterm-bterm);
+
+res
+];
+
+
+Clear[\[Alpha]qts,\[Alpha]\[Epsilon],\[Alpha]V,\[Alpha]L,\[Alpha]\[Theta],\[Alpha]n,\[Alpha]\[Infinity],\[Kappa]run]
+
+\[Alpha]qts={"\[Epsilon]","V","L","\[Theta]"};
+
+\[Alpha]\[Epsilon][gStar_,coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,\[Epsilon]0,an,res},
 
 (*distributing the coefficients*)
 {\[Mu],A,\[Lambda]}=coeffs;
@@ -978,11 +1064,98 @@ noCritTemp[coeffs];
 (*the coefficient in \[Rho]_rad(T)=a_N T^4 (a_N = \[Pi]^2/30 g_* )*)
 an=\[Pi]^2/30 gStar;
 
-(*\[Alpha]_n*)
+(*\[Alpha]_\[Epsilon]*)
 res=\[Epsilon]0/(an*T^4);
 
 res
 ]
+
+
+
+\[Alpha]V[gStar_,coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,DelV,an,res},
+
+(*distributing the coefficients*)
+{\[Mu],A,\[Lambda]}=coeffs;
+
+(*checking whether there can be a first order phase transition*)
+noCritTemp[coeffs];
+
+(*potential energy difference*)
+DelV=\[CapitalDelta]VT[coeffs,Tc,T];
+
+(*the coefficient in \[Rho]_rad(T)=a_N T^4 (a_N = \[Pi]^2/30 g_* )*)
+an=\[Pi]^2/30 gStar;
+
+(*\[Alpha]_V*)
+res=DelV/(an*T^4);
+
+res
+]
+
+
+
+\[Alpha]L[gStar_,coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,DelL,an,res},
+
+(*distributing the coefficients*)
+{\[Mu],A,\[Lambda]}=coeffs;
+
+(*checking whether there can be a first order phase transition*)
+noCritTemp[coeffs];
+
+(*latent heat difference*)
+DelL=\[CapitalDelta]Lheat[coeffs,Tc,T];
+
+(*the coefficient in \[Rho]_rad(T)=a_N T^4 (a_N = \[Pi]^2/30 g_* )*)
+an=\[Pi]^2/30 gStar;
+
+(*\[Alpha]_L*)
+res=DelL/(an*T^4);
+
+res
+]
+
+
+
+\[Alpha]\[Theta][gStar_,coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,Del\[Theta],an,res},
+
+(*distributing the coefficients*)
+{\[Mu],A,\[Lambda]}=coeffs;
+
+(*checking whether there can be a first order phase transition*)
+noCritTemp[coeffs];
+
+(*trace anomaly difference*)
+Del\[Theta]=\[CapitalDelta]\[Theta]an[coeffs,Tc,T];
+
+(*the coefficient in \[Rho]_rad(T)=a_N T^4 (a_N = \[Pi]^2/30 g_* )*)
+an=\[Pi]^2/30 gStar;
+
+(*\[Alpha]_\[Theta]*)
+res=Del\[Theta]/(an*T^4);
+
+res
+]
+
+
+
+\[Alpha]n[gStar_,coeffs_List,Tcrit_,Temp_,quantity_String]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,\[Alpha]Options={"\[Epsilon]","V","L","\[Theta]","vacuum energy","vacuum","potential energy","potential","latent heat","latent","trace anomaly","trace"},which,res},
+
+(*distributing the coefficients*)
+{\[Mu],A,\[Lambda]}=coeffs;
+
+(*checking whether there can be a first order phase transition*)
+noCritTemp[coeffs];
+
+(*checking whether the quantity requested is among those we have foreseen*)
+If[MemberQ[\[Alpha]Options,quantity],None,Message[\[Alpha]n::NoMethodFound, quantity,\[Alpha]Options]; Abort[]];
+
+(*\[Alpha]_n*)
+res=Which[MemberQ[{"\[Epsilon]","vacuum energy","vacuum"},quantity],\[Alpha]\[Epsilon][gStar,coeffs,Tc,T],MemberQ[{"V","potential energy","potential"},quantity],\[Alpha]V[gStar,coeffs,Tc,T],MemberQ[{"L","latent heat","latent"},quantity],\[Alpha]L[gStar,coeffs,Tc,T],MemberQ[{"\[Theta]","trace anomaly","trace"},quantity],\[Alpha]\[Theta][gStar,coeffs,Tc,T]];
+
+res
+]
+\[Alpha]n::NoMethodFound = "There is no definition or method to compute the PT strength \[Alpha] that makes use of the quantity=`1` you requested. The only options are `2`."; 
+
 
 
 \[Alpha]\[Infinity][gStar_,coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,\[CapitalPhi]VEV,aN,res},
@@ -1007,7 +1180,7 @@ res
 
 
 
-\[Kappa]run[gStar_,coeffs_List,Tcrit_,Temp_]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,\[Lambda]bar,sign,alphn,alphInf,res},
+\[Kappa]run[gStar_,coeffs_List,Tcrit_,Temp_,qtyNum_String,qtyDen_String]:=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,T=Temp,\[Lambda]bar,sign,alphnum,alphden,alphInf,res},
 
 (*distributing the coefficients*)
 {\[Mu],A,\[Lambda]}=coeffs;
@@ -1021,14 +1194,17 @@ noCritTemp[coeffs];
 (*the sign of the runaway condition*)
 sign=Sign[1-\[Lambda]bar];
 
-(*\[Alpha]_n*)
-alphn=\[Alpha]n[gStar,coeffs,Tc,T];
+(*\[Alpha]_num*)
+alphnum=\[Alpha]n[gStar,coeffs,Tc,T,qtyNum];
+
+(*\[Alpha]_den*)
+alphden=\[Alpha]n[gStar,coeffs,Tc,T,qtyDen];
 
 (*\[Alpha]_\[Infinity]*)
 alphInf=\[Alpha]\[Infinity][gStar,coeffs,Tc,T];
 
 (*\[Kappa]_run*)
-res=sign*((alphn-alphInf)/alphn);
+res=sign*((alphnum-alphInf)/alphden);
 
 res
 ]
@@ -2291,12 +2467,12 @@ tTPT::NoTpt="Tpt=`1` is outside the interval `2`. In other words, the PT could n
 (**)
 (*The last five arguments (the method to compute the PT temperature, the numerical coefficient in front of \[CapitalGamma]_nucl/\[ScriptCapitalV], whether we include T-dependent contributions from the 0-modes of the path integral, whether we consider the impact of the scale factor on bubble nucleation, and the number of log steps in time for the full numerical method) are optional parameters.*)
 (**)
-(*Output: T_PT(t_PT), t_PT, \[Lambda]bar(t_PT), \[LeftAngleBracket]\[CapitalPhi]_b(t_PT)\[RightAngleBracket], \[CapitalDelta]V(t_PT) (also called \[Epsilon]_T), E_c(t_PT), S_E(t_PT), S_E'(t_PT), S_E''(t_PT), \[CapitalGamma]_nucl(t_PT)/\[ScriptCapitalV], \[Beta]_1(t_PT), \[Beta]_2(t_PT), n_b(t_PT), R_b(t_PT), \[LeftAngleBracket]R(t_PT)\[RightAngleBracket], \[Beta]_eff(t_PT), \[Alpha]_\[Infinity](t_PT), \[Alpha]_n(t_PT), \[Kappa]_run \[Congruent] sign[1-\[Lambda]bar] (\[Alpha]_n-\[Alpha]_\[Infinity])/\[Alpha]_n.*)
+(*Output: T_PT(t_PT), t_PT, \[Lambda]bar(t_PT), \[LeftAngleBracket]\[CapitalPhi]_b(t_PT)\[RightAngleBracket], \[CapitalDelta]V(t_PT), E_c(t_PT), S_E(t_PT), S_E'(t_PT), S_E''(t_PT), \[CapitalGamma]_nucl(t_PT)/\[ScriptCapitalV], \[Beta]_1(t_PT), \[Beta]_2(t_PT), n_b(t_PT), R_b(t_PT), \[LeftAngleBracket]R(t_PT)\[RightAngleBracket], \[Beta]_eff(t_PT), \[Alpha]_\[Infinity](t_PT), {\[Alpha]_n(t_PT) for \[Epsilon]0, V_T, L, & \[Theta]}, {\[Kappa]_run \[Congruent] sign[1-\[Lambda]bar] (\[Alpha]_\[Epsilon]-\[Alpha]_\[Infinity])/\[Alpha]_n}.*)
 
 
 Clear[ptParams]
 
-ptParams[gStar_,direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,method_:"analytic",Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=ptParams[gStar,direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,atau,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,gamma,t0,tcrit,Tfn,Toft,dlnTdt,d2lnTdt2,tt,tScale,Tpt,tpt,T,\[Lambda]bar,\[CapitalPhi]b,\[Epsilon],Ec,SE,SE1,SE2,GammaNucl,beta1Rate,beta2Rate,LmlnhLx,LnbLx,LRbLx,nbPT,RPT,Ravg,betaEff,alphInf,alphn,effRun},
+ptParams[gStar_,direction_,vw_,TempEvol_List,coeffs_List,Tcrit_,method_:"analytic",Kfactor_:1,full_:False,atau_:{1,1},Nlx_:250]:=ptParams[gStar,direction,vw,TempEvol,coeffs,Tcrit,method,Kfactor,full,atau,Nlx]=Block[{\[Mu],A,\[Lambda],Tc=Tcrit,gamma,t0,tcrit,Tfn,Toft,dlnTdt,d2lnTdt2,tt,tScale,Tpt,tpt,T,\[Lambda]bar,\[CapitalPhi]b,VT,Ec,SE,SE1,SE2,GammaNucl,beta1Rate,beta2Rate,LmlnhLx,LnbLx,LRbLx,nbPT,RPT,Ravg,betaEff,alphInf,alphn,effRun},
 
 (*distributing the coefficients*)
 {\[Mu],A,\[Lambda]}=coeffs;
@@ -2327,8 +2503,8 @@ tcrit=If[direction=="cold",tcrit[[2]],tcrit[[1]]];
 (*\[CapitalPhi]_b*)
 \[CapitalPhi]b=(Fb/.PotToCoeffs);
 
-(*\[Epsilon] (|\[CapitalDelta]V|)*)
-\[Epsilon]=(\[CapitalDelta]V/.Mc\[Lambda]barToCoeffs);
+(*\[CapitalDelta]V_T (|\[CapitalDelta]V|)*)
+VT=(\[CapitalDelta]V/.Mc\[Lambda]barToCoeffs);
 
 (*E_c*)
 Ec=EcTemp[coeffs,Tc,Tpt];
@@ -2380,13 +2556,13 @@ betaEff=(8\[Pi]*vw^3*nbPT)^(1/3)
 alphInf=\[Alpha]\[Infinity][gStar,coeffs,Tc,Tpt];
 
 (*\[Alpha]_n*)
-alphn=\[Alpha]n[gStar,coeffs,Tc,Tpt];
+alphn=\[Alpha]n[gStar,coeffs,Tc,Tpt,#]&/@\[Alpha]qts;
 
 (*\[Kappa]_run: the "efficiency" for runaway bubbles, if the runaway condition is satisfied (\[Kappa]_run>0). This is the fraction of energy that actually goes into accelerating the bubble wall when we have runaway. For runaway bubbles we will take this to be the efficiency corresponding to the energy going into the envelope. For non-runaway bubbles (when this number is negative) we should NOT use this number.*)
-effRun=\[Kappa]run[gStar,coeffs,Tc,Tpt];
+effRun=\[Kappa]run[gStar,coeffs,Tc,Tpt,"\[Epsilon]",#]&/@\[Alpha]qts;
 
-(*final result, 19 parameters: {T_PT, t_PT, \[Lambda]bar, \[CapitalPhi]_b, \[Epsilon], E_c, S_E, S_E', S_E'', \[CapitalGamma]_nucl/\[ScriptCapitalV], \[Beta]_1, \[Beta]_2, n_b, R_b, <R>, \[Beta]_eff, \[Alpha]_\[Infinity], \[Alpha]_n, \[Kappa]_run}*)
-{Tpt,tpt,\[Lambda]bar,\[CapitalPhi]b,\[Epsilon],Ec,SE,SE1,SE2,GammaNucl,beta1Rate,beta2Rate,nbPT,RPT,Ravg,betaEff,alphInf,alphn,effRun}
+(*final result, 19 parameters: {T_PT, t_PT, \[Lambda]bar, \[CapitalPhi]_b, \[CapitalDelta]V_T, E_c, S_E, S_E', S_E'', \[CapitalGamma]_nucl/\[ScriptCapitalV], \[Beta]_1, \[Beta]_2, n_b, R_b, <R>, \[Beta]_eff, \[Alpha]_\[Infinity], {\[Alpha]_n}, {\[Kappa]_run}}*)
+{Tpt,tpt,\[Lambda]bar,\[CapitalPhi]b,VT,Ec,SE,SE1,SE2,GammaNucl,beta1Rate,beta2Rate,nbPT,RPT,Ravg,betaEff,alphInf,alphn,effRun}
 
 ]
 
