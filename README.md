@@ -32,20 +32,16 @@ To call the packages, simply enter the following commands in a Mathematica cell:
 Using the code
 --------------
 
-You can use `GraPhaRe` freely, provided that in any resulting publications you cite the paper [Buen-Abad, Chang, Hook (2022)](https://arxiv.org/abs/2212.xxxxx).
+You can use `GraPhaRe` freely, provided that in any resulting publications you cite the paper [Buen-Abad, Chang, Hook (2023)](https://arxiv.org/abs/2305.09712).
 
 The BibTeX entry for the paper is:
 
-    @article{Buen-Abad:2212abc,
-		author = "Buen-Abad, Manuel A. and Chang, Jae Hyeok and Hook, Anson",
-		title = "{Gravitational Waves from Reheating}",
-		eprint = "2212.xxxxx",
-		archivePrefix = "arXiv",
-		primaryClass = "hep-ph",
-		doi = "???",
-		journal = "???",
-		volume = "?",
-		number = "?",
-		pages = "??",
-		year = "2022"
-	}
+    @article{Buen-Abad:2023qnt,
+    author = "Buen-Abad, Manuel A. and Chang, Jae Hyeok and Hook, Anson",
+    title = "{Gravitational Wave Signatures of Reheating}",
+    eprint = "2305.09712",
+    archivePrefix = "arXiv",
+    primaryClass = "hep-ph",
+    month = "5",
+    year = "2023"
+    }
