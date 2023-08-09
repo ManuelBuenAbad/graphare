@@ -36,12 +36,16 @@ You can use `GraPhaRe` freely, provided that in any resulting publications you c
 
 The BibTeX entry for the paper is:
 
-    @article{Buen-Abad:2023qnt,
+    @article{Buen-Abad:2023hex,
     author = "Buen-Abad, Manuel A. and Chang, Jae Hyeok and Hook, Anson",
-    title = "{Gravitational Wave Signatures of Reheating}",
+    title = "{Gravitational wave signatures from reheating}",
     eprint = "2305.09712",
     archivePrefix = "arXiv",
     primaryClass = "hep-ph",
-    month = "5",
+    doi = "10.1103/PhysRevD.108.036006",
+    journal = "Phys. Rev. D",
+    volume = "108",
+    number = "3",
+    pages = "036006",
     year = "2023"
     }
